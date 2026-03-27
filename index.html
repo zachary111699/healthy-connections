@@ -359,6 +359,50 @@ input[type="checkbox"]{width:20px;height:20px}
 .ntb{font-size:8px;padding:9px 10px;min-width:max-content}.stamp-cnt{font-size:38px}
 }
 
+
+.mob-menu-btn{display:none}
+.mob-menu-dropdown{display:none}
+
+@media(max-width:768px){
+.mob-menu-btn{
+  display:block;
+  background:#00f7ff15;border:1px solid #00f7ff25;
+  color:#00f7ff;padding:8px 14px;border-radius:8px;
+  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
+  cursor:pointer;white-space:nowrap;
+}
+.pv-mob-btn{
+  background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);
+  color:#fff;margin-top:10px;
+}
+#nv{display:none}
+.pv-tabs{display:none}
+.mob-menu-dropdown{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(6,10,20,0.95);
+  z-index:400;padding:20px;
+  overflow-y:auto;
+  animation:fadeIn .2s;
+}
+.mob-menu-dropdown .mob-close{
+  display:block;text-align:right;margin-bottom:12px;
+  color:#ff4757;font-size:14px;font-weight:700;
+  cursor:pointer;padding:8px;
+}
+.mob-menu-dropdown .mob-item{
+  display:block;width:100%;
+  padding:16px 20px;margin-bottom:4px;
+  background:linear-gradient(145deg,#0d1a2d,#111d33);
+  border:1px solid #00f7ff08;border-radius:10px;
+  color:#c8f0ff;font-family:'Orbitron',sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:.5px;
+  cursor:pointer;text-align:left;
+  border-left:3px solid transparent;
+}
+.mob-menu-dropdown .mob-item:hover{border-left-color:#00f7ff;background:#0d1a2d}
+.mob-menu-dropdown .mob-item.on{border-left-color:#00f7ff;color:#00f7ff;background:#00f7ff08}
+}
+
 </style>
 </head>
 <body>
@@ -368,9 +412,9 @@ input[type="checkbox"]{width:20px;height:20px}
 <button class="lbtn" id="liB" onclick="tryL()">▶ INITIALIZE</button>
 <div class="lerr" id="liE">ACCESS DENIED</div></div></div>
 <div id="DS" style="display:none">
-<div class="hd"><div><h1>H.C. v5.0</h1><div class="hd-s">▸ COMPLETE SUITE</div><div class="hd-u" id="hu"></div></div>
+<div class="hd"><div><h1>H.C. v5.0</h1><div class="hd-s">▸ COMPLETE SUITE</div><div class="hd-u" id="hu"></div></div><button class="mob-menu-btn" id="mobMenuBtn" onclick="toggleMobMenu()">☰ Menu</button>
 <div class="hd-b"><button class="b" id="bC">⚙</button><span id="aB"></span><button class="b" id="bL">⏻</button><button class="b bg2" id="bN">+</button></div></div>
-<div class="nt" id="nv"></div>
+<div class="nt" id="nv"></div><div class="mob-menu-dropdown" id="mobMenu" style="display:none"></div>
 <div class="mn" id="pg"></div></div>
 <div id="PV" style="display:none" class="pv-bg"><div class="pv-card" id="pvc"></div></div>
 <div class="mbg" id="mb" style="display:none" onclick="if(event.target===this)CM()"><div class="mbox" id="mc"></div></div>
@@ -2269,6 +2313,51 @@ function openAddExercise(){var h2="<div class='mti'>+ ADD CUSTOM EXERCISE "+XB()
 function saveCustomExercise(){var n=document.getElementById('ceN').value.trim();if(!n)return;var e={n:n,bp:document.getElementById('ceBp').value,eq:document.getElementById('ceEq').value,df:document.getElementById('ceDf').value,ms:(document.getElementById('ceMs').value.trim()||document.getElementById('ceBp').value).split(',').map(function(m){return m.trim()})};var hw=document.getElementById('ceHow').value.trim();ACE_LIB.push(e);EXERCISES=ACE_LIB;if(hw)EX_HOW[n]=hw;var cx=JSON.parse(localStorage.getItem('hc6-customex')||'[]');cx.push(e);localStorage.setItem('hc6-customex',JSON.stringify(cx));if(hw){var hs=JSON.parse(localStorage.getItem('hc6-customhow')||'{}');hs[n]=hw;localStorage.setItem('hc6-customhow',JSON.stringify(hs))}openAddExercise()}
 function delCustomExercise(ci){var cx=JSON.parse(localStorage.getItem('hc6-customex')||'[]');if(ci>=0&&ci<cx.length){var n=cx[ci].n;var idx=ACE_LIB.findIndex(function(e){return e.n===n});if(idx>-1)ACE_LIB.splice(idx,1);EXERCISES=ACE_LIB;delete EX_HOW[n];cx.splice(ci,1);localStorage.setItem('hc6-customex',JSON.stringify(cx))}openAddExercise()}
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}
+
+
+function closeMobMenu(){var m=document.getElementById('mobMenu');if(m)m.style.display='none'}
+function closePvMobMenu(){var m=document.getElementById('pvMobMenu');if(m)m.remove()}
+
+function mobMenuSelect(idx){
+var tabs=document.getElementById('nv');
+if(!tabs)return;
+var btns=tabs.querySelectorAll('.ntb');
+if(btns[idx])btns[idx].click();
+closeMobMenu()}
+
+function pvMobMenuSelect(idx){
+var tabs=document.querySelector('.pv-tabs');
+if(!tabs)return;
+var btns=tabs.querySelectorAll('.pv-tab');
+if(btns[idx])btns[idx].click();
+closePvMobMenu()}
+
+function toggleMobMenu(){
+var m=document.getElementById('mobMenu');
+if(m.style.display==='block'){closeMobMenu();return}
+var tabs=document.getElementById('nv');
+if(!tabs)return;
+var btns=tabs.querySelectorAll('.ntb');
+var h='<div class="mob-close" onclick="closeMobMenu()">✕ CLOSE</div>';
+for(var i=0;i<btns.length;i++){
+var isOn=btns[i].classList.contains('on');
+h+='<div class="mob-item'+(isOn?' on':'')+'" onclick="mobMenuSelect('+i+')">'+btns[i].textContent+'</div>'}
+m.innerHTML=h;m.style.display='block'}
+
+function togglePvMobMenu(){
+var existing=document.getElementById('pvMobMenu');
+if(existing){closePvMobMenu();return}
+var tabs=document.querySelector('.pv-tabs');
+if(!tabs)return;
+var btns=tabs.querySelectorAll('.pv-tab');
+var overlay=document.createElement('div');
+overlay.id='pvMobMenu';overlay.className='mob-menu-dropdown';overlay.style.display='block';
+var h='<div class="mob-close" onclick="closePvMobMenu()">✕ CLOSE</div>';
+for(var i=0;i<btns.length;i++){
+var isOn=btns[i].classList.contains('on');
+h+='<div class="mob-item'+(isOn?' on':'')+'" onclick="pvMobMenuSelect('+i+')">'+btns[i].textContent+'</div>'}
+overlay.innerHTML=h;
+document.body.appendChild(overlay)}
 
 </script><div id='printArea' style='display:none'></div>
 </body></html>

@@ -906,6 +906,7 @@ var h="";
 
 /* Barcode card */
 if(p.memberId){h+="<div class='pv-sec' style='text-align:center;background:#ffffff;border-radius:12px;padding:16px'><div style='font-size:10px;color:#333;font-family:Orbitron;margin-bottom:4px;letter-spacing:1px'>YMCA MEMBER CARD</div><div style='font-size:14px;color:#333;font-weight:700;margin-bottom:8px'>"+H(p.n)+"</div>"+genBarcodeSVG(p.memberId,260,55)+"<div style='font-size:8px;color:#999;margin-top:6px'>Show this at the front desk to scan in</div></div>"}
+else{h+="<div class='pv-sec' style='text-align:center;padding:20px'><div style='font-size:24px;margin-bottom:8px'>🪪</div><div style='font-size:13px;color:#c8f0ff60'>No scan card on file yet.</div><div style='font-size:10px;color:#00f7ff30;margin-top:4px'>Ask your coach to add your YMCA scan card number.</div></div>"}
 
 /* Stamp check-in */
 h+="<div class='stamp-cd'><div class='stamp-title'>WEEKLY CHECK-IN</div><div class='stamp-wk'>"+wkL(cw)+"</div><div class='stamp-dots'>";

@@ -1712,7 +1712,7 @@ h+=”<p style='margin-top:20px;font-size:10px;color:#999'>Generated “+new Dat
 h+=”<div style='margin-top:8px;display:flex;gap:4px'><button class='b bg2' onclick='doPrint()'>🖨 PRINT</button><button class='b' onclick='CM()'>CLOSE</button></div>”;
 SM(h)}
 
-function doPrint(){var pa=document.getElementById(“printArea”);if(!pa)return;var w=window.open(””,””,“width=800,height=600”);var css=“body{font-family:Arial,sans-serif;font-size:12px;line-height:1.6;padding:20px}h1{font-size:18px;color:#1a365d;border-bottom:2px solid #1a365d;padding-bottom:5px}h2{font-size:14px;color:#2d3748;margin:12px 0 6px}table{width:100%;border-collapse:collapse;margin:8px 0}th,td{border:1px solid #e2e8f0;padding:5px 8px;text-align:left;font-size:11px}th{background:#edf2f7;font-weight:700}”;var d=w.document;d.open();d.write(”<html><head><title>HC Report</title>”);d.write(”<s”);d.write(“tyle>”+css+”</s”);d.write(“tyle></head><body>”);d.write(pa.innerHTML);d.write(”</body></html>”);d.close();w.print()}
+function doPrint(){var pa=document.getElementById(“printArea”);if(!pa)return;var w=window.open(””,””,“width=800,height=600”);var css=“body{font-family:Arial,sans-serif;font-size:12px;line-height:1.6;padding:20px}h1{font-size:18px;color:#1a365d;border-bottom:2px solid #1a365d;padding-bottom:5px}h2{font-size:14px;color:#2d3748;margin:12px 0 6px}table{width:100%;border-collapse:collapse;margin:8px 0}th,td{border:1px solid #e2e8f0;padding:5px 8px;text-align:left;font-size:11px}th{background:#edf2f7;font-weight:700}”;var d=w.document;d.open();d.write(”<ht”+“ml><he”+“ad><title>HC Report</title>”);d.write(”<s”);d.write(“tyle>”+css+”</s”);d.write(“tyle></he”+“ad><bo”+“dy>”);d.write(pa.innerHTML);d.write(”</bo”+“dy></ht”+“ml>”);d.close();w.print()}
 
 /* ═══ ANNOUNCEMENTS ═══ */
 function rAnn(el){
@@ -2036,7 +2036,7 @@ var wGoals=P.filter(function(p){return p.fc&&p.fc.g}).length;
 var totalSt=0;P.forEach(function(p){Object.keys(STAMPS[p.id]||{}).forEach(function(w){totalSt+=(STAMPS[p.id][w]||{}).count||0})});
 var mhC=0,nuC=0,fiC=0;P.forEach(function(p){if(p.sessions){if(p.sessions.mh>0)mhC++;if(p.sessions.nutr>0)nuC++;if(p.sessions.fin>0)fiC++}});
 var mn=new Date().toLocaleDateString(“en-US”,{month:“long”,year:“numeric”});
-var h=”<html><head><title>HC Report</title><s”+“tyle>body{font-family:Arial;padding:30px;color:#333;max-width:800px;margin:0 auto}h1{color:#003366;font-size:22px;border-bottom:3px solid #003366;padding-bottom:8px}h2{color:#003366;font-size:16px;margin-top:20px}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{padding:8px 12px;border:1px solid #ddd;text-align:left}th{background:#f0f4f8;font-weight:700}.big{font-size:28px;font-weight:800;color:#003366;text-align:center}.met{display:inline-block;text-align:center;padding:15px;margin:5px;border:1px solid #e0e0e0;border-radius:8px;min-width:120px}.ml{font-size:11px;color:#666;margin-top:4px}</s’+’tyle></head><body>”;
+var h=”<ht”+“ml><he”+“ad><title>HC Report</title><s”+“tyle>body{font-family:Arial;padding:30px;color:#333;max-width:800px;margin:0 auto}h1{color:#003366;font-size:22px;border-bottom:3px solid #003366;padding-bottom:8px}h2{color:#003366;font-size:16px;margin-top:20px}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{padding:8px 12px;border:1px solid #ddd;text-align:left}th{background:#f0f4f8;font-weight:700}.big{font-size:28px;font-weight:800;color:#003366;text-align:center}.met{display:inline-block;text-align:center;padding:15px;margin:5px;border:1px solid #e0e0e0;border-radius:8px;min-width:120px}.ml{font-size:11px;color:#666;margin-top:4px}</s’+’tyle></he”+“ad><bo”+“dy>”;
 h+=”<h1>YMCA HEALTHY CONNECTIONS</h1><h2>Monthly Program Report — “+mn+”</h2><p>Prepared: “+new Date().toLocaleDateString(“en-US”,{month:“long”,day:“numeric”,year:“numeric”})+”</p>”;
 h+=”<h2>Program Overview</h2><div style='text-align:center'>”;
 [[“Total Served”,total],[“Active”,ac.length],[“Completed”,exP.length],[“Total Visits”,totalSt]].forEach(function(m){h+=”<div class='met'><div class='big'>”+m[1]+”</div><div class='ml'>”+m[0]+”</div></div>”});
@@ -2045,7 +2045,7 @@ h+=”<h2>Referral Services</h2><table><tr><th>Service</th><th>Participants</th>
 if(REFLOGS.length){h+=”<h2>Referral Partners</h2><table><tr><th>Partner</th><th>Count</th></tr>”;var pc3={};REFLOGS.forEach(function(r){pc3[r.partner||”?”]=(pc3[r.partner||”?”]||0)+1});Object.keys(pc3).forEach(function(k){h+=”<tr><td>”+k+”</td><td>”+pc3[k]+”</td></tr>”});h+=”</table>”}
 h+=”<h2>Participants</h2><table><tr><th>Name</th><th>Coach</th><th>Months</th><th>Status</th></tr>”;
 ac.forEach(function(p){h+=”<tr><td>”+H(p.n)+”</td><td>”+H(p.co||”-”)+”</td><td>”+(p.cc||0)+”</td><td>”+ciI(p).l+”</td></tr>”});
-h+=”</table><p style='margin-top:30px;font-size:10px;color:#999'>H.C. System v7.0</p></body></html>”;
+h+=”</table><p style='margin-top:30px;font-size:10px;color:#999'>H.C. System v7.0</p></bo”+“dy></ht”+“ml>”;
 var w=window.open(””,””,“width=850,height=700”);w.document.write(h);w.document.close();w.print()}
 
 function pvCompleteMonthly(pid){if(!MONTHLYCH.length)return;var ch=MONTHLYCH[MONTHLYCH.length-1];if(!ch.completedBy)ch.completedBy=[];if(ch.completedBy.indexOf(pid)===-1)ch.completedBy.push(pid);SV();pvRefresh()}

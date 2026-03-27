@@ -10,7 +10,6 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>H.C. SYSTEM v5.0</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
@@ -331,26 +330,30 @@ textarea.ip{min-height:60px;resize:vertical}
 .monthly-ch{background:linear-gradient(135deg,#c792ff06,#f59e0b06);border:1px solid #c792ff15;border-radius:8px;padding:12px;margin-bottom:8px;text-align:center}
 
 @media(max-width:768px){
-.mn{padding:8px 6px}.hdr{padding:8px 12px}#hu{font-size:10px}
-#nv{gap:4px;padding:6px;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;overflow-x:auto;scrollbar-width:none}
-#nv::-webkit-scrollbar{display:none}
-.ntb{padding:10px 12px;font-size:9px;min-width:max-content;flex:0 0 auto;border-radius:8px}
+.mn{padding:8px 6px}
+.hdr{padding:8px 12px}
+#hu{font-size:10px}
+
+/* HIDE horizontal tabs, show dropdown menu button */
+.nt,#nv{display:none !important}
+.pv-tabs{display:none !important}
+.mob-menu-btn{display:block !important}
+
 .sts{gap:4px}.st{padding:10px 8px;min-width:60px}.st-n{font-size:20px}.st-l{font-size:6px}
-.cd{padding:12px 10px}.ct{font-size:10px}.r2{grid-template-columns:1fr}.r3{grid-template-columns:1fr}
+.cd{padding:12px 10px}.ct{font-size:10px}
+.r2{grid-template-columns:1fr}.r3{grid-template-columns:1fr}
 .mbox{padding:16px 12px;max-width:95vw;border-radius:12px}.mti{font-size:12px}
 table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
-th,td{padding:6px 8px;font-size:11px;white-space:nowrap}.si{width:100%}
+th,td{padding:6px 8px;font-size:11px;white-space:nowrap}
+.si{width:100%}
 .fis,.fls{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
 .fi{flex-shrink:0;font-size:9px;padding:5px 8px}
 .pv-bg{padding:6px 4px}.pv-hdr{padding:14px 10px}.pv-name{font-size:18px}
-.pv-tabs{gap:4px;padding:6px;-webkit-overflow-scrolling:touch;overflow-x:auto;scrollbar-width:none}
-.pv-tabs::-webkit-scrollbar{display:none}
-.pv-tab{padding:10px 12px;font-size:9px;min-width:max-content;flex:0 0 auto;border-radius:8px}
 .pv-sec{padding:12px 10px}.pv-st{font-size:11px}
 .stamp-btn{padding:20px;font-size:16px}.stamp-dot{width:32px;height:32px;font-size:14px}.stamp-cnt{font-size:44px}
 .ex-lib{grid-template-columns:1fr 1fr;gap:3px}.ex-item{padding:6px 8px;font-size:10px}
 .mood-popup{padding:28px 20px}.mood-popup-btn{font-size:40px;padding:12px}
-button,.b,.fl,.fi,.bk-btn,.pv-tab,.ntb{min-height:36px}
+button,.b,.fl,.fi,.bk-btn{min-height:36px}
 input[type="checkbox"]{width:20px;height:20px}
 }
 @media(max-width:480px){

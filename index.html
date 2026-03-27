@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <meta charset="UTF-8">
-<title>H.C. SYSTEM v5.0</title>
+<title>H.C. SYSTEM v7.0</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
@@ -438,13 +438,13 @@ input[type="checkbox"]{width:20px;height:20px}
 </style>
 </head>
 <body>
-<div id="LS"><div class="lc"><div class="lc-tl"></div><span style="font-size:28px;display:block;margin-bottom:8px">⚡</span><h1>H.C. SYSTEM</h1><div class="lc-s">v5.0 — COMPLETE SUITE</div><div class="lc-d"></div>
+<div id="LS"><div class="lc"><div class="lc-tl"></div><span style="font-size:28px;display:block;margin-bottom:8px">⚡</span><h1>H.C. SYSTEM</h1><div class="lc-s">v7.0 — COMPLETE SUITE</div><div class="lc-d"></div>
 <input type="text" class="li" id="liU" placeholder="> USERNAME" autocomplete="username">
 <input type="password" class="li" id="liP" placeholder="> PASSWORD" autocomplete="current-password">
 <button class="lbtn" id="liB" onclick="tryL()">▶ INITIALIZE</button>
 <div class="lerr" id="liE">ACCESS DENIED</div></div></div>
 <div id="DS" style="display:none">
-<div class="hd"><div><h1>H.C. v5.0</h1><div class="hd-s">▸ COMPLETE SUITE</div><div class="hd-u" id="hu"></div></div>
+<div class="hd"><div><h1>H.C. v7.0</h1><div class="hd-s">▸ COMPLETE SUITE</div><div class="hd-u" id="hu"></div></div>
 <div class="hd-b"><button class="b" id="bC">⚙</button><span id="aB"></span><button class="b" id="bL">⏻</button><button class="b bg2" id="bN">+</button></div></div>
 <div class="nt" id="nv"></div>
 <div class="mn" id="pg"></div></div>
@@ -569,7 +569,7 @@ var cw=wkK();if(!STAMPS[p.id])STAMPS[p.id]={};if(!STAMPS[p.id][cw])STAMPS[p.id][
 
 var h="<div class='pv-hdr'><div class='pv-name'>"+H(p.n)+"</div><div class='pv-coach'>Coach: "+H(p.co||"-")+"</div></div>";
 h+="<div class='pv-tabs'>";
-[["home","🏠 HOME"],["checkin","✅ CHECK IN"],["booking","📅 BOOK"],["workouts","🏋️ WORKOUTS"],["nutrition","🥗 NUTRITION"],["calendar","📆 CALENDAR"],["progress","📊 PROGRESS"]].concat(p.referrals&&(p.referrals.mh||p.referrals.nutr||p.referrals.fin||p.referrals.career)?[["referrals","🔗 REFERRALS"]]:[]).concat(p.jobsAccess?[["jobs","💼 JOBS"]]:[]).concat([["journal","📓 JOURNAL"]]).forEach(function(t){
+[["home","🏠 HOME"],["checkin","✅ CHECK IN"],["booking","📅 BOOK"],["calendar","📆 CALENDAR"],["workouts","🏋️ WORKOUTS"],["nutrition","🥗 NUTRITION"],["progress","📊 PROGRESS"]].concat(p.referrals&&(p.referrals.mh||p.referrals.nutr||p.referrals.fin||p.referrals.career)?[["referrals","🔗 REFERRALS"]]:[]).concat(p.jobsAccess?[["jobs","💼 JOBS"]]:[]).concat([["journal","📓 JOURNAL"]]).forEach(function(t){
 h+="<button class='pv-tab"+(pvTab===t[0]?" on":"")+"' onclick='pvSwitchTab("+JSON.stringify(t[0])+")'>"+t[1]+"</button>"});
 h+="</div><div id='pvTabContent'></div>";
 h+="<div class='pv-lock'><button onclick='doLock()'>⏻ SIGN OUT</button></div>";
@@ -589,18 +589,43 @@ else if(pvTab==="journal")pvRenderJournal(tc,p);
 }
 
 function pvRenderHome(el,p,cw){
-var ws=STAMPS[p.id][cw];var cnt=ws.count||0;var met=cnt>=2;/* stamp moved to checkin tab */
+var ws=STAMPS[p.id][cw];var cnt=ws.count||0;var met=cnt>=2;
 var h="";
-if(ANN.length){h+="<div class='pv-sec' style='border-color:#f59e0b20;background:#f59e0b04'><div class='pv-st' style='color:#f59e0b'>📢 ANNOUNCEMENTS</div>";ANN.slice(-3).reverse().forEach(function(a){h+="<div style='font-size:9px;margin-bottom:4px'><strong style='color:#f59e0b'>"+H(a.date)+"</strong> "+H(a.text)+"</div>"});h+="</div>"}
-if(p.coachMsg)h+="<div class='pv-msg'>💬 \""+H(p.coachMsg)+"\"</div>";
-
-
 var today5=new Date().toISOString().split("T")[0];
 var todayMood=null;if(MOODS[p.id]){var tm=MOODS[p.id].find(function(m){return m.date===today5});if(tm)todayMood=tm.mood}
 if(!todayMood){setTimeout(function(){showMoodPopup(p.id)},300)}
-/* streak moved to checkin tab */
-if(CHALLENGES.length){var lCh=CHALLENGES[CHALLENGES.length-1];var chDone=(lCh.completedBy||[]).indexOf(p.id)>-1;h+="<div class='challenge-box'><div style='font-family:Orbitron;font-size:7px;color:#f59e0b80;margin-bottom:3px'>⚡ WEEKLY CHALLENGE</div><div class='challenge-text'>"+H(lCh.text)+"</div><button class='challenge-btn"+(chDone?" done":"")+"' onclick=\"pvCompleteChallenge('"+p.id+"')\">"+(chDone?"✓ COMPLETED":"MARK COMPLETE")+"</button></div>"}
-if(MONTHLYCH.length){var mCh=MONTHLYCH[MONTHLYCH.length-1];var mDone=(mCh.completedBy||[]).indexOf(p.id)>-1;h+="<div class='monthly-ch'><div style='font-family:Orbitron;font-size:7px;color:#c792ff80;margin-bottom:3px'>🏆 MONTHLY CHALLENGE</div><div style='font-size:12px;color:#c792ff;margin-bottom:6px'>"+H(mCh.text)+"</div><button class='challenge-btn"+(mDone?" done":"")+"' style='border-color:#c792ff;color:#c792ff' onclick=\"pvCompleteMonthly('"+p.id+"')\">"+(mDone?"✓ COMPLETED":"MARK COMPLETE")+"</button></div>"}
+
+/* Welcome greeting */
+var hour=new Date().getHours();var greeting=hour<12?"Good morning":hour<17?"Good afternoon":"Good evening";
+h+="<div class='pv-sec' style='text-align:center;padding:20px'><div style='font-size:24px;margin-bottom:4px'>"+greeting+",</div><div style='font-family:Orbitron;font-size:18px;color:#00f7ff;font-weight:700'>"+H(p.n.split(" ")[0])+"</div></div>";
+
+/* Coach message */
+if(p.coachMsg)h+="<div class='pv-msg'>💬 \""+H(p.coachMsg)+"\"</div>";
+
+/* Announcements */
+if(ANN.length){h+="<div class='pv-sec'><div class='pv-st' style='color:#f59e0b'>📢 ANNOUNCEMENTS</div>";ANN.slice(-3).reverse().forEach(function(a){h+="<div style='font-size:11px;margin-bottom:6px;padding:8px;background:#f59e0b06;border-radius:8px'><strong style='color:#f59e0b'>"+H(a.date)+"</strong><br>"+H(a.text)+"</div>"});h+="</div>"}
+
+/* Weekly check-in status — quick glance */
+h+="<div class='pv-sec' style='text-align:center'><div class='pv-st'>📊 THIS WEEK</div><div style='font-family:Orbitron;font-size:36px;font-weight:700;color:"+(met?"#6ee7b7":cnt?"#f59e0b":"#ff4757")+"'>"+cnt+"/2</div><div style='font-size:11px;color:#c8f0ff60;margin-top:4px'>"+(met?"✓ Weekly goal met!":"Need "+(2-cnt)+" more check-in"+(2-cnt>1?"s":""))+"</div></div>";
+
+/* This week's workouts */
+var todayStr=new Date().toISOString().split("T")[0];
+var weekWorkouts=[];
+var wkStart=new Date();wkStart.setDate(wkStart.getDate()-wkStart.getDay());
+for(var wd=0;wd<7;wd++){var dd=new Date(wkStart);dd.setDate(dd.getDate()+wd);var ds=dd.toISOString().split("T")[0];
+var aKey=p.id+"-"+ds;if(ASSIGNED&&ASSIGNED[aKey]){ASSIGNED[aKey].forEach(function(wi){if(WORKOUTS[wi])weekWorkouts.push({date:ds,workout:WORKOUTS[wi],idx:wi})})}}
+if(weekWorkouts.length){h+="<div class='pv-sec'><div class='pv-st'>🏋️ THIS WEEK"+String.fromCharCode(39)+"S WORKOUTS</div>";
+weekWorkouts.forEach(function(ww){var isToday=ww.date===todayStr;
+h+="<div class='pv-wk' style='"+(isToday?"border-color:#00f7ff30":"")+"'><div style='display:flex;justify-content:space-between;align-items:center'><div class='pv-wk-name'>"+H(ww.workout.name)+"</div><span style='font-size:9px;color:"+(isToday?"#00f7ff":"#c8f0ff30")+"'>"+ww.date+(isToday?" — TODAY":"")+"</span></div>";
+if(ww.workout.exercises){ww.workout.exercises.slice(0,4).forEach(function(ex){h+="<div style='font-size:10px;color:#c8f0ff60;padding:2px 0'>"+H(ex.name)+(ex.sets?" — "+ex.sets+(ex.reps?"x"+ex.reps:""):"")+"</div>"});if(ww.workout.exercises.length>4)h+="<div style='font-size:9px;color:#00f7ff30'>+"+(ww.workout.exercises.length-4)+" more</div>"}
+h+="</div>"});h+="</div>"}
+
+/* Challenges — only show if active */
+if(CHALLENGES.length){var lCh=CHALLENGES[CHALLENGES.length-1];var chDone=(lCh.completedBy||[]).indexOf(p.id)>-1;h+="<div class='challenge-box'><div style='font-family:Orbitron;font-size:8px;color:#f59e0b80;margin-bottom:4px'>⚡ WEEKLY CHALLENGE</div><div class='challenge-text'>"+H(lCh.text)+"</div><button class='challenge-btn"+(chDone?" done":"")+"' onclick=\"pvCompleteChallenge('"+p.id+"')\">"+(chDone?"✓ COMPLETED":"MARK COMPLETE")+"</button></div>"}
+if(MONTHLYCH.length){var mCh=MONTHLYCH[MONTHLYCH.length-1];var mDone=(mCh.completedBy||[]).indexOf(p.id)>-1;h+="<div class='monthly-ch'><div style='font-family:Orbitron;font-size:8px;color:#c792ff80;margin-bottom:4px'>🏆 MONTHLY CHALLENGE</div><div style='font-size:12px;color:#c792ff;margin-bottom:6px'>"+H(mCh.text)+"</div><button class='challenge-btn"+(mDone?" done":"")+"' style='border-color:#c792ff;color:#c792ff' onclick=\"pvCompleteMonthly('"+p.id+"')\">"+(mDone?"✓ COMPLETED":"MARK COMPLETE")+"</button></div>"}
+
+/* Leaderboard opt-in — only show if there are challenges */
+if(CHALLENGES.length||MONTHLYCH.length){
 var wkCh=CHALLENGES.length?CHALLENGES[CHALLENGES.length-1]:null;
 var lbData=[];P.filter(function(lp){return lp.s==="active"&&lp.lbOptIn}).forEach(function(lp){var score=0;if(wkCh&&wkCh.completedBy&&wkCh.completedBy.indexOf(lp.id)>-1)score+=5;var ts2=0;Object.keys(STAMPS[lp.id]||{}).forEach(function(w){ts2+=(STAMPS[lp.id][w]||{}).count||0});score+=ts2;var streak2=0;var ck2=new Date();for(var s2=0;s2<52;s2++){var sk2=wkK(ck2);var sc2=(STAMPS[lp.id]&&STAMPS[lp.id][sk2])?STAMPS[lp.id][sk2].count:0;if(sc2>=2)streak2++;else if(s2>0)break;ck2.setDate(ck2.getDate()-7)}score+=streak2*2;lbData.push({name:lp.n,score:score,stamps:ts2,streak:streak2})});
 lbData.sort(function(a,b){return b.score-a.score});
@@ -608,16 +633,11 @@ h+="<div class='pv-sec' style='text-align:center'><label style='display:flex;ali
 if(lbData.length>1){h+="<div class='pv-sec'><div class='pv-st'>🏆 LEADERBOARD</div><div class='lb-board'>";
 var medals=["🥇","🥈","🥉"];
 lbData.slice(0,10).forEach(function(lb,i){h+="<div class='lb-entry'><div class='lb-pos' style='color:"+(i<3?"#f59e0b":"#00f7ff30")+"'>"+(i<3?medals[i]:(i+1))+"</div><div class='lb-info'><div style='font-size:11px;color:#c8f0ff'>"+H(lb.name)+"</div><div style='font-size:8px;color:#00f7ff30'>"+lb.stamps+" stamps · "+lb.streak+"wk streak</div></div><div class='lb-score'>"+lb.score+"</div></div>"});
-h+="</div></div>"}
+h+="</div></div>"}}
 
+/* Goals */
 if(p.goals&&p.goals.length){h+="<div class='pv-sec'><div class='pv-st'>🎯 MY GOALS</div>";p.goals.forEach(function(g){var st=g.status||"created";var stClr=st==="completed"?"#6ee7b7":st==="in_progress"?"#f59e0b":st==="not_completed"?"#ff4757":"#00f7ff";var stLbl=st==="completed"?"✓ COMPLETED":st==="in_progress"?"IN PROGRESS":st==="not_completed"?"NOT COMPLETED":"CREATED";h+="<div class='pv-goal'><div style='display:flex;justify-content:space-between;align-items:center'><div class='pv-gt'>"+(g.type||"GOAL")+"</div><span style='font-family:Orbitron;font-size:8px;padding:3px 8px;border-radius:4px;background:"+stClr+"15;color:"+stClr+";border:1px solid "+stClr+"25'>"+stLbl+"</span></div><div style='font-size:10px;color:#c8f0ff80;margin-top:4px'>"+H(g.text)+"</div></div>"});h+="</div>"}
 
-/* Referrals moved to own tab */
-if(p.sessions&&(p.sessions.mh||p.sessions.nutr||p.sessions.fin)){h+="<div class='pv-sec'><div class='pv-st'>📊 SESSIONS</div><div style='display:flex;justify-content:center;gap:10px'>";
-["mh","nutr","fin"].forEach(function(c){if(p.sessions[c]===undefined)return;var rem=10-(p.sessions[c]||0);var cls=rem>3?"sess-ok":rem>0?"sess-low":"sess-out";var lbl=c==="mh"?"MH":c==="nutr"?"NUT":"FIN";h+="<div style='text-align:center'><div class='sess-ring "+cls+"'>"+rem+"</div><div style='font-size:5px;color:#6ee7b7;margin-top:2px'>"+lbl+"</div></div>"});h+="</div></div>"}
-try{h+=pvPickupHTML(p)}catch(e){}var pR=p.assignedRes||[];var allR=gRes();var myR=allR.filter(function(r){return pR.indexOf(r.name)>-1});
-if(myR.length){h+="<div class='pv-sec'><div class='pv-st'>📚 RESOURCES</div>";myR.forEach(function(r){var ru=r.url||"";if(ru&&ru.indexOf("http")!==0)ru="https://"+ru;h+="<div style='background:#060a1440;border:1px solid #00f7ff06;border-radius:3px;padding:5px;margin-bottom:3px'><strong style='font-size:9px'>"+H(r.name)+"</strong><br><span style='font-size:7px;color:#c8f0ff30'>"+H(r.desc||"")+"</span>"+(r.phone?"<br><span style='font-size:8px;color:#6ee7b7'>"+H(r.phone)+"</span>":"")+(ru?" <a href='"+H(ru)+"' target='_blank' style='font-size:7px'>↗</a>":"")+"</div>"});h+="</div>"}
-var allW=Object.keys(STAMPS[p.id]||{}).sort().reverse();if(allW.length>1){h+="<div class='pv-sec'><div class='pv-st'>📅 HISTORY</div>";allW.forEach(function(w){if(w===cw)return;var c2=(STAMPS[p.id][w]||{}).count||0;h+="<div class='sh-row'><span>"+wkL(w)+"</span><span style='color:"+(c2>=2?"#6ee7b7":"#ff4757")+"'>"+c2+"/2 "+(c2>=2?"✓":"✗")+"</span></div>"});h+="</div>"}
 el.innerHTML=h}
 
 function pvRenderBooking(el,p){
@@ -1710,7 +1730,7 @@ if(p.notes&&p.notes.length){h+="<h2>Coach Notes</h2>";p.notes.forEach(function(n
 
 h+="<h2>Forms Completed</h2><p>";
 var fc=p.fc||{};h+="Intake: "+(fc.i?"✓":"✗")+" | Goals: "+(fc.g?"✓":"✗")+" | Referral: "+(fc.r?"✓":"✗")+" | Exit: "+(fc.e?"✓":"✗")+"</p>";
-h+="<p style='margin-top:20px;font-size:10px;color:#999'>Generated "+new Date().toLocaleDateString()+" — H.C. System v5.0</p></div>";
+h+="<p style='margin-top:20px;font-size:10px;color:#999'>Generated "+new Date().toLocaleDateString()+" — H.C. System v7.0</p></div>";
 h+="<div style='margin-top:8px;display:flex;gap:4px'><button class='b bg2' onclick='doPrint()'>🖨 PRINT</button><button class='b' onclick='CM()'>CLOSE</button></div>";
 SM(h)}
 
@@ -2054,7 +2074,7 @@ h+="<h2>Referral Services</h2><table><tr><th>Service</th><th>Participants</th></
 if(REFLOGS.length){h+="<h2>Referral Partners</h2><table><tr><th>Partner</th><th>Count</th></tr>";var pc3={};REFLOGS.forEach(function(r){pc3[r.partner||"?"]=(pc3[r.partner||"?"]||0)+1});Object.keys(pc3).forEach(function(k){h+="<tr><td>"+k+"</td><td>"+pc3[k]+"</td></tr>"});h+="</table>"}
 h+="<h2>Participants</h2><table><tr><th>Name</th><th>Coach</th><th>Months</th><th>Status</th></tr>";
 ac.forEach(function(p){h+="<tr><td>"+H(p.n)+"</td><td>"+H(p.co||"-")+"</td><td>"+(p.cc||0)+"</td><td>"+ciI(p).l+"</td></tr>"});
-h+="</table><p style='margin-top:30px;font-size:10px;color:#999'>H.C. System v5.0</p></body></html>";
+h+="</table><p style='margin-top:30px;font-size:10px;color:#999'>H.C. System v7.0</p></body></html>";
 var w=window.open("","","width=850,height=700");w.document.write(h);w.document.close();w.print()}
 
 

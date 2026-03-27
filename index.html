@@ -62,7 +62,7 @@ a{color:#00f7ff}
 .fi.on{border-color:#00f7ff;background:#00f7ff08;color:#00f7ff}
 .si{padding:5px 8px;border:1px solid #00f7ff15;border-radius:5px;font-size:10px;outline:none;width:150px;font-family:inherit;background:#060a14;color:#00f7ff}
 .si::placeholder{color:#00f7ff20}
-table{width:100%;border-collapse:collapse;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:15px}
 th{background:#0a162880;color:#00f7ff;padding:5px;text-align:left;font-size:7px;font-weight:700;font-family:'Orbitron',sans-serif;letter-spacing:.5px;border-bottom:1px solid #00f7ff12}
 td{padding:5px;border-bottom:1px solid #00f7ff04;vertical-align:middle}
 tr:hover{background:#00f7ff02}
@@ -162,11 +162,11 @@ textarea.ip{min-height:60px;resize:vertical}
 .wk-name{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#00f7ff;margin-bottom:5px}
 .wk-ex{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #00f7ff04;font-size:12px}
 .wk-detail{color:#00f7ff60;font-size:11px}
-.wk-assign{background:#c792ff08;border:1px solid #c792ff15;border-radius:4px;padding:10px;margin-top:8px}
-.pv-wk{background:#060a1440;border:1px solid #00f7ff08;border-radius:5px;padding:12px;margin-bottom:8px}
+.wk-assign{background:#c792ff08;border:1px solid #c792ff15;border-radius:4px;padding:10px;margin-top:6px}
+.pv-wk{background:#060a1440;border:1px solid #00f7ff08;border-radius:5px;padding:12px;margin-bottom:6px}
 .pv-wk-name{font-family:'Orbitron',sans-serif;font-size:14px;color:#00f7ff;font-weight:700;margin-bottom:4px}
 .pv-wk-ex{display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid #00f7ff04;font-size:12px}
-.pv-wk-check{width:22px;height:22px;border:2px solid #00f7ff25;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;flex-shrink:0}
+.pv-wk-check{width:22px;height:22px;border:2px solid #00f7ff25;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;flex-shrink:0}
 .pv-wk-check.done{border-color:#6ee7b7;background:#6ee7b712;color:#6ee7b7}
 .pv-wk-info{flex:1}
 .pv-wk-sets{color:#00f7ff50;font-size:10px}
@@ -330,103 +330,30 @@ textarea.ip{min-height:60px;resize:vertical}
 .job-link:hover{background:#6ee7b708}
 .monthly-ch{background:linear-gradient(135deg,#c792ff06,#f59e0b06);border:1px solid #c792ff15;border-radius:8px;padding:12px;margin-bottom:8px;text-align:center}
 
-/* ═══ MOBILE RESPONSIVE ═══ */
 @media(max-width:768px){
-  .mn{padding:8px 6px}
-  .hdr{padding:8px 12px}
-  #hu{font-size:10px}
-  #nv{gap:2px;padding:3px;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
-  .ntb{padding:8px 8px;font-size:9px;min-width:0}
-  .sts{gap:4px}
-  .st{padding:10px 8px;min-width:60px}
-  .st-n{font-size:20px}
-  .st-l{font-size:6px}
-  .cd{padding:12px 10px}
-  .ct{font-size:10px}
-  .r2{grid-template-columns:1fr}
-  .r3{grid-template-columns:1fr}
-  .mbox{padding:16px 12px;max-width:95vw;border-radius:12px}
-  .mti{font-size:12px}
-  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  th,td{padding:6px 8px;font-size:11px;white-space:nowrap}
-  .si{width:100%}
-  .fis,.fls{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
-  .fi{flex-shrink:0;font-size:9px;padding:5px 8px}
-  .cal-grid{font-size:8px;gap:1px}
-  .cal-slot{padding:2px;min-height:22px}
-  .cal-bk{font-size:7px}
-
-  /* Participant mobile */
-  .pv-bg{padding:6px 4px}
-  .pv-hdr{padding:14px 10px}
-  .pv-name{font-size:18px}
-  .pv-tabs{gap:1px;padding:3px;-webkit-overflow-scrolling:touch}
-  .pv-tab{padding:9px 4px;font-size:8px}
-  .pv-sec{padding:12px 10px}
-  .pv-st{font-size:11px}
-
-  /* Stamp button bigger on mobile for easy tapping */
-  .stamp-btn{padding:20px;font-size:16px}
-  .stamp-dot{width:32px;height:32px;font-size:14px}
-  .stamp-cnt{font-size:44px}
-
-  /* Booking */
-  .bk-slot{font-size:11px;padding:8px 6px}
-
-  /* Calendar month view */
-  .pv-mcal{gap:1px}
-  .pv-mcal-day{padding:3px;min-height:40px;font-size:7px}
-  .pv-mcal-num{font-size:8px}
-  .pv-mcal-ev{font-size:6px;padding:1px 2px}
-  .pv-mcal-hdr{font-size:7px;padding:2px}
-
-  /* Exercises - stack better on mobile */
-  .ex-lib{grid-template-columns:1fr 1fr;gap:3px}
-  .ex-item{padding:6px 8px;font-size:10px}
-
-  /* Workout cards */
-  .wk-card{padding:10px}
-  .wk-ex{font-size:10px}
-  .pv-wk{padding:10px}
-  .pv-wk-ex{font-size:10px}
-
-  /* Recipe cards */
-  .recipe-card{padding:10px}
-
-  /* Impact cards */
-  .impact-card{padding:12px}
-
-  /* Make mood popup bigger */
-  .mood-popup{padding:28px 20px}
-  .mood-popup-btn{font-size:40px;padding:12px}
-  .mood-popup-title{font-size:16px}
-
-  /* Leaderboard */
-  .lb-board{padding:8px}
-
-  /* Jobs */
-  .job-card{padding:10px}
-
-  /* Pickup */
-  .pu-card{padding:12px}
-  .pu-confirm-btn{padding:14px}
-
-  /* Drop zones */
-  .dz{padding:16px;font-size:10px}
-
-  /* Touch-friendly: minimum tap targets */
-  button,.b,.fl,.fi,.bk-btn,.pv-tab,.ntb{min-height:36px}
-  input[type="checkbox"]{width:20px;height:20px}
+.mn{padding:8px 6px}.hdr{padding:8px 12px}#hu{font-size:10px}
+#nv{gap:2px;padding:3px;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+.ntb{padding:8px 8px;font-size:9px;min-width:0}
+.sts{gap:4px}.st{padding:10px 8px;min-width:60px}.st-n{font-size:20px}.st-l{font-size:6px}
+.cd{padding:12px 10px}.ct{font-size:10px}.r2{grid-template-columns:1fr}.r3{grid-template-columns:1fr}
+.mbox{padding:16px 12px;max-width:95vw;border-radius:12px}.mti{font-size:12px}
+table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+th,td{padding:6px 8px;font-size:11px;white-space:nowrap}.si{width:100%}
+.fis,.fls{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.fi{flex-shrink:0;font-size:9px;padding:5px 8px}
+.pv-bg{padding:6px 4px}.pv-hdr{padding:14px 10px}.pv-name{font-size:18px}
+.pv-tabs{gap:1px;padding:3px;-webkit-overflow-scrolling:touch}.pv-tab{padding:9px 4px;font-size:8px}
+.pv-sec{padding:12px 10px}.pv-st{font-size:11px}
+.stamp-btn{padding:20px;font-size:16px}.stamp-dot{width:32px;height:32px;font-size:14px}.stamp-cnt{font-size:44px}
+.ex-lib{grid-template-columns:1fr 1fr;gap:3px}.ex-item{padding:6px 8px;font-size:10px}
+.mood-popup{padding:28px 20px}.mood-popup-btn{font-size:40px;padding:12px}
+button,.b,.fl,.fi,.bk-btn,.pv-tab,.ntb{min-height:36px}
+input[type="checkbox"]{width:20px;height:20px}
 }
-
 @media(max-width:480px){
-  .sts{flex-direction:row;flex-wrap:wrap}
-  .st{min-width:45%;flex:1 1 45%}
-  .ex-lib{grid-template-columns:1fr}
-  .pv-tab{font-size:7px;padding:8px 3px}
-  .ntb{font-size:8px;padding:7px 6px}
-  .stamp-cnt{font-size:38px}
-  .pv-mcal-day{min-height:35px}
+.sts{flex-direction:row;flex-wrap:wrap}.st{min-width:45%;flex:1 1 45%}
+.ex-lib{grid-template-columns:1fr}.pv-tab{font-size:7px;padding:8px 3px}
+.ntb{font-size:8px;padding:7px 6px}.stamp-cnt{font-size:38px}
 }
 
 </style>
@@ -435,7 +362,7 @@ textarea.ip{min-height:60px;resize:vertical}
 <div id="LS"><div class="lc"><div class="lc-tl"></div><span style="font-size:28px;display:block;margin-bottom:8px">⚡</span><h1>H.C. SYSTEM</h1><div class="lc-s">v5.0 — COMPLETE SUITE</div><div class="lc-d"></div>
 <input type="text" class="li" id="liU" placeholder="> USERNAME" autocomplete="username">
 <input type="password" class="li" id="liP" placeholder="> PASSWORD" autocomplete="current-password">
-<button class="lbtn" id="liB">▶ INITIALIZE</button>
+<button class="lbtn" id="liB" onclick="tryL()">▶ INITIALIZE</button>
 <div class="lerr" id="liE">ACCESS DENIED</div></div></div>
 <div id="DS" style="display:none">
 <div class="hd"><div><h1>H.C. v5.0</h1><div class="hd-s">▸ COMPLETE SUITE</div><div class="hd-u" id="hu"></div></div>
@@ -1220,8 +1147,7 @@ var EX_HOW={
 "Wall Sit":"Back against wall, slide down until thighs are parallel to floor. Hold position. Keep knees at 90° directly above ankles."
 };
 
-var EXERCISES=ACE_LIB;
-(function(){var cx=JSON.parse(localStorage.getItem("hc6-customex")||"[]");cx.forEach(function(e){if(!ACE_LIB.some(function(a){return a.n===e.n}))ACE_LIB.push(e)});EXERCISES=ACE_LIB;var ch=JSON.parse(localStorage.getItem("hc6-customhow")||"{}");Object.keys(ch).forEach(function(k){EX_HOW[k]=ch[k]})})();
+var EXERCISES=ACE_LIB;(function(){var cx=JSON.parse(localStorage.getItem('hc6-customex')||'[]');cx.forEach(function(e){if(!ACE_LIB.some(function(a){return a.n===e.n}))ACE_LIB.push(e)});EXERCISES=ACE_LIB;var ch=JSON.parse(localStorage.getItem('hc6-customhow')||'{}');Object.keys(ch).forEach(function(k){EX_HOW[k]=ch[k]})})();
 
 var WORKOUTS=JSON.parse(localStorage.getItem("hc6-workouts")||"[]");
 var ASSIGNED=JSON.parse(localStorage.getItem("hc6-assigned")||"{}")||{};
@@ -1700,115 +1626,7 @@ h+="<p style='margin-top:20px;font-size:10px;color:#999'>Generated "+new Date().
 h+="<div style='margin-top:8px;display:flex;gap:4px'><button class='b bg2' onclick='doPrint()'>🖨 PRINT</button><button class='b' onclick='CM()'>CLOSE</button></div>";
 SM(h)}
 
-function doPrint(){var pa=document.getElementById("printArea");if(!pa)return;var w=window.open("","","width=800,height=600");w.document.write("<html><head>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#060a14">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><title>HC Report</title><style>body{font-family:Arial,sans-serif;font-size:12px;line-height:1.6;padding:20px}h1{font-size:18px;color:#1a365d;border-bottom:2px solid #1a365d;padding-bottom:5px}h2{font-size:14px;color:#2d3748;margin:12px 0 6px}table{width:100%;border-collapse:collapse;margin:8px 0}th,td{border:1px solid #e2e8f0;padding:5px 8px;text-align:left;font-size:11px}th{background:#edf2f7;font-weight:700}
-/* ═══ MOBILE RESPONSIVE ═══ */
-@media(max-width:768px){
-  .mn{padding:8px 6px}
-  .hdr{padding:8px 12px}
-  #hu{font-size:10px}
-  #nv{gap:2px;padding:3px;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
-  .ntb{padding:8px 8px;font-size:9px;min-width:0}
-  .sts{gap:4px}
-  .st{padding:10px 8px;min-width:60px}
-  .st-n{font-size:20px}
-  .st-l{font-size:6px}
-  .cd{padding:12px 10px}
-  .ct{font-size:10px}
-  .r2{grid-template-columns:1fr}
-  .r3{grid-template-columns:1fr}
-  .mbox{padding:16px 12px;max-width:95vw;border-radius:12px}
-  .mti{font-size:12px}
-  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  th,td{padding:6px 8px;font-size:11px;white-space:nowrap}
-  .si{width:100%}
-  .fis,.fls{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
-  .fi{flex-shrink:0;font-size:9px;padding:5px 8px}
-  .cal-grid{font-size:8px;gap:1px}
-  .cal-slot{padding:2px;min-height:22px}
-  .cal-bk{font-size:7px}
-
-  /* Participant mobile */
-  .pv-bg{padding:6px 4px}
-  .pv-hdr{padding:14px 10px}
-  .pv-name{font-size:18px}
-  .pv-tabs{gap:1px;padding:3px;-webkit-overflow-scrolling:touch}
-  .pv-tab{padding:9px 4px;font-size:8px}
-  .pv-sec{padding:12px 10px}
-  .pv-st{font-size:11px}
-
-  /* Stamp button bigger on mobile for easy tapping */
-  .stamp-btn{padding:20px;font-size:16px}
-  .stamp-dot{width:32px;height:32px;font-size:14px}
-  .stamp-cnt{font-size:44px}
-
-  /* Booking */
-  .bk-slot{font-size:11px;padding:8px 6px}
-
-  /* Calendar month view */
-  .pv-mcal{gap:1px}
-  .pv-mcal-day{padding:3px;min-height:40px;font-size:7px}
-  .pv-mcal-num{font-size:8px}
-  .pv-mcal-ev{font-size:6px;padding:1px 2px}
-  .pv-mcal-hdr{font-size:7px;padding:2px}
-
-  /* Exercises - stack better on mobile */
-  .ex-lib{grid-template-columns:1fr 1fr;gap:3px}
-  .ex-item{padding:6px 8px;font-size:10px}
-
-  /* Workout cards */
-  .wk-card{padding:10px}
-  .wk-ex{font-size:10px}
-  .pv-wk{padding:10px}
-  .pv-wk-ex{font-size:10px}
-
-  /* Recipe cards */
-  .recipe-card{padding:10px}
-
-  /* Impact cards */
-  .impact-card{padding:12px}
-
-  /* Make mood popup bigger */
-  .mood-popup{padding:28px 20px}
-  .mood-popup-btn{font-size:40px;padding:12px}
-  .mood-popup-title{font-size:16px}
-
-  /* Leaderboard */
-  .lb-board{padding:8px}
-
-  /* Jobs */
-  .job-card{padding:10px}
-
-  /* Pickup */
-  .pu-card{padding:12px}
-  .pu-confirm-btn{padding:14px}
-
-  /* Drop zones */
-  .dz{padding:16px;font-size:10px}
-
-  /* Touch-friendly: minimum tap targets */
-  button,.b,.fl,.fi,.bk-btn,.pv-tab,.ntb{min-height:36px}
-  input[type="checkbox"]{width:20px;height:20px}
-}
-
-@media(max-width:480px){
-  .sts{flex-direction:row;flex-wrap:wrap}
-  .st{min-width:45%;flex:1 1 45%}
-  .ex-lib{grid-template-columns:1fr}
-  .pv-tab{font-size:7px;padding:8px 3px}
-  .ntb{font-size:8px;padding:7px 6px}
-  .stamp-cnt{font-size:38px}
-  .pv-mcal-day{min-height:35px}
-}
-
-</style></head><body>");w.document.write(pa.innerHTML);w.document.write("</body></html>");w.document.close();w.print()}
+function doPrint(){var pa=document.getElementById("printArea");if(!pa)return;var w=window.open("","","width=800,height=600");var css="body{font-family:Arial,sans-serif;font-size:12px;line-height:1.6;padding:20px}h1{font-size:18px;color:#1a365d;border-bottom:2px solid #1a365d;padding-bottom:5px}h2{font-size:14px;color:#2d3748;margin:12px 0 6px}table{width:100%;border-collapse:collapse;margin:8px 0}th,td{border:1px solid #e2e8f0;padding:5px 8px;text-align:left;font-size:11px}th{background:#edf2f7;font-weight:700}";var d=w.document;d.open();d.write("<html><head><title>HC Report</title>");d.write("<s");d.write("tyle>"+css+"</s");d.write("tyle></head><body>");d.write(pa.innerHTML);d.write("</body></html>");d.close();w.print()}
 
 
 /* ═══ ANNOUNCEMENTS ═══ */
@@ -1923,7 +1741,7 @@ if(openSlots.length){h+="<label class='lb' style='margin-top:6px'>SELECT TIME</l
 openSlots.forEach(function(s){h+="<option value='"+s.sk+"' data-coaches='"+s.coaches.map(function(c){return c.name}).join("|")+"'>"+H(s.label)+"</option>"});
 h+="</select>";
 if(openSlots.some(function(s){return s.coaches.length>1})){h+="<label class='lb'>COACH</label><select class='ip' id='pvBkCoach'></select>";
-h+="<script>document.getElementById('pvBkTime').addEventListener('change',function(){var opt=this.selectedOptions[0];var cs=(opt.getAttribute('data-coaches')||'').split('|');var cSel=document.getElementById('pvBkCoach');if(cSel){cSel.innerHTML=cs.map(function(c){return '<option>'+c+'</option>'}).join('')}});document.getElementById('pvBkTime').dispatchEvent(new Event('change'));<\/script>"}
+h+="<scr"+"ipt>document.getElementById('pvBkTime').addEventListener('change',function(){var opt=this.selectedOptions[0];var cs=(opt.getAttribute('data-coaches')||'').split('|');var cSel=document.getElementById('pvBkCoach');if(cSel){cSel.innerHTML=cs.map(function(c){return '<option>'+c+'</option>'}).join('')}});document.getElementById('pvBkTime').dispatchEvent(new Event('change'));<\/script>"}
 h+="<button class='b bg2' style='width:100%;margin-top:6px;padding:7px' onclick=\"pvBkFromDropdown('"+pid+"')\">▶ BOOK SESSION</button>"}
 else if(!mySlots.length){h+="<div class='emp'>NO OPEN SLOTS THIS DAY</div>"}
 area.innerHTML=h}
@@ -2139,115 +1957,7 @@ var wGoals=P.filter(function(p){return p.fc&&p.fc.g}).length;
 var totalSt=0;P.forEach(function(p){Object.keys(STAMPS[p.id]||{}).forEach(function(w){totalSt+=(STAMPS[p.id][w]||{}).count||0})});
 var mhC=0,nuC=0,fiC=0;P.forEach(function(p){if(p.sessions){if(p.sessions.mh>0)mhC++;if(p.sessions.nutr>0)nuC++;if(p.sessions.fin>0)fiC++}});
 var mn=new Date().toLocaleDateString("en-US",{month:"long",year:"numeric"});
-var h="<html><head>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#060a14">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><title>HC Report</title><style>body{font-family:Arial;padding:30px;color:#333;max-width:800px;margin:0 auto}h1{color:#003366;font-size:22px;border-bottom:3px solid #003366;padding-bottom:8px}h2{color:#003366;font-size:16px;margin-top:20px}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{padding:8px 12px;border:1px solid #ddd;text-align:left}th{background:#f0f4f8;font-weight:700}.big{font-size:28px;font-weight:800;color:#003366;text-align:center}.met{display:inline-block;text-align:center;padding:15px;margin:5px;border:1px solid #e0e0e0;border-radius:8px;min-width:120px}.ml{font-size:11px;color:#666;margin-top:4px}
-/* ═══ MOBILE RESPONSIVE ═══ */
-@media(max-width:768px){
-  .mn{padding:8px 6px}
-  .hdr{padding:8px 12px}
-  #hu{font-size:10px}
-  #nv{gap:2px;padding:3px;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
-  .ntb{padding:8px 8px;font-size:9px;min-width:0}
-  .sts{gap:4px}
-  .st{padding:10px 8px;min-width:60px}
-  .st-n{font-size:20px}
-  .st-l{font-size:6px}
-  .cd{padding:12px 10px}
-  .ct{font-size:10px}
-  .r2{grid-template-columns:1fr}
-  .r3{grid-template-columns:1fr}
-  .mbox{padding:16px 12px;max-width:95vw;border-radius:12px}
-  .mti{font-size:12px}
-  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  th,td{padding:6px 8px;font-size:11px;white-space:nowrap}
-  .si{width:100%}
-  .fis,.fls{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
-  .fi{flex-shrink:0;font-size:9px;padding:5px 8px}
-  .cal-grid{font-size:8px;gap:1px}
-  .cal-slot{padding:2px;min-height:22px}
-  .cal-bk{font-size:7px}
-
-  /* Participant mobile */
-  .pv-bg{padding:6px 4px}
-  .pv-hdr{padding:14px 10px}
-  .pv-name{font-size:18px}
-  .pv-tabs{gap:1px;padding:3px;-webkit-overflow-scrolling:touch}
-  .pv-tab{padding:9px 4px;font-size:8px}
-  .pv-sec{padding:12px 10px}
-  .pv-st{font-size:11px}
-
-  /* Stamp button bigger on mobile for easy tapping */
-  .stamp-btn{padding:20px;font-size:16px}
-  .stamp-dot{width:32px;height:32px;font-size:14px}
-  .stamp-cnt{font-size:44px}
-
-  /* Booking */
-  .bk-slot{font-size:11px;padding:8px 6px}
-
-  /* Calendar month view */
-  .pv-mcal{gap:1px}
-  .pv-mcal-day{padding:3px;min-height:40px;font-size:7px}
-  .pv-mcal-num{font-size:8px}
-  .pv-mcal-ev{font-size:6px;padding:1px 2px}
-  .pv-mcal-hdr{font-size:7px;padding:2px}
-
-  /* Exercises - stack better on mobile */
-  .ex-lib{grid-template-columns:1fr 1fr;gap:3px}
-  .ex-item{padding:6px 8px;font-size:10px}
-
-  /* Workout cards */
-  .wk-card{padding:10px}
-  .wk-ex{font-size:10px}
-  .pv-wk{padding:10px}
-  .pv-wk-ex{font-size:10px}
-
-  /* Recipe cards */
-  .recipe-card{padding:10px}
-
-  /* Impact cards */
-  .impact-card{padding:12px}
-
-  /* Make mood popup bigger */
-  .mood-popup{padding:28px 20px}
-  .mood-popup-btn{font-size:40px;padding:12px}
-  .mood-popup-title{font-size:16px}
-
-  /* Leaderboard */
-  .lb-board{padding:8px}
-
-  /* Jobs */
-  .job-card{padding:10px}
-
-  /* Pickup */
-  .pu-card{padding:12px}
-  .pu-confirm-btn{padding:14px}
-
-  /* Drop zones */
-  .dz{padding:16px;font-size:10px}
-
-  /* Touch-friendly: minimum tap targets */
-  button,.b,.fl,.fi,.bk-btn,.pv-tab,.ntb{min-height:36px}
-  input[type="checkbox"]{width:20px;height:20px}
-}
-
-@media(max-width:480px){
-  .sts{flex-direction:row;flex-wrap:wrap}
-  .st{min-width:45%;flex:1 1 45%}
-  .ex-lib{grid-template-columns:1fr}
-  .pv-tab{font-size:7px;padding:8px 3px}
-  .ntb{font-size:8px;padding:7px 6px}
-  .stamp-cnt{font-size:38px}
-  .pv-mcal-day{min-height:35px}
-}
-
-</style></head><body>";
+var h="<html><head><title>HC Report</title><s"+"tyle>body{font-family:Arial;padding:30px;color:#333;max-width:800px;margin:0 auto}h1{color:#003366;font-size:22px;border-bottom:3px solid #003366;padding-bottom:8px}h2{color:#003366;font-size:16px;margin-top:20px}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{padding:8px 12px;border:1px solid #ddd;text-align:left}th{background:#f0f4f8;font-weight:700}.big{font-size:28px;font-weight:800;color:#003366;text-align:center}.met{display:inline-block;text-align:center;padding:15px;margin:5px;border:1px solid #e0e0e0;border-radius:8px;min-width:120px}.ml{font-size:11px;color:#666;margin-top:4px}</s'+'tyle></head><body>";
 h+="<h1>YMCA HEALTHY CONNECTIONS</h1><h2>Monthly Program Report &mdash; "+mn+"</h2><p>Prepared: "+new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})+"</p>";
 h+="<h2>Program Overview</h2><div style='text-align:center'>";
 [["Total Served",total],["Active",ac.length],["Completed",exP.length],["Total Visits",totalSt]].forEach(function(m){h+="<div class='met'><div class='big'>"+m[1]+"</div><div class='ml'>"+m[0]+"</div></div>"});
@@ -2552,61 +2262,10 @@ body=body.replace("[auto-filled]","Name: "+p.n+"\nPhone: "+(p.phone||"N/A")+"\nE
 location.href="mailto:"+svc.email+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body)}
 
 
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
-
-
-function openAddExercise(){
-var h2="<div class='mti'>+ ADD CUSTOM EXERCISE "+XB()+"</div>";
-h2+="<label class='lb'>EXERCISE NAME *</label><input class='ip' id='ceN' placeholder='e.g. Bulgarian Split Squat'>";
-h2+="<div class='r2'><div><label class='lb'>BODY PART</label><select class='ip' id='ceBp'>";
-["Abs","Arms","Back","Butt/Hips","Chest","Full Body","Legs-Calves","Legs-Thighs","Shoulders"].forEach(function(bp){h2+="<option>"+bp+"</option>"});
-h2+="</select></div><div><label class='lb'>EQUIPMENT</label><select class='ip' id='ceEq'>";
-["No Equipment","Dumbbells","Barbell","Kettlebells","Machine","Resistance Bands/Cables","Bench","Stability Ball","Medicine Ball","Pull-up Bar","TRX","BOSU","Box/Platform"].forEach(function(eq){h2+="<option>"+eq+"</option>"});
-h2+="</select></div></div>";
-h2+="<div class='r2'><div><label class='lb'>DIFFICULTY</label><select class='ip' id='ceDf'><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div><div><label class='lb'>MUSCLES TARGETED</label><input class='ip' id='ceMs' placeholder='e.g. Quads, Glutes'></div></div>";
-h2+="<label class='lb'>INSTRUCTIONS (HOW TO PERFORM)</label><textarea class='ip' id='ceHow' placeholder='Step-by-step instructions...'></textarea>";
-h2+="<button class='b bg2' style='width:100%;margin-top:10px;padding:10px' onclick='saveCustomExercise()'>+ ADD TO LIBRARY</button>";
-h2+="<div style='margin-top:12px;padding-top:10px;border-top:2px solid #00f7ff08'>";
-h2+="<div style='font-size:10px;color:#00f7ff40;margin-bottom:6px'>CUSTOM EXERCISES ADDED:</div>";
-var custom=JSON.parse(localStorage.getItem("hc6-customex")||"[]");
-if(custom.length){custom.forEach(function(c,ci){h2+="<div style='display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #00f7ff04;font-size:11px'><div><strong>"+H(c.n)+"</strong> <span style='color:#00f7ff40'>"+H(c.bp)+" · "+H(c.eq)+" · "+H(c.df)+"</span></div><button style='border:1px solid #ff475730;border-radius:3px;background:transparent;color:#ff4757;font-size:9px;padding:2px 8px;cursor:pointer' onclick='delCustomExercise("+ci+")'>✕</button></div>"})}
-else{h2+="<div style='font-size:11px;color:#00f7ff15;text-align:center;padding:8px'>None yet</div>"}
-h2+="</div>";
-SM(h2)}
-
-function saveCustomExercise(){
-var name=document.getElementById("ceN").value.trim();
-if(!name)return;
-var bp=document.getElementById("ceBp").value;
-var eq=document.getElementById("ceEq").value;
-var df=document.getElementById("ceDf").value;
-var msRaw=document.getElementById("ceMs").value.trim();
-var ms=msRaw?msRaw.split(",").map(function(m){return m.trim()}).filter(function(m){return m}):[bp];
-var how=document.getElementById("ceHow").value.trim();
-var ex={n:name,bp:bp,eq:eq,df:df,ms:ms};
-ACE_LIB.push(ex);
-EXERCISES=ACE_LIB;
-if(how)EX_HOW[name]=how;
-var custom=JSON.parse(localStorage.getItem("hc6-customex")||"[]");
-custom.push(ex);
-localStorage.setItem("hc6-customex",JSON.stringify(custom));
-if(how){var howStore=JSON.parse(localStorage.getItem("hc6-customhow")||"{}");howStore[name]=how;localStorage.setItem("hc6-customhow",JSON.stringify(howStore))}
-openAddExercise()}
-
-function delCustomExercise(ci){
-var custom=JSON.parse(localStorage.getItem("hc6-customex")||"[]");
-if(ci>=0&&ci<custom.length){
-var name=custom[ci].n;
-var idx=ACE_LIB.findIndex(function(e){return e.n===name});
-if(idx>-1)ACE_LIB.splice(idx,1);
-EXERCISES=ACE_LIB;
-delete EX_HOW[name];
-custom.splice(ci,1);
-localStorage.setItem("hc6-customex",JSON.stringify(custom));
-var howStore=JSON.parse(localStorage.getItem("hc6-customhow")||"{}");
-delete howStore[name];
-localStorage.setItem("hc6-customhow",JSON.stringify(howStore))}
-openAddExercise()}
+function openAddExercise(){var h2="<div class='mti'>+ ADD CUSTOM EXERCISE "+XB()+"</div>";h2+="<label class='lb'>EXERCISE NAME *</label><input class='ip' id='ceN' placeholder='e.g. Bulgarian Split Squat'>";h2+="<div class='r2'><div><label class='lb'>BODY PART</label><select class='ip' id='ceBp'>";["Abs","Arms","Back","Butt/Hips","Chest","Full Body","Legs-Calves","Legs-Thighs","Shoulders"].forEach(function(bp){h2+="<option>"+bp+"</option>"});h2+="</select></div><div><label class='lb'>EQUIPMENT</label><select class='ip' id='ceEq'>";["No Equipment","Dumbbells","Barbell","Kettlebells","Machine","Resistance Bands/Cables","Bench","Stability Ball","Medicine Ball","Pull-up Bar","TRX","BOSU","Box/Platform"].forEach(function(eq){h2+="<option>"+eq+"</option>"});h2+="</select></div></div>";h2+="<div class='r2'><div><label class='lb'>DIFFICULTY</label><select class='ip' id='ceDf'><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div><div><label class='lb'>MUSCLES</label><input class='ip' id='ceMs' placeholder='Quads, Glutes'></div></div>";h2+="<label class='lb'>INSTRUCTIONS</label><textarea class='ip' id='ceHow' placeholder='Step-by-step...'></textarea>";h2+="<button class='b bg2' style='width:100%;margin-top:10px;padding:10px' onclick='saveCustomExercise()'>+ ADD TO LIBRARY</button>";var cx=JSON.parse(localStorage.getItem('hc6-customex')||'[]');if(cx.length){h2+="<div style='margin-top:12px;border-top:2px solid #00f7ff08;padding-top:8px'>";cx.forEach(function(c,ci){h2+="<div style='display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #00f7ff04;font-size:11px'><strong>"+H(c.n)+"</strong><button style='border:1px solid #ff475730;border-radius:3px;background:transparent;color:#ff4757;font-size:9px;padding:2px 8px;cursor:pointer' onclick='delCustomExercise("+ci+")'>x</button></div>"});h2+="</div>"}SM(h2)}
+function saveCustomExercise(){var n=document.getElementById('ceN').value.trim();if(!n)return;var e={n:n,bp:document.getElementById('ceBp').value,eq:document.getElementById('ceEq').value,df:document.getElementById('ceDf').value,ms:(document.getElementById('ceMs').value.trim()||document.getElementById('ceBp').value).split(',').map(function(m){return m.trim()})};var hw=document.getElementById('ceHow').value.trim();ACE_LIB.push(e);EXERCISES=ACE_LIB;if(hw)EX_HOW[n]=hw;var cx=JSON.parse(localStorage.getItem('hc6-customex')||'[]');cx.push(e);localStorage.setItem('hc6-customex',JSON.stringify(cx));if(hw){var hs=JSON.parse(localStorage.getItem('hc6-customhow')||'{}');hs[n]=hw;localStorage.setItem('hc6-customhow',JSON.stringify(hs))}openAddExercise()}
+function delCustomExercise(ci){var cx=JSON.parse(localStorage.getItem('hc6-customex')||'[]');if(ci>=0&&ci<cx.length){var n=cx[ci].n;var idx=ACE_LIB.findIndex(function(e){return e.n===n});if(idx>-1)ACE_LIB.splice(idx,1);EXERCISES=ACE_LIB;delete EX_HOW[n];cx.splice(ci,1);localStorage.setItem('hc6-customex',JSON.stringify(cx))}openAddExercise()}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}
 
 </script><div id='printArea' style='display:none'></div>
 </body></html>

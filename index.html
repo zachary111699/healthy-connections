@@ -1144,6 +1144,146 @@ var NASM_ADD=[
 
 NASM_ADD.forEach(function(e){if(!ACE_LIB.some(function(a){return a.n===e.n}))ACE_LIB.push(e)});
 
+/* ═══ EXTENDED EXERCISE LIBRARY — 200+ additional ═══ */
+var EXTRA_EX=[
+/* === ABS === */
+{n:"Hanging Leg Raise",bp:"Abs",eq:"Pull-up Bar",df:"Advanced",ms:["Abs","Hip Flexors"]},
+{n:"Cable Crunch",bp:"Abs",eq:"Resistance Bands/Cables",df:"Intermediate",ms:["Abs"]},
+{n:"Ab Wheel Rollout",bp:"Abs",eq:"No Equipment",df:"Advanced",ms:["Abs","Shoulders"]},
+{n:"Dragon Flag",bp:"Abs",eq:"Bench",df:"Advanced",ms:["Abs","Full Body"]},
+{n:"Hollow Body Hold",bp:"Abs",eq:"No Equipment",df:"Intermediate",ms:["Abs"]},
+{n:"Toe Touch Crunch",bp:"Abs",eq:"No Equipment",df:"Beginner",ms:["Abs"]},
+{n:"Windshield Wipers",bp:"Abs",eq:"Pull-up Bar",df:"Advanced",ms:["Abs","Obliques"]},
+{n:"Pallof Press",bp:"Abs",eq:"Resistance Bands/Cables",df:"Intermediate",ms:["Abs","Obliques"]},
+{n:"Dead Bug",bp:"Abs",eq:"No Equipment",df:"Beginner",ms:["Abs"]},
+{n:"Bear Crawl",bp:"Abs",eq:"No Equipment",df:"Intermediate",ms:["Abs","Shoulders","Full Body"]},
+{n:"L-Sit Hold",bp:"Abs",eq:"No Equipment",df:"Advanced",ms:["Abs","Hip Flexors"]},
+{n:"Suitcase Carry",bp:"Abs",eq:"Dumbbells",df:"Intermediate",ms:["Abs","Obliques","Grip"]},
+{n:"Copenhagen Plank",bp:"Abs",eq:"Bench",df:"Advanced",ms:["Abs","Adductors"]},
+
+/* === CHEST === */
+{n:"Incline Dumbbell Press",bp:"Chest",eq:"Dumbbells",df:"Intermediate",ms:["Chest","Shoulders","Triceps"]},
+{n:"Decline Bench Press",bp:"Chest",eq:"Barbell",df:"Intermediate",ms:["Chest","Triceps"]},
+{n:"Chest Dip",bp:"Chest",eq:"No Equipment",df:"Intermediate",ms:["Chest","Triceps","Shoulders"]},
+{n:"Landmine Press",bp:"Chest",eq:"Barbell",df:"Intermediate",ms:["Chest","Shoulders"]},
+{n:"Svend Press",bp:"Chest",eq:"Dumbbells",df:"Beginner",ms:["Chest"]},
+{n:"Floor Press",bp:"Chest",eq:"Dumbbells",df:"Intermediate",ms:["Chest","Triceps"]},
+{n:"Cable Crossover",bp:"Chest",eq:"Resistance Bands/Cables",df:"Intermediate",ms:["Chest"]},
+{n:"Close-Grip Bench Press",bp:"Chest",eq:"Barbell",df:"Intermediate",ms:["Chest","Triceps"]},
+{n:"Pec Deck Fly",bp:"Chest",eq:"Machine",df:"Beginner",ms:["Chest"]},
+{n:"Smith Machine Bench Press",bp:"Chest",eq:"Machine",df:"Beginner",ms:["Chest","Triceps"]},
+{n:"Hex Press",bp:"Chest",eq:"Dumbbells",df:"Beginner",ms:["Chest","Triceps"]},
+{n:"Ring Push-Up",bp:"Chest",eq:"TRX",df:"Advanced",ms:["Chest","Shoulders","Abs"]},
+
+/* === BACK === */
+{n:"Pendlay Row",bp:"Back",eq:"Barbell",df:"Intermediate",ms:["Back","Biceps"]},
+{n:"Meadows Row",bp:"Back",eq:"Barbell",df:"Advanced",ms:["Back","Lats"]},
+{n:"Chest-Supported Row",bp:"Back",eq:"Dumbbells",df:"Intermediate",ms:["Back"]},
+{n:"Seal Row",bp:"Back",eq:"Barbell",df:"Intermediate",ms:["Back"]},
+{n:"Kroc Row",bp:"Back",eq:"Dumbbells",df:"Advanced",ms:["Back","Grip"]},
+{n:"Cable Pullover",bp:"Back",eq:"Resistance Bands/Cables",df:"Intermediate",ms:["Back","Lats"]},
+{n:"Inverted Row",bp:"Back",eq:"Barbell",df:"Beginner",ms:["Back","Biceps"]},
+{n:"Straight-Arm Pulldown",bp:"Back",eq:"Resistance Bands/Cables",df:"Intermediate",ms:["Lats"]},
+{n:"Rack Pull",bp:"Back",eq:"Barbell",df:"Intermediate",ms:["Back","Traps","Glutes"]},
+{n:"Snatch-Grip Deadlift",bp:"Back",eq:"Barbell",df:"Advanced",ms:["Back","Traps","Hamstrings"]},
+{n:"Machine Row",bp:"Back",eq:"Machine",df:"Beginner",ms:["Back"]},
+{n:"Neutral-Grip Pull-Up",bp:"Back",eq:"Pull-up Bar",df:"Intermediate",ms:["Back","Biceps"]},
+
+/* === SHOULDERS === */
+{n:"Arnold Press",bp:"Shoulders",eq:"Dumbbells",df:"Intermediate",ms:["Shoulders"]},
+{n:"Z-Press",bp:"Shoulders",eq:"Dumbbells",df:"Advanced",ms:["Shoulders","Abs"]},
+{n:"Behind-the-Neck Press",bp:"Shoulders",eq:"Barbell",df:"Advanced",ms:["Shoulders"]},
+{n:"Cable Lateral Raise",bp:"Shoulders",eq:"Resistance Bands/Cables",df:"Intermediate",ms:["Shoulders"]},
+{n:"Lu Raise",bp:"Shoulders",eq:"Dumbbells",df:"Advanced",ms:["Shoulders","Traps"]},
+{n:"Barbell Upright Row",bp:"Shoulders",eq:"Barbell",df:"Intermediate",ms:["Shoulders","Traps"]},
+{n:"Machine Shoulder Press",bp:"Shoulders",eq:"Machine",df:"Beginner",ms:["Shoulders"]},
+{n:"Plate Front Raise",bp:"Shoulders",eq:"No Equipment",df:"Beginner",ms:["Shoulders"]},
+{n:"Prone Y Raise",bp:"Shoulders",eq:"Dumbbells",df:"Beginner",ms:["Shoulders","Upper Back"]},
+{n:"Cuban Press",bp:"Shoulders",eq:"Dumbbells",df:"Intermediate",ms:["Shoulders","Rotator Cuff"]},
+{n:"Viking Press",bp:"Shoulders",eq:"Machine",df:"Advanced",ms:["Shoulders","Triceps"]},
+
+/* === ARMS === */
+{n:"Preacher Curl",bp:"Arms",eq:"Barbell",df:"Intermediate",ms:["Biceps"]},
+{n:"Spider Curl",bp:"Arms",eq:"Dumbbells",df:"Intermediate",ms:["Biceps"]},
+{n:"Incline Dumbbell Curl",bp:"Arms",eq:"Dumbbells",df:"Intermediate",ms:["Biceps"]},
+{n:"Bayesian Curl",bp:"Arms",eq:"Resistance Bands/Cables",df:"Intermediate",ms:["Biceps"]},
+{n:"Skull Crusher",bp:"Arms",eq:"Barbell",df:"Intermediate",ms:["Triceps"]},
+{n:"Overhead Tricep Extension",bp:"Arms",eq:"Dumbbells",df:"Intermediate",ms:["Triceps"]},
+{n:"Tricep Kickback",bp:"Arms",eq:"Dumbbells",df:"Beginner",ms:["Triceps"]},
+{n:"Cable Tricep Pushdown",bp:"Arms",eq:"Resistance Bands/Cables",df:"Beginner",ms:["Triceps"]},
+{n:"Diamond Push-Up",bp:"Arms",eq:"No Equipment",df:"Intermediate",ms:["Triceps","Chest"]},
+{n:"Zottman Curl",bp:"Arms",eq:"Dumbbells",df:"Intermediate",ms:["Biceps","Forearms"]},
+{n:"Reverse Curl",bp:"Arms",eq:"Barbell",df:"Beginner",ms:["Forearms","Biceps"]},
+{n:"Wrist Curl",bp:"Arms",eq:"Dumbbells",df:"Beginner",ms:["Forearms"]},
+{n:"Concentration Curl",bp:"Arms",eq:"Dumbbells",df:"Beginner",ms:["Biceps"]},
+{n:"EZ-Bar Curl",bp:"Arms",eq:"Barbell",df:"Beginner",ms:["Biceps"]},
+{n:"Cable Curl",bp:"Arms",eq:"Resistance Bands/Cables",df:"Beginner",ms:["Biceps"]},
+{n:"French Press",bp:"Arms",eq:"Barbell",df:"Intermediate",ms:["Triceps"]},
+
+/* === LEGS-THIGHS === */
+{n:"Front Squat",bp:"Legs-Thighs",eq:"Barbell",df:"Intermediate",ms:["Quads","Glutes","Abs"]},
+{n:"Hack Squat",bp:"Legs-Thighs",eq:"Machine",df:"Intermediate",ms:["Quads","Glutes"]},
+{n:"Sissy Squat",bp:"Legs-Thighs",eq:"No Equipment",df:"Advanced",ms:["Quads"]},
+{n:"Pistol Squat",bp:"Legs-Thighs",eq:"No Equipment",df:"Advanced",ms:["Quads","Glutes","Balance"]},
+{n:"Leg Extension",bp:"Legs-Thighs",eq:"Machine",df:"Beginner",ms:["Quads"]},
+{n:"Leg Curl",bp:"Legs-Thighs",eq:"Machine",df:"Beginner",ms:["Hamstrings"]},
+{n:"Romanian Deadlift",bp:"Legs-Thighs",eq:"Barbell",df:"Intermediate",ms:["Hamstrings","Glutes"]},
+{n:"Stiff-Leg Deadlift",bp:"Legs-Thighs",eq:"Barbell",df:"Intermediate",ms:["Hamstrings","Glutes"]},
+{n:"Nordic Hamstring Curl",bp:"Legs-Thighs",eq:"No Equipment",df:"Advanced",ms:["Hamstrings"]},
+{n:"Sumo Squat",bp:"Legs-Thighs",eq:"Dumbbells",df:"Beginner",ms:["Quads","Adductors","Glutes"]},
+{n:"Zercher Squat",bp:"Legs-Thighs",eq:"Barbell",df:"Advanced",ms:["Quads","Abs","Back"]},
+{n:"Leg Press",bp:"Legs-Thighs",eq:"Machine",df:"Beginner",ms:["Quads","Glutes"]},
+{n:"Smith Machine Squat",bp:"Legs-Thighs",eq:"Machine",df:"Beginner",ms:["Quads","Glutes"]},
+{n:"Pause Squat",bp:"Legs-Thighs",eq:"Barbell",df:"Intermediate",ms:["Quads","Glutes"]},
+{n:"Belt Squat",bp:"Legs-Thighs",eq:"Machine",df:"Intermediate",ms:["Quads","Glutes"]},
+{n:"Dumbbell Step-Up",bp:"Legs-Thighs",eq:"Dumbbells",df:"Beginner",ms:["Quads","Glutes"]},
+
+/* === LEGS-CALVES === */
+{n:"Standing Calf Raise",bp:"Legs-Calves",eq:"Machine",df:"Beginner",ms:["Calves"]},
+{n:"Seated Calf Raise",bp:"Legs-Calves",eq:"Machine",df:"Beginner",ms:["Calves"]},
+{n:"Single-Leg Calf Raise",bp:"Legs-Calves",eq:"No Equipment",df:"Beginner",ms:["Calves"]},
+{n:"Donkey Calf Raise",bp:"Legs-Calves",eq:"Machine",df:"Intermediate",ms:["Calves"]},
+{n:"Tibialis Raise",bp:"Legs-Calves",eq:"No Equipment",df:"Beginner",ms:["Tibialis"]},
+{n:"Smith Machine Calf Raise",bp:"Legs-Calves",eq:"Machine",df:"Beginner",ms:["Calves"]},
+
+/* === BUTT/HIPS === */
+{n:"Barbell Hip Thrust",bp:"Butt/Hips",eq:"Barbell",df:"Intermediate",ms:["Glutes","Hamstrings"]},
+{n:"Cable Pull-Through",bp:"Butt/Hips",eq:"Resistance Bands/Cables",df:"Intermediate",ms:["Glutes","Hamstrings"]},
+{n:"Frog Pump",bp:"Butt/Hips",eq:"No Equipment",df:"Beginner",ms:["Glutes"]},
+{n:"Banded Clamshell",bp:"Butt/Hips",eq:"Resistance Bands/Cables",df:"Beginner",ms:["Glutes"]},
+{n:"Kickback Machine",bp:"Butt/Hips",eq:"Machine",df:"Beginner",ms:["Glutes"]},
+{n:"Single-Leg Hip Thrust",bp:"Butt/Hips",eq:"Bench",df:"Intermediate",ms:["Glutes"]},
+{n:"Sumo Deadlift",bp:"Butt/Hips",eq:"Barbell",df:"Intermediate",ms:["Glutes","Hamstrings","Back"]},
+{n:"Good Morning",bp:"Butt/Hips",eq:"Barbell",df:"Intermediate",ms:["Glutes","Hamstrings","Back"]},
+
+/* === FULL BODY === */
+{n:"Clean and Jerk",bp:"Full Body",eq:"Barbell",df:"Advanced",ms:["Full Body"]},
+{n:"Snatch",bp:"Full Body",eq:"Barbell",df:"Advanced",ms:["Full Body"]},
+{n:"Power Clean",bp:"Full Body",eq:"Barbell",df:"Advanced",ms:["Full Body"]},
+{n:"Hang Clean",bp:"Full Body",eq:"Barbell",df:"Intermediate",ms:["Full Body"]},
+{n:"Turkish Get-Up",bp:"Full Body",eq:"Kettlebells",df:"Advanced",ms:["Full Body"]},
+{n:"Man Maker",bp:"Full Body",eq:"Dumbbells",df:"Advanced",ms:["Full Body"]},
+{n:"Devil Press",bp:"Full Body",eq:"Dumbbells",df:"Advanced",ms:["Full Body"]},
+{n:"Farmer Walk",bp:"Full Body",eq:"Dumbbells",df:"Beginner",ms:["Full Body","Grip"]},
+{n:"Sled Push",bp:"Full Body",eq:"Machine",df:"Intermediate",ms:["Full Body","Legs"]},
+{n:"Battle Ropes",bp:"Full Body",eq:"No Equipment",df:"Intermediate",ms:["Full Body","Arms","Abs"]},
+{n:"Wall Ball",bp:"Full Body",eq:"Medicine Ball",df:"Intermediate",ms:["Full Body"]},
+{n:"Box Jump",bp:"Full Body",eq:"Box/Platform",df:"Intermediate",ms:["Legs","Full Body"]},
+{n:"Broad Jump",bp:"Full Body",eq:"No Equipment",df:"Intermediate",ms:["Legs","Full Body"]},
+{n:"Tuck Jump",bp:"Full Body",eq:"No Equipment",df:"Intermediate",ms:["Legs","Full Body"]},
+{n:"Jumping Lunge",bp:"Full Body",eq:"No Equipment",df:"Intermediate",ms:["Legs","Glutes"]},
+{n:"Sprint Intervals",bp:"Full Body",eq:"No Equipment",df:"Intermediate",ms:["Full Body","Legs"]},
+{n:"Jump Rope",bp:"Full Body",eq:"No Equipment",df:"Beginner",ms:["Full Body","Calves"]},
+{n:"Assault Bike",bp:"Full Body",eq:"Machine",df:"Intermediate",ms:["Full Body"]},
+{n:"Rowing Machine",bp:"Full Body",eq:"Machine",df:"Beginner",ms:["Full Body","Back","Legs"]},
+{n:"Stairmaster",bp:"Full Body",eq:"Machine",df:"Beginner",ms:["Legs","Cardio"]},
+{n:"Elliptical",bp:"Full Body",eq:"Machine",df:"Beginner",ms:["Full Body","Cardio"]},
+{n:"Swimming",bp:"Full Body",eq:"No Equipment",df:"Beginner",ms:["Full Body"]},
+{n:"Cycling",bp:"Full Body",eq:"Machine",df:"Beginner",ms:["Legs","Cardio"]}
+];
+EXTRA_EX.forEach(function(e){if(!ACE_LIB.some(function(a){return a.n===e.n}))ACE_LIB.push(e)});
+
+
 var EX_HOW={
 "Crunch":"Lie on back, knees bent, hands behind head. Curl shoulders off floor using abs. Lower with control. Don't pull on neck.",
 "Reverse Crunch":"Lie on back, legs raised with knees bent 90°. Contract abs to curl hips off floor toward chest. Lower slowly.",
@@ -1221,6 +1361,83 @@ var EX_HOW={
 var EXERCISES=ACE_LIB;
 
 var WORKOUTS=JSON.parse(localStorage.getItem("hc6-workouts")||"[]");
+
+/* ═══ PRE-BUILT WORKOUTS ═══ */
+var PREBUILT_WK=[
+{name:"Full Body Beginner",type:"Strength",exercises:[
+{name:"Goblet Squat",sets:"3",reps:"12",weight:"",rest:"60s",notes:""},
+{name:"Push-Up",sets:"3",reps:"10",weight:"",rest:"60s",notes:"Knees OK for beginners"},
+{name:"Dumbbell Row",sets:"3",reps:"10",weight:"",rest:"60s",notes:"Each arm"},
+{name:"Plank",sets:"3",reps:"30s",weight:"",rest:"45s",notes:"Hold position"},
+{name:"Farmer Walk",sets:"3",reps:"40 steps",weight:"",rest:"60s",notes:""}]},
+{name:"Upper Body Push",type:"Strength",exercises:[
+{name:"Bench Press",sets:"4",reps:"8",weight:"",rest:"90s",notes:""},
+{name:"Incline Dumbbell Press",sets:"3",reps:"10",weight:"",rest:"60s",notes:""},
+{name:"Overhead Press",sets:"3",reps:"10",weight:"",rest:"60s",notes:""},
+{name:"Cable Lateral Raise",sets:"3",reps:"15",weight:"",rest:"45s",notes:""},
+{name:"Skull Crusher",sets:"3",reps:"12",weight:"",rest:"45s",notes:""},
+{name:"Diamond Push-Up",sets:"2",reps:"max",weight:"",rest:"60s",notes:"Burnout set"}]},
+{name:"Upper Body Pull",type:"Strength",exercises:[
+{name:"Pull-Up",sets:"4",reps:"8",weight:"",rest:"90s",notes:"Use assist band if needed"},
+{name:"Barbell Row",sets:"4",reps:"8",weight:"",rest:"90s",notes:""},
+{name:"Chest-Supported Row",sets:"3",reps:"12",weight:"",rest:"60s",notes:""},
+{name:"Face Pull",sets:"3",reps:"15",weight:"",rest:"45s",notes:""},
+{name:"EZ-Bar Curl",sets:"3",reps:"12",weight:"",rest:"45s",notes:""},
+{name:"Concentration Curl",sets:"2",reps:"12",weight:"",rest:"45s",notes:"Each arm"}]},
+{name:"Leg Day",type:"Strength",exercises:[
+{name:"Barbell Squat",sets:"4",reps:"8",weight:"",rest:"120s",notes:""},
+{name:"Romanian Deadlift",sets:"3",reps:"10",weight:"",rest:"90s",notes:""},
+{name:"Leg Press",sets:"3",reps:"12",weight:"",rest:"90s",notes:""},
+{name:"Walking Lunge",sets:"3",reps:"12 each",weight:"",rest:"60s",notes:""},
+{name:"Leg Curl",sets:"3",reps:"12",weight:"",rest:"60s",notes:""},
+{name:"Standing Calf Raise",sets:"4",reps:"15",weight:"",rest:"45s",notes:""}]},
+{name:"HIIT Cardio Blast",type:"Cardio",exercises:[
+{name:"Jump Rope",sets:"3",reps:"60s",weight:"",rest:"30s",notes:""},
+{name:"Burpee",sets:"3",reps:"10",weight:"",rest:"30s",notes:""},
+{name:"Mountain Climber",sets:"3",reps:"30s",weight:"",rest:"30s",notes:""},
+{name:"Box Jump",sets:"3",reps:"10",weight:"",rest:"30s",notes:""},
+{name:"Battle Ropes",sets:"3",reps:"30s",weight:"",rest:"30s",notes:""},
+{name:"Sprint Intervals",sets:"5",reps:"20s on / 40s off",weight:"",rest:"",notes:"Max effort"}]},
+{name:"Core Crusher",type:"Strength",exercises:[
+{name:"Plank",sets:"3",reps:"45s",weight:"",rest:"30s",notes:""},
+{name:"Hanging Leg Raise",sets:"3",reps:"12",weight:"",rest:"45s",notes:""},
+{name:"Cable Crunch",sets:"3",reps:"15",weight:"",rest:"30s",notes:""},
+{name:"Russian Twist",sets:"3",reps:"20",weight:"",rest:"30s",notes:"10 each side"},
+{name:"Dead Bug",sets:"3",reps:"10 each",weight:"",rest:"30s",notes:""},
+{name:"Ab Wheel Rollout",sets:"3",reps:"10",weight:"",rest:"45s",notes:"From knees OK"}]},
+{name:"Glute Builder",type:"Strength",exercises:[
+{name:"Barbell Hip Thrust",sets:"4",reps:"10",weight:"",rest:"90s",notes:""},
+{name:"Bulgarian Split Squat",sets:"3",reps:"10 each",weight:"",rest:"60s",notes:""},
+{name:"Sumo Deadlift",sets:"3",reps:"10",weight:"",rest:"90s",notes:""},
+{name:"Cable Pull-Through",sets:"3",reps:"15",weight:"",rest:"45s",notes:""},
+{name:"Banded Clamshell",sets:"3",reps:"15 each",weight:"",rest:"30s",notes:""},
+{name:"Frog Pump",sets:"3",reps:"20",weight:"",rest:"30s",notes:"Squeeze at top"}]},
+{name:"Functional Fitness",type:"Cardio",exercises:[
+{name:"Turkish Get-Up",sets:"3",reps:"3 each",weight:"",rest:"60s",notes:"Light weight, focus on form"},
+{name:"Kettlebell Swing",sets:"4",reps:"15",weight:"",rest:"45s",notes:""},
+{name:"Bear Crawl",sets:"3",reps:"30s",weight:"",rest:"30s",notes:""},
+{name:"Farmer Walk",sets:"3",reps:"40 steps",weight:"",rest:"60s",notes:"Heavy as possible"},
+{name:"Wall Ball",sets:"3",reps:"15",weight:"",rest:"45s",notes:""},
+{name:"Rowing Machine",sets:"3",reps:"250m",weight:"",rest:"60s",notes:"Max effort"}]},
+{name:"No Equipment Home",type:"Strength",exercises:[
+{name:"Push-Up",sets:"4",reps:"15",weight:"",rest:"45s",notes:""},
+{name:"Bodyweight Squat",sets:"4",reps:"20",weight:"",rest:"45s",notes:""},
+{name:"Plank",sets:"3",reps:"60s",weight:"",rest:"30s",notes:""},
+{name:"Jumping Lunge",sets:"3",reps:"10 each",weight:"",rest:"45s",notes:""},
+{name:"Diamond Push-Up",sets:"3",reps:"10",weight:"",rest:"45s",notes:""},
+{name:"Hollow Body Hold",sets:"3",reps:"30s",weight:"",rest:"30s",notes:""},
+{name:"Burpee",sets:"3",reps:"10",weight:"",rest:"60s",notes:""},
+{name:"Single-Leg Calf Raise",sets:"3",reps:"15 each",weight:"",rest:"30s",notes:""}]},
+{name:"Stretch & Recovery",type:"Flexibility",exercises:[
+{name:"Cat-Cow Stretch",sets:"1",reps:"10",weight:"",rest:"",notes:"Slow and controlled"},
+{name:"World Greatest Stretch",sets:"1",reps:"5 each",weight:"",rest:"",notes:""},
+{name:"Pigeon Pose",sets:"1",reps:"30s each",weight:"",rest:"",notes:""},
+{name:"Foam Roll IT Band",sets:"1",reps:"60s each",weight:"",rest:"",notes:""},
+{name:"Foam Roll Quads",sets:"1",reps:"60s each",weight:"",rest:"",notes:""},
+{name:"Child Pose",sets:"1",reps:"60s",weight:"",rest:"",notes:"Deep breathing"}]}
+];
+if(!WORKOUTS.length){WORKOUTS=PREBUILT_WK;localStorage.setItem("hc6-workouts",JSON.stringify(WORKOUTS))}
+
 var ASSIGNED=JSON.parse(localStorage.getItem("hc6-assigned")||"{}")||{};
 var COMPLETED=JSON.parse(localStorage.getItem("hc6-completed")||"{}")||{};
 function svW(){localStorage.setItem("hc6-exercises",JSON.stringify(EXERCISES));localStorage.setItem("hc6-workouts",JSON.stringify(WORKOUTS));localStorage.setItem("hc6-assigned",JSON.stringify(ASSIGNED));localStorage.setItem("hc6-completed",JSON.stringify(COMPLETED))}

@@ -147,7 +147,7 @@ textarea.ip{min-height:60px;resize:vertical}
 .bk-btn{padding:2px 6px;border-radius:2px;border:1px solid #6ee7b7;background:transparent;color:#6ee7b7;font-size:7px;cursor:pointer;font-family:inherit}
 .bk-btn:hover{background:#6ee7b710}
 .bk-btn.cancel{border-color:#ff4757;color:#ff4757}
-.ut{width:100%;border-collapse:collapse;font-size:9px;margin-top:5px}
+.ut{width:100%;border-collapse:collapse;font-size:13px;margin-top:5px}
 .ut th{background:#0a1628;color:#00f7ff;padding:4px 5px;text-align:left;font-size:7px;border-bottom:1px solid #00f7ff10;font-family:'Orbitron',sans-serif}
 .ut td{padding:4px 5px;border-bottom:1px solid #00f7ff04}
 .ra{background:#00f7ff10;color:#00f7ff;padding:1px 4px;border-radius:2px;font-size:6px;font-weight:700;font-family:'Press Start 2P',monospace}
@@ -534,7 +534,34 @@ function addGR(){var gl=document.getElementById("gList");if(!gl)return;var d=doc
 function savePF(id){var p=P.find(function(x){return x.id===id});if(!p)return;p.pUser=document.getElementById("pu").value.trim();p.memberId=(document.getElementById("pMemberId")?document.getElementById("pMemberId").value.trim():"");p.jobsAccess=document.getElementById("pJobAccess")?document.getElementById("pJobAccess").checked:false;p.lbOptIn=document.getElementById("pLbOptIn")?document.getElementById("pLbOptIn").checked:false;p.pPass=document.getElementById("pp").value;p.coachMsg=document.getElementById("pmsg").value.trim();var ts=document.querySelectorAll(".pGT"),xs=document.querySelectorAll(".pGX"),ss=document.querySelectorAll(".pGP");p.goals=[];for(var i=0;i<ts.length;i++){var tx=xs[i].value.trim();if(tx)p.goals.push({type:ts[i].value.trim(),text:tx,status:ss[i]?ss[i].value:"created"})}p.sessions={mh:parseInt(document.getElementById("sMH").value)||0,nutr:parseInt(document.getElementById("sN").value)||0,fin:parseInt(document.getElementById("sF").value)||0};savePersonalEvents(p.id);var cks=document.querySelectorAll(".pRC");p.assignedRes=[];cks.forEach(function(c){if(c.checked)p.assignedRes.push(c.value)});SV();CM();R()}
 
 function rRes(el){
-var h="";
+var allRes=gRes();var h="";
+
+/* ── MASTER RESOURCE DIRECTORY ── */
+h+="<div class='cd'><div class='ct'>▸ RESOURCE DIRECTORY</div>";
+h+="<div style='display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap'><button class='b bg2' onclick='openAR()'>+ ADD AGENCY</button><input class='si' id='resSrch' placeholder='Search agencies...' oninput='R()' style='flex:1;min-width:150px'></div>";
+
+var rq=(document.getElementById("resSrch")?document.getElementById("resSrch").value:"").toLowerCase();
+var filtered=allRes;
+if(rq)filtered=allRes.filter(function(r){return r.name.toLowerCase().indexOf(rq)>-1||r.cat.toLowerCase().indexOf(rq)>-1||(r.desc||"").toLowerCase().indexOf(rq)>-1});
+
+var cats=[...new Set(filtered.map(function(r){return r.cat}))].sort();
+cats.forEach(function(cat){
+var items=filtered.filter(function(r){return r.cat===cat});
+h+="<div class='res-cat'>"+cat+" ("+items.length+")</div>";
+items.forEach(function(r){
+/* Count how many participants have this resource assigned */
+var assignedCount=P.filter(function(p){return p.assignedRes&&p.assignedRes.indexOf(r.name)>-1}).length;
+h+="<div class='res-item' style='flex-wrap:wrap'><div style='flex:1'><strong>"+H(r.name)+"</strong>";
+if(r.desc)h+=" <span style='color:#c8f0ff30;font-size:10px'>"+H(r.desc)+"</span>";
+if(r.phone)h+="<br><span style='color:#6ee7b7;font-size:11px'>"+H(r.phone)+"</span>";
+h+="</div><div style='display:flex;gap:4px;align-items:center'>";
+if(assignedCount)h+="<span style='font-size:9px;color:#00f7ff;padding:3px 6px;border:1px solid #00f7ff20;border-radius:4px'>"+assignedCount+" assigned</span>";
+h+="<button class='b bs2' onclick='openResAssign("+JSON.stringify(r.name)+")'>👥</button>";
+if(r.url)h+="<a href='"+H(r.url)+"' target='_blank' style='font-size:10px'>↗</a>";
+h+="</div></div>"})});
+
+if(!filtered.length)h+="<div class='emp'>NO MATCHING AGENCIES</div>";
+h+="</div>";
 
 /* ── RESOURCE PICKUPS ── */
 h+="<div class='cd'><div class='ct'>▸ RESOURCE PICKUPS</div>";
@@ -546,7 +573,7 @@ var confirmed=pu.slots.filter(function(s){return s.date===nextDate});
 var assignedNames=(pu.assignedTo||[]).map(function(pid){var p2=P.find(function(x){return x.id===pid});return p2?p2.n:"?"});
 var recurLabel=pu.recurrence==="weekly"?"Weekly":pu.recurrence==="biweekly"?"Biweekly":pu.recurrence==="monthly"?"Monthly":"One-time";
 h+="<div class='pu-card'><div style='display:flex;justify-content:space-between;align-items:center'><div><div class='pu-title'>"+H(pu.partner)+"</div><div class='pu-meta'>"+(pu.day?pu.day+"s":"")+" at "+pu.time+" · "+recurLabel+" · Next: "+nextDate+"</div></div><div style='display:flex;gap:4px'><button style='padding:5px 10px;border:1px solid #00f7ff25;border-radius:4px;background:transparent;color:#00f7ff;font-size:10px;cursor:pointer' onclick='editPickupAssign("+pi+")'>👥</button><button style='padding:5px 10px;border:1px solid #ff475730;border-radius:4px;background:transparent;color:#ff4757;font-size:10px;cursor:pointer' onclick='PICKUPS.splice("+pi+",1);svPU();R()'>DELETE</button></div></div>";
-if(assignedNames.length){h+="<div style='font-size:9px;color:#6ee7b760;margin:4px 0'>Assigned: "+assignedNames.join(", ")+"</div>"}else{h+="<div style='font-size:9px;color:#ff475760;margin:4px 0'>⚠ No participants assigned — click 👥</div>"}
+if(assignedNames.length){h+="<div style='font-size:9px;color:#6ee7b760;margin:4px 0'>Assigned: "+assignedNames.join(", ")+"</div>"}else{h+="<div style='font-size:9px;color:#ff475760;margin:4px 0'>No participants assigned — click 👥</div>"}
 h+="<div style='font-family:Orbitron;font-size:9px;color:#00f7ff;margin:6px 0 4px'>CONFIRMED FOR "+nextDate+" ("+confirmed.length+")</div>";
 if(confirmed.length){
 confirmed.forEach(function(s){
@@ -558,8 +585,6 @@ h+="</div>"});
 h+="</div>"});
 h+="</div>";
 
-/* ── RESOURCES LIST ── */
-var res=gRes();h+="<div class='cd'><div class='ct'>▸ RESOURCES</div><button class='b bg2' onclick='openAR()' style='margin-bottom:6px'>+ ADD</button>";var cats=[...new Set(res.map(function(r){return r.cat}))];cats.forEach(function(cat){var items=res.filter(function(r){return r.cat===cat});h+="<div class='res-cat'>"+cat+"</div>";items.forEach(function(r){h+="<div class='res-item'><div><strong>"+H(r.name)+"</strong> <span style='color:#c8f0ff30'>"+H(r.desc||"")+"</span>"+(r.phone?" · <span style='color:#6ee7b7'>"+H(r.phone)+"</span>":"")+"</div><div>"+(r.url?"<a href='"+H(r.url)+"' target='_blank'>↗</a>":"")+(r.phone?" <button class='cb' onclick=\"cpy('"+H(r.phone)+"')\">📋</button>":"")+"</div></div>"})});h+="</div>";
 el.innerHTML=h}
 
 function showPV(u){
@@ -2488,6 +2513,31 @@ var s=sessionStorage.getItem("hc6-s");
 if(s){try{CU=JSON.parse(s);if(CU.role==="participant"){showPV(CU)}else{document.getElementById("LS").style.display="flex";document.getElementById("LS").style.display="none";document.getElementById("DS").style.display="block";R()}}catch(e){document.getElementById("LS").style.display="flex"}}
 else{document.getElementById("LS").style.display="flex"}
 });
+
+
+function openResAssign(resName){
+var h2="<div class='mti'>👥 ASSIGN: "+H(resName)+" "+XB()+"</div>";
+h2+="<div style='font-size:11px;color:#c8f0ff60;margin-bottom:8px'>Select which participants have access to this resource:</div>";
+h2+="<div style='margin-bottom:6px'><button class='b bs2' onclick='resSelAll(true)'>Select All</button> <button class='b bs2' onclick='resSelAll(false)'>Clear All</button></div>";
+h2+="<div style='max-height:50vh;overflow-y:auto'>";
+P.filter(function(p){return p.s==="active"}).sort(function(a,b){return a.n.localeCompare(b.n)}).forEach(function(p){
+var has=p.assignedRes&&p.assignedRes.indexOf(resName)>-1;
+h2+="<label style='display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #00f7ff04;cursor:pointer;font-size:12px'><input type='checkbox' class='resPC' value='"+p.id+"'"+(has?" checked":"")+"> "+H(p.n)+"</label>"});
+h2+="</div><button class='b bg2' style='width:100%;margin-top:10px;padding:10px' onclick='saveResAssign("+JSON.stringify(resName)+")'>SAVE</button>";
+SM(h2)}
+
+function resSelAll(val){document.querySelectorAll(".resPC").forEach(function(c){c.checked=val})}
+
+function saveResAssign(resName){
+var cks=document.querySelectorAll(".resPC");
+cks.forEach(function(c){
+var p=P.find(function(x){return x.id===c.value});
+if(!p)return;
+if(!p.assignedRes)p.assignedRes=[];
+var idx=p.assignedRes.indexOf(resName);
+if(c.checked&&idx===-1)p.assignedRes.push(resName);
+else if(!c.checked&&idx>-1)p.assignedRes.splice(idx,1)});
+SV();CM();R()}
 
 </script><div id='printArea' style='display:none'></div>
 </body></html>

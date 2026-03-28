@@ -481,6 +481,26 @@ button,.b,.fl,.fi,.bk-btn{min-height:36px}
 .impact-card .impact-lbl{word-break:break-word}
 }
 
+
+/* ═══ STORE ═══ */
+.store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.store-item{background:linear-gradient(145deg,#0d1a2d,#111d33);border:1px solid #00f7ff08;border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.15s}
+.store-item:hover{border-color:#00f7ff20;transform:translateY(-1px)}
+.store-img{width:100%;height:120px;background:#060a14;display:flex;align-items:center;justify-content:center;font-size:40px;color:#c8f0ff15;overflow:hidden}
+.store-img img{width:100%;height:100%;object-fit:cover}
+.store-body{padding:10px}
+.store-name{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:#c8f0ff;margin-bottom:4px}
+.store-cat{font-size:9px;color:#6ee7b7;margin-bottom:4px}
+.store-qty{font-size:10px;color:#c8f0ff30}
+.store-claim-btn{width:100%;padding:10px;border:none;border-radius:0 0 12px 12px;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;cursor:pointer;letter-spacing:0.5px}
+.store-claim-btn.avail{background:linear-gradient(135deg,#6ee7b7,#00A63D);color:#060a14}
+.store-claim-btn.used{background:#c8f0ff10;color:#c8f0ff30;cursor:default}
+.store-claim-btn.oos{background:#ff475710;color:#ff4757;cursor:default}
+@media(max-width:768px){
+.store-grid{grid-template-columns:1fr 1fr}
+.store-img{height:100px}
+}
+
 </style>
 </head>
 <body>
@@ -527,7 +547,7 @@ var DAYS=["SUN","MON","TUE","WED","THU","FRI","SAT"];
 var MAX_SLOT=2;
 var DEF_RES=[{cat:"Food",name:"Feeding South Florida",desc:"Food distribution",url:"https://feedingsouthflorida.org",phone:"954-518-1818"},{cat:"Food",name:"PBC Food Bank",desc:"Emergency food",url:"https://pbcfoodbank.org",phone:"561-670-2518"},{cat:"Clothing",name:"Goodwill Palm Beaches",desc:"Clothing & training",url:"https://gogoodwill.org",phone:"561-832-8893"},{cat:"Mental Health",name:"211 Palm Beach",desc:"24/7 hotline",url:"https://211palmbeach.org",phone:"211"},{cat:"Mental Health",name:"988 Crisis Lifeline",desc:"24/7 support",url:"https://988lifeline.org",phone:"988"},{cat:"Financial",name:"MyMoney.gov",desc:"Financial education",url:"https://www.mymoney.gov",phone:""},{cat:"Career",name:"CareerSource PBC",desc:"Jobs & training",url:"https://careersourcepbc.com",phone:"561-340-1060"},{cat:"Education",name:"Palm Beach State College",desc:"GED & degrees",url:"https://palmbeachstate.edu",phone:"561-967-7222"},{cat:"Housing",name:"PBC Housing Authority",desc:"Section 8",url:"https://pbcha.org",phone:"561-684-2160"}];
 
-function SV(){localStorage.setItem("hc6-users",JSON.stringify(users));localStorage.setItem("hc6-p",JSON.stringify(P));localStorage.setItem("hc6-f",JSON.stringify(F));localStorage.setItem("hc6-refemails",JSON.stringify(REF_EMAILS));localStorage.setItem("hc6-res",JSON.stringify(RES));localStorage.setItem("hc6-stamps",JSON.stringify(STAMPS));localStorage.setItem("hc6-wlogs",JSON.stringify(WLOGS));localStorage.setItem("hc6-books",JSON.stringify(BOOKS));localStorage.setItem("hc6-ann",JSON.stringify(ANN));localStorage.setItem("hc6-coaches",JSON.stringify(COACHES));localStorage.setItem("hc6-pvtodos",JSON.stringify(PVTODOS));localStorage.setItem("hc6-moods",JSON.stringify(MOODS));localStorage.setItem("hc6-challenges",JSON.stringify(CHALLENGES));localStorage.setItem("hc6-journals",JSON.stringify(JOURNALS));localStorage.setItem("hc6-reflogs",JSON.stringify(REFLOGS));localStorage.setItem("hc6-sesslogs",JSON.stringify(SESSLOGS));localStorage.setItem("hc6-monthlych",JSON.stringify(MONTHLYCH));localStorage.setItem("hc6-jobposts",JSON.stringify(JOBPOSTS));svPU()}
+function SV(){localStorage.setItem("hc6-users",JSON.stringify(users));localStorage.setItem("hc6-p",JSON.stringify(P));localStorage.setItem("hc6-f",JSON.stringify(F));localStorage.setItem("hc6-refemails",JSON.stringify(REF_EMAILS));localStorage.setItem("hc6-res",JSON.stringify(RES));localStorage.setItem("hc6-stamps",JSON.stringify(STAMPS));localStorage.setItem("hc6-wlogs",JSON.stringify(WLOGS));localStorage.setItem("hc6-store",JSON.stringify(STORE));localStorage.setItem("hc6-claims",JSON.stringify(CLAIMS));localStorage.setItem("hc6-books",JSON.stringify(BOOKS));localStorage.setItem("hc6-ann",JSON.stringify(ANN));localStorage.setItem("hc6-coaches",JSON.stringify(COACHES));localStorage.setItem("hc6-pvtodos",JSON.stringify(PVTODOS));localStorage.setItem("hc6-moods",JSON.stringify(MOODS));localStorage.setItem("hc6-challenges",JSON.stringify(CHALLENGES));localStorage.setItem("hc6-journals",JSON.stringify(JOURNALS));localStorage.setItem("hc6-reflogs",JSON.stringify(REFLOGS));localStorage.setItem("hc6-sesslogs",JSON.stringify(SESSLOGS));localStorage.setItem("hc6-monthlych",JSON.stringify(MONTHLYCH));localStorage.setItem("hc6-jobposts",JSON.stringify(JOBPOSTS));svPU()}
 function H(s){if(!s)return"";var d=document.createElement("div");d.textContent=String(s);return d.innerHTML}
 function dT(d){if(!d)return null;return Math.floor((new Date(d)-new Date())/864e5)}
 function cpy(t){navigator.clipboard.writeText(t).catch(function(){})}
@@ -557,7 +577,7 @@ function tryL(){var u=document.getElementById("liU").value.trim().toLowerCase(),
 function doLock(){CU=null;sessionStorage.removeItem("hc6-s");document.getElementById("DS").style.display="none";document.getElementById("PV").style.display="none";document.getElementById("LS").style.display="flex";document.getElementById("liU").value="";document.getElementById("liP").value="";document.getElementById("liE").style.display="none"}
 var ss=JSON.parse(sessionStorage.getItem("hc6-s")||"null");if(ss){if(ss.role==="participant"){var pp2=P.find(function(x){return x.pUser===ss.username&&x.pPass===ss.password});if(pp2){CU=ss;document.getElementById("LS").style.display="none";showPV(ss)}}else{var vv=users.find(function(x){return x.username===ss.username&&x.password===ss.password});if(vv){CU=vv;document.getElementById("LS").style.display="none";document.getElementById("DS").style.display="block"}}}
 
-function R(){if(!CU||CU.role==="participant")return;document.getElementById("hu").innerHTML="▸ "+H(CU.name)+" ["+CU.role.toUpperCase()+"]";document.getElementById("aB").innerHTML=CU.role==="admin"?"<button class='hd-btn' onclick='openUM()'><span class='hd-btn-icon'>👥</span><span class='hd-btn-label'>Users</span></button>":"";var nc=nCounts();var tabs=[["tracker","📊 TRACKER",nc.tracker],["portal","👤 PORTAL",0],["calendar","📅 CALENDAR",nc.calendar],["workouts","🏋️ WORKOUTS",0],["nutrition","🥗 NUTRITION",0],["referrals","🔗 REFERRALS",0],["resources","🏢 AGENCIES",0],["reports","📈 REPORTS",0],["announce","📢 ANNOUNCE",0]];document.getElementById("nv").innerHTML=tabs.map(function(t){return"<button class='ntb"+(tab===t[0]?" on":"")+"' onclick=\"tab='"+t[0]+"';R()\">"+t[1]+(t[2]?"<span class='ntb-bd'>"+t[2]+"</span>":"")+"</button>"}).join("");var pg=document.getElementById("pg");if(tab==="tracker")rTracker(pg);else if(tab==="calendar")rCal(pg);else if(tab==="workouts")rWorkouts(pg);else if(tab==="referrals")rReferrals(pg);else if(tab==="reports")rReports(pg);else if(tab==="announce")rAnn(pg);else if(tab==="portal")rPortal(pg);else if(tab==="nutrition")rNutrition(pg);else if(tab==="resources")rRes(pg)}
+function R(){if(!CU||CU.role==="participant")return;document.getElementById("hu").innerHTML="▸ "+H(CU.name)+" ["+CU.role.toUpperCase()+"]";document.getElementById("aB").innerHTML=CU.role==="admin"?"<button class='hd-btn' onclick='openUM()'><span class='hd-btn-icon'>👥</span><span class='hd-btn-label'>Users</span></button>":"";var nc=nCounts();var tabs=[["tracker","📊 TRACKER",nc.tracker],["portal","👤 PORTAL",0],["calendar","📅 CALENDAR",nc.calendar],["workouts","🏋️ WORKOUTS",0],["nutrition","🥗 NUTRITION",0],["store","🛍 STORE",0],["referrals","🔗 REFERRALS",0],["resources","🏢 AGENCIES",0],["reports","📈 REPORTS",0],["announce","📢 ANNOUNCE",0]];document.getElementById("nv").innerHTML=tabs.map(function(t){return"<button class='ntb"+(tab===t[0]?" on":"")+"' onclick=\"tab='"+t[0]+"';R()\">"+t[1]+(t[2]?"<span class='ntb-bd'>"+t[2]+"</span>":"")+"</button>"}).join("");var pg=document.getElementById("pg");if(tab==="tracker")rTracker(pg);else if(tab==="calendar")rCal(pg);else if(tab==="workouts")rWorkouts(pg);else if(tab==="referrals")rReferrals(pg);else if(tab==="reports")rReports(pg);else if(tab==="announce")rAnn(pg);else if(tab==="portal")rPortal(pg);else if(tab==="nutrition")rNutrition(pg);else if(tab==="store")rStore(pg);else if(tab==="resources")rRes(pg)}
 
 function rTracker(el){var ac=P.filter(function(p){return p.s==="active"}),ex=P.filter(function(p){return p.s==="exited"});var coaches2=["all"];ac.forEach(function(p){if(p.co&&coaches2.indexOf(p.co)===-1)coaches2.push(p.co)});var fl=coachF!=="all"?ac.filter(function(p){return p.co===coachF}):ac;var ov=fl.filter(function(p){return ciI(p).c==="r"}),du=fl.filter(function(p){return ciI(p).c==="y"}),ut=fl.filter(function(p){return ciI(p).c==="g"});var cw=wkK();var h="<div class='sts'>";[[fl.length,"#00f7ff","ACTIVE"],[ov.length,"#ff4757","CRITICAL"],[du.length,"#f59e0b","WARNING"],[ut.length,"#6ee7b7","ONLINE"],[ex.length,"#94a3b8","ARCHIVED"]].forEach(function(s){h+="<div class='st'><div class='st-n' style='color:"+s[1]+"'>"+s[0]+"</div><div class='st-l'>"+s[2]+"</div></div>"});h+="</div>";h+="<div class='cd'><div class='ct'>▸ FORMS</div><div class='fls'>";[["📋INT","intake"],["🎯GOL","goals"],["📊CHK","checkin"],["🔗REF","referral"],["🏁EXT","exit"]].forEach(function(f){h+="<button class='fl' onclick=\"ofl('"+f[1]+"')\">"+f[0]+"</button>"});h+="</div>";if(coaches2.length>1){h+="<div class='fls' style='margin-top:4px'>";coaches2.forEach(function(c){h+="<button class='fi"+(coachF===c?" on":"")+"' onclick=\"coachF='"+H(c)+"';R()\">"+(c==="all"?"ALL":H(c))+"</button>"});h+="</div>"}if(!F.intake)h+="<p class='wrn'>⚠ NO FORM LINKS</p>";h+="</div>";h+="<div style='display:flex;flex-direction:column;gap:6px;margin-bottom:8px'><div style='display:flex;gap:4px;flex-wrap:wrap'><input class='si' id='sb' placeholder='Search name, ID, coach...' oninput='R()' style='flex:1;min-width:150px'><select class='ip' id='sortSel' onchange='sortBy=this.value;R()' style='width:auto;min-width:120px;padding:8px'><option value='name-az'"+(sortBy==="name-az"?" selected":"")+">Name A-Z</option><option value='name-za'"+(sortBy==="name-za"?" selected":"")+">Name Z-A</option><option value='coach'"+(sortBy==="coach"?" selected":"")+">Coach</option><option value='status'"+(sortBy==="status"?" selected":"")+">Status</option></select></div><div class='fis'>";[["all","ALL["+fl.length+"]",cf==="all"&&cv==="active"],["overdue","🔴["+ov.length+"]",cf==="overdue"],["due","🟡["+du.length+"]",cf==="due"],["good","🟢["+ut.length+"]",cf==="good"],["exited","📦["+ex.length+"]",cv==="exited"]].forEach(function(f){h+="<button class='fi"+(f[2]?" on":"")+"' onclick=\"sf('"+f[0]+"')\">"+f[1]+"</button>"});h+="</div></div>";var ls=cv==="exited"?ex:fl;if(cf==="overdue")ls=ov;else if(cf==="due")ls=du;else if(cf==="good")ls=ut;var q=(document.getElementById("sb")?document.getElementById("sb").value:"").toLowerCase();if(q)ls=ls.filter(function(p){return p.n.toLowerCase().indexOf(q)>-1||(p.pid||"").toLowerCase().indexOf(q)>-1||(p.co||"").toLowerCase().indexOf(q)>-1});if(sortBy==="name-az")ls.sort(function(a,b){return a.n.localeCompare(b.n)});else if(sortBy==="name-za")ls.sort(function(a,b){return b.n.localeCompare(a.n)});else if(sortBy==="coach")ls.sort(function(a,b){return(a.co||"zzz").localeCompare(b.co||"zzz")});else ls.sort(function(a,b){var o={r:0,y:1,g:2,x:3};return(o[ciI(a).c]||3)-(o[ciI(b).c]||3)});h+="<div class='cd' style='padding:0;overflow:hidden'><div style='padding:12px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border-bottom:1px solid #00f7ff08' onclick='togTracker()'><span style='font-family:Orbitron;font-size:12px;color:#00f7ff;font-weight:700'>PARTICIPANTS ("+ls.length+")</span><span id='trackerArrow' style='font-size:14px;color:#00f7ff40'>▼</span></div><div id='trackerList'>";if(!ls.length)h+="<div class='emp'>NO ENTRIES</div>";else{h+="<div style='overflow-x:auto'><table><thead><tr><th>STS</th><th>NAME</th><th>COACH</th><th>CHK</th><th>F/U</th><th>WK</th><th>SESS</th><th>M</th><th>FRM</th><th></th></tr></thead><tbody>";ls.forEach(function(p){var ci=ciI(p),fc=p.fc||{};var ws=(STAMPS[p.id]&&STAMPS[p.id][cw])?STAMPS[p.id][cw].count:0;h+="<tr><td><span class='bd "+bCl(ci.c)+"'><span class='dot3' style='background:"+dCl(ci.c)+"'></span>"+ci.l+"</span></td><td style='font-weight:600'>"+H(p.n)+"</td><td style='font-size:8px'>"+H(p.co||"-")+"</td><td>"+tH(p)+"</td><td>"+fT(p.followUp)+"</td><td><span class='bd "+(ws>=2?"bd-g":ws?"bd-y":"bd-x")+"'>"+ws+"/2</span></td><td>"+sessH(p)+"</td><td style='text-align:center;font-family:Orbitron;color:#00f7ff;font-size:9px'>"+(p.cc||0)+"</td><td>";[["i","I"],["g","G"],["r","R"],["e","E"]].forEach(function(x){h+="<span class='ft "+(fc[x[0]]?"fy":"fn3")+"'>"+(fc[x[0]]?"✓":"·")+x[1]+"</span>"});h+="</td><td><button class='b bs2' onclick=\"od('"+p.id+"')\">▶</button>"+(p.s==="active"?" <button class='b bs2 bg2' onclick=\"rc('"+p.id+"')\">✓</button>":"")+"</td></tr>"});h+="</tbody></table></div>"}h+="</div></div>";el.innerHTML=h}
 
@@ -660,7 +680,7 @@ var cw=wkK();if(!STAMPS[p.id])STAMPS[p.id]={};if(!STAMPS[p.id][cw])STAMPS[p.id][
 
 var h="<div class='pv-hdr'><div class='pv-name'>"+H(p.n)+"</div><div class='pv-coach'>Coach: "+H(p.co||"-")+"</div></div>";
 h+="<div class='pv-tabs'>";
-[["home","🏠 HOME"],["checkin","✅ CHECK IN"],["booking","📅 BOOK"],["calendar","📆 CALENDAR"],["workouts","🏋️ WORKOUTS"],["nutrition","🥗 NUTRITION"],["progress","📊 PROGRESS"]].concat(p.referrals&&(p.referrals.mh||p.referrals.nutr||p.referrals.fin||p.referrals.career)?[["referrals","🔗 REFERRALS"]]:[]).concat(p.jobsAccess?[["jobs","💼 JOBS"]]:[]).concat([["journal","📓 JOURNAL"]]).forEach(function(t){
+[["home","🏠 HOME"],["checkin","✅ CHECK IN"],["booking","📅 BOOK"],["calendar","📆 CALENDAR"],["workouts","🏋️ WORKOUTS"],["nutrition","🥗 NUTRITION"],["progress","📊 PROGRESS"]].concat(p.referrals&&(p.referrals.mh||p.referrals.nutr||p.referrals.fin||p.referrals.career)?[["store","🛍 STORE"],["referrals","🔗 REFERRALS"]]:[]).concat(p.jobsAccess?[["jobs","💼 JOBS"]]:[]).concat([["journal","📓 JOURNAL"]]).forEach(function(t){
 h+="<button class='pv-tab"+(pvTab===t[0]?" on":"")+"' onclick='pvSwitchTab("+JSON.stringify(t[0])+")'>"+t[1]+"</button>"});
 h+="</div><div id='pvTabContent'></div>";
 h+="<div class='pv-lock'><button onclick='doLock()'>⏻ SIGN OUT</button></div>";
@@ -671,7 +691,7 @@ if(pvTab==="home")pvRenderHome(tc,p,cw);
 else if(pvTab==="checkin")pvRenderCheckin(tc,p,cw);
 else if(pvTab==="booking")pvRenderBooking(tc,p);
 else if(pvTab==="calendar")pvRenderCalendar(tc,p);
-else if(pvTab==="referrals")pvRenderReferrals(tc,p);
+else if(pvTab==="store")pvRenderStore(tc,p);else if(pvTab==="referrals")pvRenderReferrals(tc,p);
 else if(pvTab==="workouts")pvRenderWorkouts(tc,p);
 else if(pvTab==="progress")pvRenderProgress(tc,p);
 else if(pvTab==="nutrition")pvRenderNutrition(tc,p);
@@ -1772,7 +1792,9 @@ localStorage.setItem("hc6-workouts",JSON.stringify(WORKOUTS))
 var ASSIGNED=JSON.parse(localStorage.getItem("hc6-assigned")||"{}")||{};
 var COMPLETED=JSON.parse(localStorage.getItem("hc6-completed")||"{}")||{};
 var WLOGS=JSON.parse(localStorage.getItem("hc6-wlogs")||"{}")||{};
-function svW(){localStorage.setItem("hc6-exercises",JSON.stringify(EXERCISES));localStorage.setItem("hc6-workouts",JSON.stringify(WORKOUTS));localStorage.setItem("hc6-assigned",JSON.stringify(ASSIGNED));localStorage.setItem("hc6-completed",JSON.stringify(COMPLETED));localStorage.setItem("hc6-wlogs",JSON.stringify(WLOGS));fbPush()}
+var STORE=JSON.parse(localStorage.getItem("hc6-store")||"[]")||[];
+var CLAIMS=JSON.parse(localStorage.getItem("hc6-claims")||"[]")||[];
+function svW(){localStorage.setItem("hc6-exercises",JSON.stringify(EXERCISES));localStorage.setItem("hc6-workouts",JSON.stringify(WORKOUTS));localStorage.setItem("hc6-assigned",JSON.stringify(ASSIGNED));localStorage.setItem("hc6-completed",JSON.stringify(COMPLETED));localStorage.setItem("hc6-wlogs",JSON.stringify(WLOGS));localStorage.setItem("hc6-store",JSON.stringify(STORE));localStorage.setItem("hc6-claims",JSON.stringify(CLAIMS));fbPush()}
 /* Data integrity check */
 if(!ASSIGNED||typeof ASSIGNED!=="object"||Array.isArray(ASSIGNED)){ASSIGNED={};localStorage.setItem("hc6-assigned","{}")}
 if(!COMPLETED||typeof COMPLETED!=="object"||Array.isArray(COMPLETED)){COMPLETED={};localStorage.setItem("hc6-completed","{}")}
@@ -2886,7 +2908,7 @@ function openResAssignIdx(idx){var allRes=gRes();if(idx>=0&&idx<allRes.length)op
 function openResAssign(resName){var h2="<div class='mti'>Assign: "+H(resName)+" "+XB()+"</div><div style='max-height:50vh;overflow-y:auto'>";P.filter(function(p){return p.s==="active"}).sort(function(a,b){return a.n.localeCompare(b.n)}).forEach(function(p){var has=p.assignedRes&&p.assignedRes.indexOf(resName)>-1;h2+="<label style='display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #00f7ff04;font-size:12px'><input type='checkbox' class='resPC' value='"+p.id+"'"+(has?" checked":"")+"> "+H(p.n)+"</label>"});h2+="</div><button class='b bg2' style='width:100%;margin-top:10px' onclick='saveResAssign()'>SAVE</button>";window._resAssignName=resName;SM(h2)}
 function saveResAssign(){var resName=window._resAssignName;if(!resName)return;var cks=document.querySelectorAll(".resPC");for(var i=0;i<cks.length;i++){var p=P.find(function(x){return x.id===cks[i].value});if(!p)continue;if(!p.assignedRes)p.assignedRes=[];var idx=p.assignedRes.indexOf(resName);if(cks[i].checked&&idx===-1)p.assignedRes.push(resName);else if(!cks[i].checked&&idx>-1)p.assignedRes.splice(idx,1)}SV();CM();R()}
 var FB_URL="https://healthy-connections-3edd3-default-rtdb.firebaseio.com";
-function fbPush(){var data={p:P,users:users,stamps:STAMPS,books:BOOKS,ann:ANN,coaches:COACHES,moods:MOODS,challenges:CHALLENGES,monthlych:MONTHLYCH,journals:JOURNALS,reflogs:REFLOGS,sesslogs:SESSLOGS,jobposts:JOBPOSTS,pickups:PICKUPS,pvtodos:PVTODOS,workouts:WORKOUTS,assigned:ASSIGNED,completed:COMPLETED,wlogs:WLOGS,refemails:REF_EMAILS,forms:F,res:RES};fetch(FB_URL+"/hc.json",{method:"PUT",body:JSON.stringify(data)}).catch(function(){})}
+function fbPush(){var data={p:P,users:users,stamps:STAMPS,books:BOOKS,ann:ANN,coaches:COACHES,moods:MOODS,challenges:CHALLENGES,monthlych:MONTHLYCH,journals:JOURNALS,reflogs:REFLOGS,sesslogs:SESSLOGS,jobposts:JOBPOSTS,pickups:PICKUPS,pvtodos:PVTODOS,workouts:WORKOUTS,assigned:ASSIGNED,completed:COMPLETED,wlogs:WLOGS,store:STORE,claims:CLAIMS,refemails:REF_EMAILS,forms:F,res:RES};fetch(FB_URL+"/hc.json",{method:"PUT",body:JSON.stringify(data)}).catch(function(){})}
 function fbPull(cb){fetch(FB_URL+"/hc.json").then(function(r){return r.json()}).then(function(d){if(!d){if(cb)cb();return}if(d.p&&d.p.length){P=d.p;P.forEach(function(p){
 if(!p.goals)p.goals=[];
 if(!p.notes)p.notes=[];
@@ -2894,7 +2916,7 @@ if(!p.assignedRes)p.assignedRes=[];
 if(!p.metrics)p.metrics=[];
 if(!p.sessions)p.sessions={};
 if(!p.fc)p.fc={i:false,g:false,r:false,e:false};
-})}if(d.users)users=d.users;if(d.stamps)STAMPS=d.stamps;if(d.books)BOOKS=d.books;if(d.ann)ANN=d.ann;if(d.coaches)COACHES=d.coaches;if(d.moods)MOODS=d.moods;if(d.challenges)CHALLENGES=d.challenges;if(d.monthlych)MONTHLYCH=d.monthlych;if(d.journals)JOURNALS=d.journals;if(d.reflogs)REFLOGS=d.reflogs;if(d.sesslogs)SESSLOGS=d.sesslogs;if(d.jobposts)JOBPOSTS=d.jobposts;if(d.pickups){PICKUPS=d.pickups;PICKUPS.forEach(function(pu){if(!pu.slots)pu.slots=[];if(!pu.assignedTo)pu.assignedTo=[]})}if(d.pvtodos)PVTODOS=d.pvtodos;if(d.workouts&&Array.isArray(d.workouts))WORKOUTS=d.workouts;if(!Array.isArray(WORKOUTS))WORKOUTS=[];if(d.assigned)ASSIGNED=d.assigned;if(!ASSIGNED||typeof ASSIGNED!=="object")ASSIGNED={};if(d.completed)COMPLETED=d.completed;if(!COMPLETED||typeof COMPLETED!=="object")COMPLETED={};if(d.wlogs)WLOGS=d.wlogs;if(!WLOGS||typeof WLOGS!=="object")WLOGS={};if(d.refemails)REF_EMAILS=d.refemails;if(d.forms)F=d.forms;if(d.res)RES=d.res;SV();if(cb)cb()}).catch(function(){if(cb)cb()})}
+})}if(d.users)users=d.users;if(d.stamps)STAMPS=d.stamps;if(d.books)BOOKS=d.books;if(d.ann)ANN=d.ann;if(d.coaches)COACHES=d.coaches;if(d.moods)MOODS=d.moods;if(d.challenges)CHALLENGES=d.challenges;if(d.monthlych)MONTHLYCH=d.monthlych;if(d.journals)JOURNALS=d.journals;if(d.reflogs)REFLOGS=d.reflogs;if(d.sesslogs)SESSLOGS=d.sesslogs;if(d.jobposts)JOBPOSTS=d.jobposts;if(d.pickups){PICKUPS=d.pickups;PICKUPS.forEach(function(pu){if(!pu.slots)pu.slots=[];if(!pu.assignedTo)pu.assignedTo=[]})}if(d.pvtodos)PVTODOS=d.pvtodos;if(d.workouts&&Array.isArray(d.workouts))WORKOUTS=d.workouts;if(!Array.isArray(WORKOUTS))WORKOUTS=[];if(d.assigned)ASSIGNED=d.assigned;if(!ASSIGNED||typeof ASSIGNED!=="object")ASSIGNED={};if(d.completed)COMPLETED=d.completed;if(!COMPLETED||typeof COMPLETED!=="object")COMPLETED={};if(d.wlogs)WLOGS=d.wlogs;if(!WLOGS||typeof WLOGS!=="object")WLOGS={};if(d.store&&Array.isArray(d.store))STORE=d.store;if(d.claims&&Array.isArray(d.claims))CLAIMS=d.claims;if(d.refemails)REF_EMAILS=d.refemails;if(d.forms)F=d.forms;if(d.res)RES=d.res;SV();if(cb)cb()}).catch(function(){if(cb)cb()})}
 var _origSV=SV;SV=function(){_origSV();fbPush()};
 fbPull(function(){var ld=document.getElementById("hcLoading");if(ld)ld.style.display="none";var s=sessionStorage.getItem("hc6-s");if(s){try{CU=JSON.parse(s);if(CU.role==="participant"){showPV(CU)}else{document.getElementById("LS").style.display="none";document.getElementById("DS").style.display="block";R()}}catch(e){document.getElementById("LS").style.display="flex"}}else{document.getElementById("LS").style.display="flex"}});
 if("serviceWorker" in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister()})})}
@@ -2907,7 +2929,7 @@ var field=el.getAttribute("data-field");
 if(!WLOGS[wlKey])WLOGS[wlKey]=[];
 while(WLOGS[wlKey].length<=setIdx)WLOGS[wlKey].push({});
 WLOGS[wlKey][setIdx][field]=el.value;
-localStorage.setItem("hc6-wlogs",JSON.stringify(WLOGS));
+localStorage.setItem("hc6-wlogs",JSON.stringify(WLOGS));localStorage.setItem("hc6-store",JSON.stringify(STORE));localStorage.setItem("hc6-claims",JSON.stringify(CLAIMS));
 fbPush()}
 
 function getExHistory(pid,exName){
@@ -3208,6 +3230,166 @@ if(!p.assignedRecipes.some(function(ar){return ar.name===r.name})){
 p.assignedRecipes.push({name:r.name,date:new Date().toISOString().split("T")[0]})}
 SV();
 rNutrition(document.getElementById("pg"))}
+
+
+function rStore(el){
+var h="";
+
+/* Store management header */
+h+="<div class='rpt-section'><div class='rpt-title' style='color:#f59e0b'>🛍 RESOURCE STORE</div>";
+h+="<div style='display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap'>";
+h+="<button class='b bg2' onclick='openAddStoreItem()' style='padding:10px 16px'>+ ADD ITEM</button>";
+h+="<button class='b' onclick='openStoreAccess()' style='padding:10px 16px'>👥 MANAGE ACCESS</button></div>";
+h+="<div style='font-size:12px;color:#c8f0ff30;margin-bottom:8px'>"+STORE.length+" items · Participants can claim 1 item per month</div>";
+
+/* Items grid */
+if(STORE.length){
+h+="<div class='store-grid'>";
+STORE.forEach(function(item,idx){
+h+="<div class='store-item' onclick='openEditStoreItem("+idx+")'>";
+if(item.img){h+="<div class='store-img'><img src='"+H(item.img)+"'></div>"}
+else{h+="<div class='store-img'>📦</div>"}
+h+="<div class='store-body'><div class='store-name'>"+H(item.name)+"</div>";
+if(item.cat)h+="<div class='store-cat'>"+H(item.cat)+"</div>";
+if(item.desc)h+="<div style='font-size:10px;color:#c8f0ff20;margin-bottom:4px'>"+H(item.desc)+"</div>";
+h+="<div class='store-qty'>"+(parseInt(item.qty)||0)+" in stock</div>";
+h+="</div></div>"});
+h+="</div>"}
+else{h+="<div class='emp'>NO ITEMS — Click + ADD ITEM to stock the store</div>"}
+h+="</div>";
+
+/* Recent claims */
+h+="<div class='rpt-section'><div class='rpt-title' style='color:#6ee7b7'>📋 RECENT CLAIMS</div>";
+var sorted=CLAIMS.slice().reverse();
+if(sorted.length){
+sorted.slice(0,20).forEach(function(c){
+var p=P.find(function(x){return x.id===c.pid});
+h+="<div style='display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #00f7ff04;font-size:12px'>";
+h+="<div><strong style='color:#c8f0ff'>"+(p?H(p.n):"Unknown")+"</strong> claimed <span style='color:#f59e0b'>"+H(c.item)+"</span></div>";
+h+="<div style='color:#c8f0ff30;font-size:10px'>"+H(c.date)+"</div></div>"});
+}else{h+="<div class='emp'>NO CLAIMS YET</div>"}
+h+="</div>";
+
+el.innerHTML=h}
+
+function openAddStoreItem(){
+var h2="<div class='mti'>+ ADD STORE ITEM "+XB()+"</div>";
+h2+="<label class='lb'>ITEM NAME</label><input class='ip' id='siName' style='font-size:14px;padding:10px'>";
+h2+="<label class='lb'>CATEGORY</label><select class='ip' id='siCat' style='font-size:13px;padding:10px'><option>Clothing</option><option>Hygiene</option><option>Food</option><option>Electronics</option><option>School Supplies</option><option>Household</option><option>Sports/Fitness</option><option>Gift Cards</option><option>Other</option></select>";
+h2+="<label class='lb'>DESCRIPTION</label><input class='ip' id='siDesc' placeholder='Brief description...' style='font-size:13px;padding:10px'>";
+h2+="<label class='lb'>QUANTITY</label><input class='ip' id='siQty' type='number' value='1' style='font-size:13px;padding:10px'>";
+h2+="<label class='lb'>IMAGE URL (optional — or paste base64)</label><input class='ip' id='siImg' placeholder='https://... or leave blank' style='font-size:12px;padding:10px'>";
+h2+="<label class='lb'>OR UPLOAD IMAGE</label><input type='file' accept='image/*' id='siFile' onchange='storeImgPreview()' style='font-size:12px;padding:6px'>";
+h2+="<div id='siPreview' style='margin-top:6px'></div>";
+h2+="<button class='b bg2' style='width:100%;margin-top:10px;padding:12px;font-size:12px' onclick='saveStoreItem()'>+ ADD TO STORE</button>";
+SM(h2)}
+
+function storeImgPreview(){
+var file=document.getElementById("siFile").files[0];if(!file)return;
+var reader=new FileReader();
+reader.onload=function(e){
+document.getElementById("siImg").value=e.target.result;
+document.getElementById("siPreview").innerHTML="<img src='"+e.target.result+"' style='max-width:100px;max-height:100px;border-radius:8px'>"};
+reader.readAsDataURL(file)}
+
+function saveStoreItem(){
+var name=document.getElementById("siName").value.trim();if(!name)return;
+STORE.push({
+name:name,
+cat:document.getElementById("siCat").value,
+desc:document.getElementById("siDesc").value.trim(),
+qty:document.getElementById("siQty").value||"1",
+img:document.getElementById("siImg").value.trim()||""
+});
+SV();CM();R()}
+
+function openEditStoreItem(idx){
+var item=STORE[idx];if(!item)return;
+var h2="<div class='mti'>Edit: "+H(item.name)+" "+XB()+"</div>";
+if(item.img)h2+="<div style='text-align:center;margin-bottom:8px'><img src='"+H(item.img)+"' style='max-width:150px;max-height:150px;border-radius:10px'></div>";
+h2+="<label class='lb'>NAME</label><input class='ip' id='eiName' value='"+H(item.name)+"' style='font-size:14px;padding:10px'>";
+h2+="<label class='lb'>CATEGORY</label><select class='ip' id='eiCat' style='font-size:13px;padding:10px'>";
+["Clothing","Hygiene","Food","Electronics","School Supplies","Household","Sports/Fitness","Gift Cards","Other"].forEach(function(c){h2+="<option"+(item.cat===c?" selected":"")+">"+c+"</option>"});
+h2+="</select>";
+h2+="<label class='lb'>DESCRIPTION</label><input class='ip' id='eiDesc' value='"+H(item.desc||"")+"' style='font-size:13px;padding:10px'>";
+h2+="<label class='lb'>QUANTITY</label><input class='ip' id='eiQty' type='number' value='"+(item.qty||1)+"' style='font-size:13px;padding:10px'>";
+h2+="<label class='lb'>IMAGE URL</label><input class='ip' id='eiImg' value='"+H(item.img||"")+"' style='font-size:11px;padding:10px'>";
+h2+="<div style='display:flex;gap:6px;margin-top:10px'><button class='b bg2' style='flex:1;padding:12px' onclick='updateStoreItem("+idx+")'>SAVE</button>";
+h2+="<button class='b br2' style='padding:12px' onclick='STORE.splice("+idx+",1);SV();CM();R()'>DELETE</button></div>";
+SM(h2)}
+
+function updateStoreItem(idx){
+STORE[idx].name=document.getElementById("eiName").value.trim();
+STORE[idx].cat=document.getElementById("eiCat").value;
+STORE[idx].desc=document.getElementById("eiDesc").value.trim();
+STORE[idx].qty=document.getElementById("eiQty").value;
+STORE[idx].img=document.getElementById("eiImg").value.trim();
+SV();CM();R()}
+
+function openStoreAccess(){
+var h2="<div class='mti'>👥 STORE ACCESS "+XB()+"</div>";
+h2+="<div style='font-size:12px;color:#c8f0ff40;margin-bottom:10px'>Select which participants can access the store</div>";
+P.filter(function(p){return p.s==="active"}).sort(function(a,b){return a.n.localeCompare(b.n)}).forEach(function(p){
+var hasAccess=p.storeAccess?true:false;
+h2+="<label style='display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #00f7ff04;font-size:13px;cursor:pointer'>";
+var ti=P.filter(function(x){return x.s==="active"}).indexOf(p);
+h2+="<input type='checkbox' "+(hasAccess?"checked":"")+" onchange='togSA(this,"+ti+")'> "+H(p.n)+"</label>"});
+h2+="<button class='b' style='width:100%;margin-top:10px;padding:10px' onclick='CM()'>DONE</button>";
+SM(h2)}
+
+function togSA(el,idx){var actv=P.filter(function(x){return x.s==='active'}).sort(function(a,b){return a.n.localeCompare(b.n)});if(actv[idx])toggleStoreAccess(el,actv[idx].id)}
+function toggleStoreAccess(el,pid){
+var p=P.find(function(x){return x.id===pid});if(!p)return;
+p.storeAccess=el.checked;SV()}
+
+/* ═══ PARTICIPANT STORE VIEW ═══ */
+function pvRenderStore(el,p){
+var h="";
+if(!p.storeAccess){
+h+="<div class='wk-empty' style='padding:40px'><div class='wk-empty-icon'>🔒</div><div style='font-size:14px;color:#c8f0ff60'>Store access not enabled</div><div style='font-size:11px;color:#00f7ff20'>Talk to your coach about accessing donated goods</div></div>";
+el.innerHTML=h;return}
+
+/* Check if they already claimed this month */
+var now=new Date();var thisMonth=now.getFullYear()+"-"+(now.getMonth()+1<10?"0":"")+(now.getMonth()+1);
+var claimedThisMonth=CLAIMS.filter(function(c){return c.pid===p.id&&c.date&&c.date.substring(0,7)===thisMonth});
+var canClaim=claimedThisMonth.length===0;
+
+h+="<div style='text-align:center;padding:14px;margin-bottom:12px'>";
+h+="<div style='font-family:Orbitron;font-size:18px;font-weight:800;color:#f59e0b;margin-bottom:4px'>🛍 RESOURCE STORE</div>";
+if(canClaim){h+="<div style='font-size:12px;color:#6ee7b7'>You can claim 1 item this month</div>"}
+else{h+="<div style='font-size:12px;color:#c8f0ff30'>You already claimed an item this month</div>";
+h+="<div style='font-size:10px;color:#c8f0ff20;margin-top:2px'>Claimed: "+H(claimedThisMonth[0].item)+"</div>"}
+h+="</div>";
+
+if(STORE.length){
+h+="<div class='store-grid'>";
+STORE.forEach(function(item,idx){
+var inStock=(parseInt(item.qty)||0)>0;
+h+="<div class='store-item'>";
+if(item.img){h+="<div class='store-img'><img src='"+H(item.img)+"'></div>"}
+else{h+="<div class='store-img'>📦</div>"}
+h+="<div class='store-body'><div class='store-name'>"+H(item.name)+"</div>";
+if(item.cat)h+="<div class='store-cat'>"+H(item.cat)+"</div>";
+if(item.desc)h+="<div style='font-size:10px;color:#c8f0ff20;margin-bottom:4px'>"+H(item.desc)+"</div>";
+h+="</div>";
+if(!inStock){h+="<button class='store-claim-btn oos'>OUT OF STOCK</button>"}
+else if(!canClaim){h+="<button class='store-claim-btn used'>CLAIMED THIS MONTH</button>"}
+else{h+="<button class='store-claim-btn avail' onclick='pvClaimItem("+idx+")'>CLAIM ITEM</button>"}
+h+="</div>"});
+h+="</div>"}
+else{h+="<div class='emp'>NO ITEMS AVAILABLE RIGHT NOW</div>"}
+
+el.innerHTML=h}
+
+function pvClaimItem(idx){if(CU&&CU.pid)claimItem(CU.pid,idx)}
+function claimItem(pid,idx){
+var item=STORE[idx];if(!item)return;
+var p=P.find(function(x){return x.id===pid});if(!p)return;
+if(!confirm("Claim "+item.name+"? You can only claim 1 item per month."))return;
+var qty=parseInt(item.qty)||0;if(qty<=0){alert("Out of stock");return}
+STORE[idx].qty=""+(qty-1);
+CLAIMS.push({pid:pid,item:item.name,date:new Date().toISOString().split("T")[0],cat:item.cat||""});
+SV();pvRefresh()}
 
 </script><div id='printArea' style='display:none'></div>
 </body></html>

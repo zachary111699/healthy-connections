@@ -17,7 +17,7 @@
 @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Share Tech Mono',monospace;background:#0a0e1a;color:#c8f0ff;min-height:100vh;font-size:11px}
+html{background:#0a0e1a}body{font-family:'Share Tech Mono',monospace;background:#0a0e1a;color:#c8f0ff;min-height:100vh;font-size:11px}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#0a0e1a}::-webkit-scrollbar-thumb{background:#00f7ff30;border-radius:3px}
 a{color:#00f7ff}
 #LS{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,#0d1525,#060a14);padding:20px}
@@ -546,11 +546,16 @@ function rRes(el){
 var allRes=gRes();
 var h="";
 
-h+="<div class='cd'><div class='ct' style='font-size:16px;color:#6ee7b7'>🏢 PALM BEACH COUNTY AGENCY DIRECTORY</div><div style='font-size:11px;color:#c8f0ff40;margin-bottom:8px'>Master list of partner agencies. Assign to participants using the Assign button.</div>";
-h+="<div style='display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap'>";
-h+="<button class='b bg2' onclick='openAR()'>+ ADD AGENCY</button>";
-h+="<input class='si' id='resSrch' placeholder='Search agencies...' oninput='R()' style='flex:1;min-width:150px'>";
-h+="</div>";
+/* ═══ AGENCY DIRECTORY — looks like a phone book ═══ */
+h+="<div class='cd' style='padding:20px'>";
+h+="<div style='text-align:center;margin-bottom:16px'><div style='font-size:24px;margin-bottom:4px'>🏢</div>";
+h+="<div style='font-family:Orbitron;font-size:16px;color:#6ee7b7;font-weight:700'>AGENCY DIRECTORY</div>";
+h+="<div style='font-size:11px;color:#c8f0ff40;margin-top:4px'>Palm Beach County Partner Agencies</div>";
+h+="<div style='font-size:10px;color:#c8f0ff20;margin-top:2px'>Click ASSIGN to give participants access</div></div>";
+
+h+="<div style='display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap'>";
+h+="<input class='si' id='resSrch' placeholder='Search by name or category...' oninput='R()' style='flex:1;min-width:180px;font-size:13px;padding:10px'>";
+h+="<button class='b bg2' onclick='openAR()' style='padding:10px 16px'>+ ADD AGENCY</button></div>";
 
 var rq="";
 var el2=document.getElementById("resSrch");
@@ -558,37 +563,43 @@ if(el2)rq=el2.value.toLowerCase();
 
 var filtered=allRes;
 if(rq){filtered=allRes.filter(function(r){
-return r.name.toLowerCase().indexOf(rq)>-1||r.cat.toLowerCase().indexOf(rq)>-1||(r.desc||"").toLowerCase().indexOf(rq)>-1
-})}
+return r.name.toLowerCase().indexOf(rq)>-1||r.cat.toLowerCase().indexOf(rq)>-1||(r.desc||"").toLowerCase().indexOf(rq)>-1})}
 
 var cats=[];
 filtered.forEach(function(r){if(cats.indexOf(r.cat)===-1)cats.push(r.cat)});
 cats.sort();
 
+h+="<div style='font-size:10px;color:#00f7ff40;margin-bottom:8px'>"+filtered.length+" agencies across "+cats.length+" categories</div>";
+
 cats.forEach(function(cat){
 var items=filtered.filter(function(r){return r.cat===cat});
-h+="<div class='res-cat'>"+cat+" ("+items.length+")</div>";
+h+="<div style='font-family:Orbitron;font-size:12px;color:#6ee7b7;padding:10px 0 6px;border-bottom:2px solid #6ee7b720;margin-top:10px;letter-spacing:1px'>"+H(cat).toUpperCase()+" ("+items.length+")</div>";
 items.forEach(function(r){
 var ac=0;
 P.forEach(function(p){if(p.assignedRes&&p.assignedRes.indexOf(r.name)>-1)ac++});
-h+="<div class='res-item' style='flex-wrap:wrap'>";
-h+="<div style='flex:1'><strong>"+H(r.name)+"</strong>";
-if(r.desc)h+=" <span style='color:#c8f0ff30;font-size:10px'>"+H(r.desc)+"</span>";
-if(r.phone)h+="<br><span style='color:#6ee7b7;font-size:11px'>"+H(r.phone)+"</span>";
+h+="<div style='display:flex;justify-content:space-between;align-items:center;padding:12px 8px;border-bottom:1px solid #00f7ff06'>";
+h+="<div style='flex:1'>";
+h+="<div style='font-size:14px;font-weight:700;color:#c8f0ff'>"+H(r.name)+"</div>";
+if(r.desc)h+="<div style='font-size:11px;color:#c8f0ff40;margin-top:2px'>"+H(r.desc)+"</div>";
+var contact=[];
+if(r.phone)contact.push("<span style='color:#6ee7b7'>"+H(r.phone)+"</span>");
+if(r.url)contact.push("<a href='"+H(r.url)+"' target='_blank' style='color:#00f7ff;font-size:11px'>Visit Website</a>");
+if(contact.length)h+="<div style='font-size:11px;margin-top:3px'>"+contact.join(" · ")+"</div>";
 h+="</div>";
-h+="<div style='display:flex;gap:4px;align-items:center'>";
-if(ac>0)h+="<span style='font-size:9px;color:#00f7ff;padding:3px 6px;border:1px solid #00f7ff20;border-radius:4px'>"+ac+" assigned</span>";
-h+="<button class='b bs2' onclick='openResAssign(decodeURIComponent(\""+encodeURIComponent(r.name)+"\"))'>Assign</button>";
-if(r.url)h+="<a href='"+H(r.url)+"' target='_blank' style='font-size:10px'> Link</a>";
-h+="</div></div>"
-})});
+h+="<div style='display:flex;flex-direction:column;align-items:center;gap:3px;min-width:70px'>";
+if(ac>0)h+="<div style='font-family:Orbitron;font-size:9px;color:#00f7ff;padding:2px 6px;border:1px solid #00f7ff20;border-radius:10px'>"+ac+" assigned</div>";
+h+="<button class='b bs2 bg2' onclick='openResAssignIdx("+allRes.indexOf(r)+")' style='font-size:10px;padding:6px 12px'>ASSIGN</button>";
+h+="</div></div>"})});
 
 if(!filtered.length)h+="<div class='emp'>NO MATCHING AGENCIES</div>";
 h+="</div>";
 
-h+="<div class='cd'><div class='ct'>▸ RESOURCE PICKUPS</div>";
-h+="<button class='b bg2' onclick='openCreatePickup()' style='margin-bottom:8px'>+ NEW PICKUP</button>";
-if(!PICKUPS.length){h+="<div class='emp'>NO PICKUP PROGRAMS</div>"}
+/* ═══ RESOURCE PICKUPS ═══ */
+h+="<div class='cd' style='margin-top:12px'>";
+h+="<div style='text-align:center;margin-bottom:12px'><div style='font-size:20px;margin-bottom:4px'>📦</div>";
+h+="<div style='font-family:Orbitron;font-size:12px;color:#f59e0b;font-weight:700'>RESOURCE PICKUPS</div></div>";
+h+="<button class='b bg2' onclick='openCreatePickup()' style='margin-bottom:8px;width:100%;padding:10px'>+ NEW PICKUP PROGRAM</button>";
+if(!PICKUPS.length){h+="<div class='emp'>NO PICKUP PROGRAMS — Click + to create one</div>"}
 PICKUPS.forEach(function(pu,pi){
 var nextDate=pu.date?getNextPickupDateFrom(pu):getNextPickupDate(pu.day);
 var confirmed=pu.slots.filter(function(s){return s.date===nextDate});
@@ -600,12 +611,12 @@ h+="<div style='display:flex;justify-content:space-between;align-items:center'>"
 h+="<div><div class='pu-title'>"+H(pu.partner)+"</div>";
 h+="<div class='pu-meta'>"+(pu.day?pu.day+"s":"")+" at "+pu.time+" | "+recurLabel+" | Next: "+nextDate+"</div></div>";
 h+="<div style='display:flex;gap:4px'>";
-h+="<button class='b bs2' onclick='editPickupAssign("+pi+")'>Assign</button>";
-h+="<button class='b bs2 br2' onclick='PICKUPS.splice("+pi+",1);svPU();R()'>Del</button>";
+h+="<button class='b bs2' onclick='editPickupAssign("+pi+")'>ASSIGN</button>";
+h+="<button class='b bs2 br2' onclick='PICKUPS.splice("+pi+",1);svPU();R()'>DEL</button>";
 h+="</div></div>";
-if(aNames.length){h+="<div style='font-size:9px;color:#6ee7b760;margin:4px 0'>Assigned: "+aNames.join(", ")+"</div>"}
-else{h+="<div style='font-size:9px;color:#ff475760;margin:4px 0'>No one assigned yet</div>"}
-h+="<div style='font-size:9px;color:#00f7ff;margin:6px 0 4px'>CONFIRMED ("+confirmed.length+")</div>";
+if(aNames.length){h+="<div style='font-size:10px;color:#6ee7b760;margin:4px 0'>Assigned to: "+aNames.join(", ")+"</div>"}
+else{h+="<div style='font-size:10px;color:#ff475760;margin:4px 0'>No one assigned yet</div>"}
+h+="<div style='font-size:9px;color:#00f7ff;margin:6px 0 4px'>CONFIRMED FOR "+nextDate+" ("+confirmed.length+")</div>";
 if(confirmed.length){confirmed.forEach(function(s){
 h+="<div class='pu-slot'><strong>"+H(s.name)+"</strong>";
 if(s.customFields){Object.keys(s.customFields).forEach(function(k){h+=" | "+k.replace(/_/g," ")+": "+H(s.customFields[k])})}
@@ -2543,6 +2554,9 @@ if(s){try{CU=JSON.parse(s);if(CU.role==="participant"){showPV(CU)}else{document.
 else{document.getElementById("LS").style.display="flex"}
 });
 
+
+
+function openResAssignIdx(idx){var allRes=gRes();if(idx>=0&&idx<allRes.length)openResAssign(allRes[idx].name)}
 
 function openResAssign(resName){
 var h2="<div class='mti'>👥 ASSIGN: "+H(resName)+" "+XB()+"</div>";

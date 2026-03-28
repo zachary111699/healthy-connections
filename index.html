@@ -671,8 +671,94 @@ else h+="<button class='pv-wk2-go ready' onclick=\"pvFinishAll('"+p.id+"','"+ww.
 h+="</div>"});
 
 var hitM=[];wws.forEach(function(ww){(ww.w.exercises||[]).forEach(function(ex){var f=ACE_LIB.find(function(a){return a.n===ex.name});if(f&&f.ms){f.ms.forEach(function(m){if(hitM.indexOf(m)===-1)hitM.push(m)})}})});
-if(hitM.length){h+="<div style='text-align:center;padding:12px;margin-top:8px'><div style='font-family:Orbitron;font-size:10px;color:#ff475780;margin-bottom:6px'>MUSCLES THIS WEEK</div>";
-["Abs","Arms","Back","Butt/Hips","Chest","Full Body","Legs-Calves","Legs-Thighs","Shoulders"].forEach(function(m){h+="<span class='muscle-tag2 "+(hitM.indexOf(m)>-1?"hit":"miss")+"'>"+m+"</span>"});h+="</div>"}
+if(hitM.length){
+h+="<div style='text-align:center;padding:16px;margin-top:8px;background:linear-gradient(145deg,#0d1a2d,#111d33);border-radius:14px;border:1px solid #00f7ff08'>";
+h+="<div style='font-family:Orbitron;font-size:12px;color:#ff475780;margin-bottom:12px;letter-spacing:1px'>MUSCLES THIS WEEK</div>";
+
+/* SVG Anatomical Body Map — front view */
+var sh=hitM.indexOf("Shoulders")>-1;
+var ch=hitM.indexOf("Chest")>-1;
+var ab=hitM.indexOf("Abs")>-1;
+var ar=hitM.indexOf("Arms")>-1;
+var bk=hitM.indexOf("Back")>-1;
+var lt=hitM.indexOf("Legs-Thighs")>-1;
+var lc=hitM.indexOf("Legs-Calves")>-1;
+var gl=hitM.indexOf("Butt/Hips")>-1;
+var fb=hitM.indexOf("Full Body")>-1;
+var on="#ff4757";var off="#1a2a40";
+
+h+="<div style='display:flex;justify-content:center;align-items:flex-start;gap:20px;flex-wrap:wrap'>";
+
+/* Front view */
+h+="<div><div style='font-size:8px;color:#c8f0ff20;margin-bottom:4px'>FRONT</div>";
+h+="<svg width='120' height='260' viewBox='0 0 120 260'>";
+/* Head */
+h+="<ellipse cx='60' cy='22' rx='16' ry='18' fill='"+off+"' stroke='#00f7ff15' stroke-width='1'/>";
+/* Neck */
+h+="<rect x='52' y='38' width='16' height='12' fill='"+off+"' rx='3'/>";
+/* Shoulders */
+h+="<ellipse cx='30' cy='55' rx='14' ry='8' fill='"+(sh||fb?on:off)+"' opacity='"+(sh||fb?"0.8":"0.3")+"'/>";
+h+="<ellipse cx='90' cy='55' rx='14' ry='8' fill='"+(sh||fb?on:off)+"' opacity='"+(sh||fb?"0.8":"0.3")+"'/>";
+/* Chest */
+h+="<rect x='35' y='50' width='50' height='30' fill='"+(ch||fb?on:off)+"' opacity='"+(ch||fb?"0.7":"0.3")+"' rx='6'/>";
+/* Abs */
+h+="<rect x='42' y='82' width='36' height='40' fill='"+(ab||fb?on:off)+"' opacity='"+(ab||fb?"0.7":"0.3")+"' rx='4'/>";
+/* Arms left */
+h+="<rect x='10' y='58' width='18' height='50' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.7":"0.3")+"' rx='8'/>";
+/* Arms right */
+h+="<rect x='92' y='58' width='18' height='50' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.7":"0.3")+"' rx='8'/>";
+/* Forearms */
+h+="<rect x='8' y='108' width='14' height='40' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.5":"0.2")+"' rx='6'/>";
+h+="<rect x='98' y='108' width='14' height='40' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.5":"0.2")+"' rx='6'/>";
+/* Hips */
+h+="<rect x='38' y='122' width='44' height='16' fill='"+(gl||fb?on:off)+"' opacity='"+(gl||fb?"0.6":"0.3")+"' rx='8'/>";
+/* Thighs */
+h+="<rect x='36' y='138' width='20' height='55' fill='"+(lt||fb?on:off)+"' opacity='"+(lt||fb?"0.7":"0.3")+"' rx='8'/>";
+h+="<rect x='64' y='138' width='20' height='55' fill='"+(lt||fb?on:off)+"' opacity='"+(lt||fb?"0.7":"0.3")+"' rx='8'/>";
+/* Calves */
+h+="<rect x='38' y='195' width='16' height='45' fill='"+(lc||fb?on:off)+"' opacity='"+(lc||fb?"0.7":"0.3")+"' rx='6'/>";
+h+="<rect x='66' y='195' width='16' height='45' fill='"+(lc||fb?on:off)+"' opacity='"+(lc||fb?"0.7":"0.3")+"' rx='6'/>";
+h+="</svg></div>";
+
+/* Back view */
+h+="<div><div style='font-size:8px;color:#c8f0ff20;margin-bottom:4px'>BACK</div>";
+h+="<svg width='120' height='260' viewBox='0 0 120 260'>";
+/* Head */
+h+="<ellipse cx='60' cy='22' rx='16' ry='18' fill='"+off+"' stroke='#00f7ff15' stroke-width='1'/>";
+/* Neck */
+h+="<rect x='52' y='38' width='16' height='12' fill='"+off+"' rx='3'/>";
+/* Shoulders */
+h+="<ellipse cx='30' cy='55' rx='14' ry='8' fill='"+(sh||fb?on:off)+"' opacity='"+(sh||fb?"0.8":"0.3")+"'/>";
+h+="<ellipse cx='90' cy='55' rx='14' ry='8' fill='"+(sh||fb?on:off)+"' opacity='"+(sh||fb?"0.8":"0.3")+"'/>";
+/* Upper back */
+h+="<rect x='35' y='50' width='50' height='30' fill='"+(bk||fb?on:off)+"' opacity='"+(bk||fb?"0.7":"0.3")+"' rx='6'/>";
+/* Lower back */
+h+="<rect x='40' y='82' width='40' height='35' fill='"+(bk||fb?on:off)+"' opacity='"+(bk||fb?"0.6":"0.3")+"' rx='4'/>";
+/* Arms */
+h+="<rect x='10' y='58' width='18' height='50' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.6":"0.3")+"' rx='8'/>";
+h+="<rect x='92' y='58' width='18' height='50' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.6":"0.3")+"' rx='8'/>";
+/* Forearms */
+h+="<rect x='8' y='108' width='14' height='40' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.5":"0.2")+"' rx='6'/>";
+h+="<rect x='98' y='108' width='14' height='40' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.5":"0.2")+"' rx='6'/>";
+/* Glutes */
+h+="<ellipse cx='48' cy='130' rx='12' ry='14' fill='"+(gl||fb?on:off)+"' opacity='"+(gl||fb?"0.8":"0.3")+"'/>";
+h+="<ellipse cx='72' cy='130' rx='12' ry='14' fill='"+(gl||fb?on:off)+"' opacity='"+(gl||fb?"0.8":"0.3")+"'/>";
+/* Hamstrings */
+h+="<rect x='36' y='144' width='20' height='50' fill='"+(lt||fb?on:off)+"' opacity='"+(lt||fb?"0.7":"0.3")+"' rx='8'/>";
+h+="<rect x='64' y='144' width='20' height='50' fill='"+(lt||fb?on:off)+"' opacity='"+(lt||fb?"0.7":"0.3")+"' rx='8'/>";
+/* Calves */
+h+="<rect x='38' y='195' width='16' height='45' fill='"+(lc||fb?on:off)+"' opacity='"+(lc||fb?"0.7":"0.3")+"' rx='6'/>";
+h+="<rect x='66' y='195' width='16' height='45' fill='"+(lc||fb?on:off)+"' opacity='"+(lc||fb?"0.7":"0.3")+"' rx='6'/>";
+h+="</svg></div>";
+
+h+="</div>";
+
+/* Labels */
+h+="<div style='margin-top:12px'>";
+["Abs","Arms","Back","Butt/Hips","Chest","Full Body","Legs-Calves","Legs-Thighs","Shoulders"].forEach(function(m){h+="<span class='muscle-tag2 "+(hitM.indexOf(m)>-1?"hit":"miss")+"'>"+m+"</span>"});
+h+="</div>";
+
+h+="</div>"}
 el.innerHTML=h}
 function pvFinishAll(pid,date,wIdx,cnt){for(var i=0;i<cnt;i++){var k=pid+"-"+date+"-"+wIdx+"-"+i;if(!COMPLETED[k])COMPLETED[k]=true}SV();pvRefresh()}
 

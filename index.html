@@ -3016,14 +3016,36 @@ var match=r.name.toLowerCase().indexOf(q)>-1||r.cat.toLowerCase().indexOf(q)>-1;
 c.style.display=match?"":"none"})}
 
 function viewRecipeAdmin(ri){
-var r=RECIPES[ri];
+var r=RECIPES[ri];if(!r)return;
+var mClr=r.meal==="Breakfast"?"#f59e0b":r.meal==="Lunch"?"#00f7ff":r.meal==="Dinner"?"#c792ff":"#6ee7b7";
 var h2="<div class='mti'>"+H(r.name)+" "+XB()+"</div>";
-h2+="<div style='display:flex;gap:8px;margin-bottom:8px;font-size:10px;color:#c8f0ff40'><span>"+H(r.cat)+"</span><span>"+H(r.time)+"</span><span>$"+H(r.cost)+"</span>"+(r.cal?"<span>"+r.cal+" cal</span>":"")+"</div>";
-if(r.ing){h2+="<div style='font-family:Orbitron;font-size:8px;color:#6ee7b7;margin:6px 0 3px'>INGREDIENTS</div>";
-r.ing.forEach(function(i){h2+="<div style='font-size:11px;padding:2px 0'>• "+H(i)+"</div>"})}
-if(r.steps){h2+="<div style='font-family:Orbitron;font-size:8px;color:#f59e0b;margin:6px 0 3px'>DIRECTIONS</div>";
-r.steps.forEach(function(s,si){h2+="<div style='font-size:11px;padding:3px 0'><strong style='color:#f59e0b'>"+(si+1)+".</strong> "+H(s)+"</div>"})}
-h2+="<button class='b' style='width:100%;margin-top:8px' onclick='openRecipeManager()'>← BACK</button>";
+h2+="<div style='display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px'>";
+h2+="<span style='padding:4px 12px;border-radius:8px;font-size:11px;font-weight:700;background:"+mClr+"20;color:"+mClr+";border:1px solid "+mClr+"30'>"+H(r.meal||"Meal")+"</span>";
+if(r.time)h2+="<span style='font-size:11px;color:#c8f0ff40'>"+H(r.time)+"</span>";
+if(r.cost)h2+="<span style='font-size:11px;color:#c8f0ff40'>"+H(r.cost)+"</span>";
+if(r.cal)h2+="<span style='font-size:11px;color:#c8f0ff40'>"+H(r.cal)+" cal</span>";
+h2+="</div>";
+var ingList=r.ing||"";
+if(typeof ingList==="string")ingList=ingList.split(",").map(function(s){return s.trim()}).filter(function(s){return s});
+if(ingList.length){
+h2+="<div style='background:#060a1440;border:1px solid #6ee7b715;border-radius:10px;padding:14px;margin-bottom:10px'>";
+h2+="<div style='font-family:Orbitron;font-size:10px;color:#6ee7b7;margin-bottom:8px;letter-spacing:1px'>INGREDIENTS ("+ingList.length+")</div>";
+ingList.forEach(function(ing){h2+="<div style='display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #00f7ff04;font-size:12px'><span style='color:#6ee7b7;font-size:8px'>&#9679;</span> "+H(ing)+"</div>"});
+h2+="</div>"}
+var stepList=r.steps||"";
+if(typeof stepList==="string")stepList=stepList.split(".").map(function(s){return s.trim()}).filter(function(s){return s});
+if(stepList.length){
+h2+="<div style='background:#060a1440;border:1px solid #f59e0b15;border-radius:10px;padding:14px;margin-bottom:10px'>";
+h2+="<div style='font-family:Orbitron;font-size:10px;color:#f59e0b;margin-bottom:8px;letter-spacing:1px'>DIRECTIONS</div>";
+stepList.forEach(function(step,si){h2+="<div style='display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #00f7ff04'><div style='font-family:Orbitron;font-size:14px;font-weight:800;color:#f59e0b;min-width:24px'>"+(si+1)+"</div><div style='font-size:12px;color:#c8f0ff;line-height:1.5'>"+H(step)+"</div></div>"});
+h2+="</div>"}
+h2+="<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:6px;margin-bottom:10px'>";
+if(r.time)h2+="<div style='text-align:center;padding:10px;background:#060a1440;border-radius:8px;border:1px solid #00f7ff08'><div style='font-size:16px'>&#9201;</div><div style='font-family:Orbitron;font-size:12px;color:#00f7ff'>"+H(r.time)+"</div><div style='font-size:7px;color:#c8f0ff20'>PREP TIME</div></div>";
+if(r.cost)h2+="<div style='text-align:center;padding:10px;background:#060a1440;border-radius:8px;border:1px solid #00f7ff08'><div style='font-size:16px'>&#128176;</div><div style='font-family:Orbitron;font-size:12px;color:#6ee7b7'>"+H(r.cost)+"</div><div style='font-size:7px;color:#c8f0ff20'>COST</div></div>";
+if(r.cal)h2+="<div style='text-align:center;padding:10px;background:#060a1440;border-radius:8px;border:1px solid #00f7ff08'><div style='font-size:16px'>&#128293;</div><div style='font-family:Orbitron;font-size:12px;color:#ff4757'>"+H(r.cal)+"</div><div style='font-size:7px;color:#c8f0ff20'>CALORIES</div></div>";
+h2+="<div style='text-align:center;padding:10px;background:#060a1440;border-radius:8px;border:1px solid #00f7ff08'><div style='font-size:16px'>&#127858;</div><div style='font-family:Orbitron;font-size:12px;color:#c8f0ff'>"+ingList.length+"</div><div style='font-size:7px;color:#c8f0ff20'>ITEMS</div></div>";
+h2+="</div>";
+h2+="<button class='b' style='width:100%;margin-top:6px;padding:10px' onclick='CM();reloadNutr()'>BACK TO RECIPES</button>";
 SM(h2)}
 
 function openAddRecipe(){

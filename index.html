@@ -459,8 +459,8 @@ button,.b,.fl,.fi,.bk-btn{min-height:36px}
 
 </head>
 <body>
-<div id="hcLoading" style="display:flex;justify-content:center;align-items:center;min-height:100vh;background:#060a14;color:#00f7ff;font-family:Orbitron,sans-serif;font-size:14px;text-align:center"><div>⚡ LOADING...</div></div>
-<div id="LS" style="display:none"><div class="lc"><div class="lc-tl"></div><span style="font-size:28px;display:block;margin-bottom:8px">⚡</span><h1>H.C. SYSTEM</h1><div class="lc-s">v7.0 — COMPLETE SUITE</div><div class="lc-d"></div>
+<div id="hcLoading" style="display:none"></div>LOADING...<br><span style="font-size:10px;color:#00f7ff40;margin-top:8px;display:block">Syncing with server</span></div></div>
+<div id="LS" style="display:flex"><div class="lc"><div class="lc-tl"></div><span style="font-size:28px;display:block;margin-bottom:8px">⚡</span><h1>H.C. SYSTEM</h1><div class="lc-s">v7.0 — COMPLETE SUITE</div><div class="lc-d"></div>
 <input type="text" class="li" id="liU" placeholder="> USERNAME" autocomplete="username">
 <input type="password" class="li" id="liP" placeholder="> PASSWORD" autocomplete="current-password">
 <button class="lbtn" id="liB" onclick="tryL()">▶ INITIALIZE</button>
@@ -473,31 +473,25 @@ button,.b,.fl,.fi,.bk-btn{min-height:36px}
 <div id="PV" style="display:none" class="pv-bg"><div class="pv-card" id="pvc"></div></div>
 <div class="mbg" id="mb" style="display:none" onclick="if(event.target===this)CM()"><div class="mbox" id="mc"></div></div>
 <script>
-window.onerror=function(msg,url,line){
-var ld=document.getElementById("hcLoading");
-if(ld&&ld.style.display!=="none"){ld.style.display="none";document.getElementById("LS").style.display="flex"}
-console.error("HC Error:",msg,"Line:",line);
-return false};
-
-var DU=[{username:“admin”,password:“HealthyConnections2025”,role:“admin”,name:“Administrator”}];
-var users=JSON.parse(localStorage.getItem(“hc6-users”)||“null”)||DU;
-var P=JSON.parse(localStorage.getItem(“hc6-p”)||”[]”);
+var DU=[{username:"admin",password:"HealthyConnections2025",role:"admin",name:"Administrator"}];
+var users=JSON.parse(localStorage.getItem("hc6-users")||"null")||DU;
+var P=JSON.parse(localStorage.getItem("hc6-p")||"[]");
 P.forEach(function(p){if(!p.goals)p.goals=[];if(!p.notes)p.notes=[];if(!p.assignedRes)p.assignedRes=[];if(!p.metrics)p.metrics=[];if(!p.sessions)p.sessions={};if(!p.fc)p.fc={i:false,g:false,r:false,e:false}});
-var F=JSON.parse(localStorage.getItem(“hc6-f”)||”{}”);
-var REF_EMAILS=JSON.parse(localStorage.getItem(“hc6-refemails”)||“null”)||{mh:“claudia@higginscounselingservices.com”,nutr:“dknutrition4u@yahoo.com”,fin:“DColeman@dortfcu.org”,career:“espann@careersourcepbc.com”};
-var RES=JSON.parse(localStorage.getItem(“hc6-res”)||”[]”);
-var STAMPS=JSON.parse(localStorage.getItem(“hc6-stamps”)||”{}”);
-var BOOKS=JSON.parse(localStorage.getItem(“hc6-books”)||”{}”);
-var PEVENTS=JSON.parse(localStorage.getItem(“hc6-pevents”)||”{}”);
-var PVTODOS=JSON.parse(localStorage.getItem(“hc6-pvtodos”)||”{}”);
-var MOODS=JSON.parse(localStorage.getItem(“hc6-moods”)||”{}”);
-var CHALLENGES=JSON.parse(localStorage.getItem(“hc6-challenges”)||”[]”);
-var JOURNALS=JSON.parse(localStorage.getItem(“hc6-journals”)||”{}”);
-var REFLOGS=JSON.parse(localStorage.getItem(“hc6-reflogs”)||”[]”);
-var SESSLOGS=JSON.parse(localStorage.getItem(“hc6-sesslogs”)||”{}”);
-var MONTHLYCH=JSON.parse(localStorage.getItem(“hc6-monthlych”)||”[]”);
-var JOBPOSTS=JSON.parse(localStorage.getItem(“hc6-jobposts”)||”[]”);
-var PICKUPS=JSON.parse(localStorage.getItem(“hc6-pickups”)||“null”)||[{id:“pu1”,partner:“Tree of Life Foundation”,date:””,day:“Friday”,time:“12:00 PM”,recurring:true,assignedTo:[],items:[“Canned Goods”,“Fresh Produce”,“Bread/Bakery”,“Dairy/Eggs”,“Meat/Protein”,“Rice/Pasta/Grains”,“Snacks”,“Beverages”,“Hygiene Products”,“Cleaning Supplies”,“Baby Items”,“Clothing”],fields:[“household_size”],slots:[]}];
+var F=JSON.parse(localStorage.getItem("hc6-f")||"{}");
+var REF_EMAILS=JSON.parse(localStorage.getItem("hc6-refemails")||"null")||{mh:"claudia@higginscounselingservices.com",nutr:"dknutrition4u@yahoo.com",fin:"DColeman@dortfcu.org",career:"espann@careersourcepbc.com"};
+var RES=JSON.parse(localStorage.getItem("hc6-res")||"[]");
+var STAMPS=JSON.parse(localStorage.getItem("hc6-stamps")||"{}");
+var BOOKS=JSON.parse(localStorage.getItem("hc6-books")||"{}");
+var PEVENTS=JSON.parse(localStorage.getItem("hc6-pevents")||"{}");
+var PVTODOS=JSON.parse(localStorage.getItem("hc6-pvtodos")||"{}");
+var MOODS=JSON.parse(localStorage.getItem("hc6-moods")||"{}");
+var CHALLENGES=JSON.parse(localStorage.getItem("hc6-challenges")||"[]");
+var JOURNALS=JSON.parse(localStorage.getItem("hc6-journals")||"{}");
+var REFLOGS=JSON.parse(localStorage.getItem("hc6-reflogs")||"[]");
+var SESSLOGS=JSON.parse(localStorage.getItem("hc6-sesslogs")||"{}");
+var MONTHLYCH=JSON.parse(localStorage.getItem("hc6-monthlych")||"[]");
+var JOBPOSTS=JSON.parse(localStorage.getItem("hc6-jobposts")||"[]");
+var PICKUPS=JSON.parse(localStorage.getItem("hc6-pickups")||"null")||[{id:"pu1",partner:"Tree of Life Foundation",date:"",day:"Friday",time:"12:00 PM",recurring:true,assignedTo:[],items:["Canned Goods","Fresh Produce","Bread/Bakery","Dairy/Eggs","Meat/Protein","Rice/Pasta/Grains","Snacks","Beverages","Hygiene Products","Cleaning Supplies","Baby Items","Clothing"],fields:["household_size"],slots:[]}];
 PICKUPS.forEach(function(pu){if(!pu.slots)pu.slots=[];if(!pu.assignedTo)pu.assignedTo=[]});
 
 function svPU(){localStorage.setItem(“hc6-pickups”,JSON.stringify(PICKUPS))}
@@ -2878,8 +2872,6 @@ if(!p.sessions)p.sessions={};
 if(!p.fc)p.fc={i:false,g:false,r:false,e:false};
 })}if(d.users)users=d.users;if(d.stamps)STAMPS=d.stamps;if(d.books)BOOKS=d.books;if(d.ann)ANN=d.ann;if(d.coaches)COACHES=d.coaches;if(d.moods)MOODS=d.moods;if(d.challenges)CHALLENGES=d.challenges;if(d.monthlych)MONTHLYCH=d.monthlych;if(d.journals)JOURNALS=d.journals;if(d.reflogs)REFLOGS=d.reflogs;if(d.sesslogs)SESSLOGS=d.sesslogs;if(d.jobposts)JOBPOSTS=d.jobposts;if(d.pickups){PICKUPS=d.pickups;PICKUPS.forEach(function(pu){if(!pu.slots)pu.slots=[];if(!pu.assignedTo)pu.assignedTo=[]})}if(d.pvtodos)PVTODOS=d.pvtodos;if(d.workouts&&Array.isArray(d.workouts))WORKOUTS=d.workouts;if(!Array.isArray(WORKOUTS))WORKOUTS=[];if(d.assigned)ASSIGNED=d.assigned;if(!ASSIGNED||typeof ASSIGNED!==“object”)ASSIGNED={};if(d.completed)COMPLETED=d.completed;if(!COMPLETED||typeof COMPLETED!==“object”)COMPLETED={};if(d.wlogs)WLOGS=d.wlogs;if(!WLOGS||typeof WLOGS!==“object”)WLOGS={};if(d.store&&Array.isArray(d.store))STORE=d.store;if(d.claims&&Array.isArray(d.claims))CLAIMS=d.claims;if(d.storePickup!==undefined)STORE_PICKUP=d.storePickup;if(d.refemails)REF_EMAILS=d.refemails;if(d.forms)F=d.forms;if(d.res)RES=d.res;SV();if(cb)cb()}).catch(function(){if(cb)cb()})}
 var _origSV=SV;SV=function(){_origSV();fbPush()};
-/* Safety timeout — force past loading if stuck */
-setTimeout(function(){var ld=document.getElementById(“hcLoading”);if(ld&&ld.style.display!==“none”){ld.style.display=“none”;document.getElementById(“LS”).style.display=“flex”;console.log(“Timeout: forced past loading”)}},5000);
 fbPull(function(){var ld=document.getElementById(“hcLoading”);if(ld)ld.style.display=“none”;var s=sessionStorage.getItem(“hc6-s”);if(s){try{CU=JSON.parse(s);if(CU.role===“participant”){showPV(CU)}else{document.getElementById(“LS”).style.display=“none”;document.getElementById(“DS”).style.display=“block”;R()}}catch(e){document.getElementById(“LS”).style.display=“flex”}}else{document.getElementById(“LS”).style.display=“flex”}});
 if(“serviceWorker” in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister()})})}
 

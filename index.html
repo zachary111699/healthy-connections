@@ -3327,20 +3327,31 @@ STORE[idx].img=document.getElementById("eiImg").value.trim();
 SV();CM();R()}
 
 function openStoreAccess(){
+var actv=P.filter(function(p){return p.s==="active"}).sort(function(a,b){return a.n.localeCompare(b.n)});
+window._storeAccessList=actv;
 var h2="<div class='mti'>👥 STORE ACCESS "+XB()+"</div>";
 h2+="<div style='font-size:12px;color:#c8f0ff40;margin-bottom:10px'>Select which participants can access the store</div>";
-P.filter(function(p){return p.s==="active"}).sort(function(a,b){return a.n.localeCompare(b.n)}).forEach(function(p){
+actv.forEach(function(p,i){
 var hasAccess=p.storeAccess?true:false;
 h2+="<label style='display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #00f7ff04;font-size:13px;cursor:pointer'>";
-var ti=P.filter(function(x){return x.s==="active"}).indexOf(p);
-h2+="<input type='checkbox' "+(hasAccess?"checked":"")+" onchange='togSA(this,"+ti+")'> "+H(p.n)+"</label>"});
-h2+="<button class='b' style='width:100%;margin-top:10px;padding:10px' onclick='CM()'>DONE</button>";
+h2+="<input type='checkbox' id='sa_"+i+"' "+(hasAccess?"checked":"")+" onchange='togSA("+i+")'> "+H(p.n);
+if(hasAccess)h2+=" <span style='color:#6ee7b7;font-size:9px'>✓ Active</span>";
+h2+="</label>"});
+h2+="<div style='display:flex;gap:6px;margin-top:12px'>";
+h2+="<button class='b bg2' style='flex:1;padding:10px' onclick='saveAllStoreAccess()'>SAVE ALL</button>";
+h2+="<button class='b' style='flex:1;padding:10px' onclick='CM()'>CLOSE</button></div>";
 SM(h2)}
 
-function togSA(el,idx){var actv=P.filter(function(x){return x.s==='active'}).sort(function(a,b){return a.n.localeCompare(b.n)});if(actv[idx])toggleStoreAccess(el,actv[idx].id)}
-function toggleStoreAccess(el,pid){
-var p=P.find(function(x){return x.id===pid});if(!p)return;
-p.storeAccess=el.checked;SV()}
+function togSA(idx){
+var p=window._storeAccessList[idx];if(!p)return;
+var cb=document.getElementById("sa_"+idx);if(!cb)return;
+p.storeAccess=cb.checked}
+
+function saveAllStoreAccess(){
+SV();
+var count=P.filter(function(p){return p.storeAccess}).length;
+alert(count+" participant"+(count!==1?"s":"")+" now have store access.");
+CM();R()}
 
 /* ═══ PARTICIPANT STORE VIEW ═══ */
 function pvRenderStore(el,p){

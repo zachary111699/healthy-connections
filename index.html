@@ -2993,61 +2993,73 @@ SM(h2)}
 function openAddRecipe(){
 var h2="<div class='mti'>+ ADD RECIPE "+XB()+"</div>";
 h2+="<label class='lb'>NAME</label><input class='ip' id='nrName'>";
-h2+="<div class='r2'><div><label class='lb'>CATEGORY</label><select class='ip' id='nrCat'><option>High Protein</option><option>Low Calorie</option><option>Budget</option><option>Quick</option><option>Meal Prep</option><option>Vegetarian</option><option>Snack</option></select></div><div><label class='lb'>TIME</label><input class='ip' id='nrTime' placeholder='15 min'></div></div>";
-h2+="<div class='r2'><div><label class='lb'>COST</label><input class='ip' id='nrCost' placeholder='5'></div><div><label class='lb'>CALORIES</label><input class='ip' id='nrCal' placeholder='350'></div></div>";
-h2+="<label class='lb'>INGREDIENTS (one per line)</label><textarea class='ip' id='nrIng' style='min-height:60px'></textarea>";
-h2+="<label class='lb'>DIRECTIONS (one per line)</label><textarea class='ip' id='nrSteps' style='min-height:60px'></textarea>";
+h2+="<div class='r2'><div><label class='lb'>MEAL TYPE</label><select class='ip' id='nrMeal'><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option></select></div><div><label class='lb'>PREP TIME</label><input class='ip' id='nrTime' placeholder='15m'></div></div>";
+h2+="<div class='r2'><div><label class='lb'>COST</label><input class='ip' id='nrCost' placeholder='$5'></div><div><label class='lb'>CALORIES</label><input class='ip' id='nrCal' placeholder='350'></div></div>";
+h2+="<label class='lb'>INGREDIENTS (one per line)</label><textarea class='ip' id='nrIng' style='min-height:80px'></textarea>";
+h2+="<label class='lb'>DIRECTIONS (one per line)</label><textarea class='ip' id='nrSteps' style='min-height:80px'></textarea>";
 h2+="<button class='b bg2' style='width:100%;margin-top:8px;padding:10px' onclick='saveNewRecipe()'>+ ADD RECIPE</button>";
 SM(h2)}
 
 function saveNewRecipe(){
 var name=document.getElementById("nrName").value.trim();if(!name)return;
+var ingText=document.getElementById("nrIng").value;
+var stepsText=document.getElementById("nrSteps").value;
 RECIPES.push({
-name:name,cat:document.getElementById("nrCat").value,
+name:name,
+meal:document.getElementById("nrMeal").value,
 time:document.getElementById("nrTime").value.trim()||"",
 cost:document.getElementById("nrCost").value.trim()||"",
 cal:document.getElementById("nrCal").value.trim()||"",
-ing:document.getElementById("nrIng").value.split("\n").map(function(l){return l.trim()}).filter(function(l){return l}),
-steps:document.getElementById("nrSteps").value.split("\n").map(function(l){return l.trim()}).filter(function(l){return l})
+ing:ingText,
+steps:stepsText
 });
 localStorage.setItem("hc6-recipes",JSON.stringify(RECIPES));
-openRecipeManager()}
+CM();reloadNutr()}
 
 
+function setMealFilter(idx){var t=['All','Breakfast','Lunch','Dinner','Snack'];nutrFilter=t[idx]||'All';reloadNutr()}
 function reloadNutr(){var pg=document.getElementById('pg');if(pg)rNutrition(pg)}
+var nutrFilter="All";
 function rNutrition(el){
 var h="";
 
-/* Recipe Library */
+/* Meal type filter tabs */
 h+="<div class='cd'><div class='ct'>▸ RECIPE LIBRARY</div>";
+h+="<div style='display:flex;gap:4px;margin-bottom:8px;overflow-x:auto;-webkit-overflow-scrolling:touch'>";
+var mealTypes=["All","Breakfast","Lunch","Dinner","Snack"];
+mealTypes.forEach(function(m,mi){h+="<button class='fi"+(nutrFilter===m?" on":"")+"' onclick='setMealFilter("+mi+")'>"+m+"</button>"});
+h+="</div>";
+
 h+="<div style='display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap'>";
 h+="<input class='si' id='adminRecSrch' placeholder='Search recipes...' oninput='reloadNutr()' style='flex:1;min-width:150px'>";
 h+="<button class='b bg2' onclick='openAddRecipe()'>+ ADD RECIPE</button></div>";
 
 var rq=(document.getElementById("adminRecSrch")?document.getElementById("adminRecSrch").value:"").toLowerCase();
-var cats={};
-RECIPES.forEach(function(r,ri){
-if(rq&&r.name.toLowerCase().indexOf(rq)===-1&&r.cat.toLowerCase().indexOf(rq)===-1)return;
-if(!cats[r.cat])cats[r.cat]=[];
-cats[r.cat].push({r:r,ri:ri})});
 
-Object.keys(cats).sort().forEach(function(cat){
-h+="<div style='font-family:Orbitron;font-size:11px;color:#6ee7b7;padding:8px 0 4px;border-bottom:2px solid #6ee7b720;margin-top:8px;letter-spacing:1px'>"+H(cat).toUpperCase()+" ("+cats[cat].length+")</div>";
-cats[cat].forEach(function(item){
+var filtered=[];
+RECIPES.forEach(function(r,ri){
+if(nutrFilter!=="All"&&r.meal!==nutrFilter)return;
+if(rq&&r.name.toLowerCase().indexOf(rq)===-1&&(r.meal||"").toLowerCase().indexOf(rq)===-1&&(r.ing||"").toLowerCase().indexOf(rq)===-1)return;
+filtered.push({r:r,ri:ri})});
+
+h+="<div style='font-size:10px;color:#c8f0ff30;margin-bottom:6px'>"+filtered.length+" recipe"+(filtered.length!==1?"s":"")+"</div>";
+
+filtered.forEach(function(item){
 var r=item.r;
+var mClr=r.meal==="Breakfast"?"#f59e0b":r.meal==="Lunch"?"#00f7ff":r.meal==="Dinner"?"#c792ff":"#6ee7b7";
 h+="<div class='recipe-card' onclick='viewRecipeAdmin("+item.ri+")'>";
 h+="<div style='display:flex;justify-content:space-between;align-items:center'>";
-h+="<div class='recipe-name'>"+H(r.name)+"</div>";
-h+="<div style='display:flex;gap:6px;font-size:9px;color:#c8f0ff30'>";
+h+="<div><div class='recipe-name'>"+H(r.name)+"</div>";
+h+="<div class='recipe-meta'>";
+h+="<span style='color:"+mClr+"'>"+H(r.meal||"")+"</span>";
 if(r.time)h+="<span>"+H(r.time)+"</span>";
-if(r.cost)h+="<span>$"+H(r.cost)+"</span>";
-if(r.cal)h+="<span>"+H(r.cal)+" cal</span>";
-h+="</div></div></div>"})});
+if(r.cost)h+="<span>"+H(r.cost)+"</span>";
+h+="</div></div></div></div>"});
 
-if(!Object.keys(cats).length)h+="<div class='emp'>NO MATCHING RECIPES</div>";
+if(!filtered.length)h+="<div class='emp'>NO MATCHING RECIPES</div>";
 h+="</div>";
 
-/* Participant Nutrition Logs */
+/* Participant Meal Logs */
 h+="<div class='cd'><div class='ct'>▸ PARTICIPANT MEAL LOGS</div>";
 h+="<div style='margin-bottom:8px'><input class='si' id='nutrLogSrch' placeholder='Search participant...' oninput='reloadNutr()' style='width:100%'></div>";
 
@@ -3056,25 +3068,16 @@ var hasLogs=false;
 P.filter(function(p){return p.s==="active"&&p.nutrLog&&p.nutrLog.length}).forEach(function(p){
 if(nq&&p.n.toLowerCase().indexOf(nq)===-1)return;
 hasLogs=true;
-h+="<div style='margin-bottom:8px;padding:8px;background:#060a1420;border:1px solid #00f7ff06;border-radius:8px'>";
-h+="<div style='font-size:12px;font-weight:700;color:#00f7ff;margin-bottom:4px'>"+H(p.n)+"</div>";
-(p.nutrLog||[]).slice(-5).reverse().forEach(function(n){
-h+="<div style='display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #00f7ff04;font-size:10px'>";
-h+="<div><span style='color:#6ee7b7;font-size:9px'>"+H(n.meal)+"</span> "+H(n.text)+"</div>";
+h+="<div style='margin-bottom:8px;padding:10px;background:#060a1420;border:1px solid #00f7ff06;border-radius:8px'>";
+h+="<div style='font-size:13px;font-weight:700;color:#00f7ff;margin-bottom:6px'>"+H(p.n)+"</div>";
+(p.nutrLog||[]).slice(-7).reverse().forEach(function(n){
+var mClr2=n.meal==="Breakfast"?"#f59e0b":n.meal==="Lunch"?"#00f7ff":n.meal==="Dinner"?"#c792ff":"#6ee7b7";
+h+="<div style='display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #00f7ff04;font-size:11px'>";
+h+="<div><span style='color:"+mClr2+";font-size:9px;font-weight:700'>"+H(n.meal)+"</span> "+H(n.text)+"</div>";
 h+="<span style='color:#c8f0ff20;font-size:9px'>"+H(n.date)+"</span></div>"});
 h+="</div>"});
-if(!hasLogs)h+="<div class='emp'>NO NUTRITION LOGS FROM PARTICIPANTS YET</div>";
+if(!hasLogs)h+="<div class='emp'>NO MEAL LOGS FROM PARTICIPANTS YET</div>";
 h+="</div>";
-
-/* Quick assign recipe to participant */
-h+="<div class='cd'><div class='ct'>▸ ASSIGN RECIPE</div>";
-h+="<div class='r2'><div><label class='lb'>PARTICIPANT</label><select class='ip' id='recAssignPid'><option value=''>Select...</option>";
-P.filter(function(p){return p.s==="active"}).sort(function(a,b){return a.n.localeCompare(b.n)}).forEach(function(p){
-h+="<option value='"+p.id+"'>"+H(p.n)+"</option>"});
-h+="</select></div><div><label class='lb'>RECIPE</label><select class='ip' id='recAssignRec'><option value=''>Select...</option>";
-RECIPES.forEach(function(r,ri){h+="<option value='"+ri+"'>"+H(r.name)+"</option>"});
-h+="</select></div></div>";
-h+="<button class='b bg2' style='width:100%;margin-top:6px;padding:10px' onclick='assignRecipe()'>📩 SEND RECIPE TO PARTICIPANT</button></div>";
 
 el.innerHTML=h}
 

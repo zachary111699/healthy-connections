@@ -543,54 +543,74 @@ function addGR(){var gl=document.getElementById("gList");if(!gl)return;var d=doc
 function savePF(id){var p=P.find(function(x){return x.id===id});if(!p)return;p.pUser=document.getElementById("pu").value.trim();p.memberId=(document.getElementById("pMemberId")?document.getElementById("pMemberId").value.trim():"");p.jobsAccess=document.getElementById("pJobAccess")?document.getElementById("pJobAccess").checked:false;p.lbOptIn=document.getElementById("pLbOptIn")?document.getElementById("pLbOptIn").checked:false;p.pPass=document.getElementById("pp").value;p.coachMsg=document.getElementById("pmsg").value.trim();var ts=document.querySelectorAll(".pGT"),xs=document.querySelectorAll(".pGX"),ss=document.querySelectorAll(".pGP");p.goals=[];for(var i=0;i<ts.length;i++){var tx=xs[i].value.trim();if(tx)p.goals.push({type:ts[i].value.trim(),text:tx,status:ss[i]?ss[i].value:"created"})}p.sessions={mh:parseInt(document.getElementById("sMH").value)||0,nutr:parseInt(document.getElementById("sN").value)||0,fin:parseInt(document.getElementById("sF").value)||0};savePersonalEvents(p.id);var cks=document.querySelectorAll(".pRC");p.assignedRes=[];cks.forEach(function(c){if(c.checked)p.assignedRes.push(c.value)});SV();CM();R()}
 
 function rRes(el){
-var allRes=gRes();var h="";
+var allRes=gRes();
+var h="";
 
-/* ── MASTER RESOURCE DIRECTORY ── */
-h+="<div class='cd'><div class='ct'>▸ RESOURCE DIRECTORY</div>";
-h+="<div style='display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap'><button class='b bg2' onclick='openAR()'>+ ADD AGENCY</button><input class='si' id='resSrch' placeholder='Search agencies...' oninput='R()' style='flex:1;min-width:150px'></div>";
+h+="<div class='cd'><div class='ct'>▸ AGENCY DIRECTORY</div>";
+h+="<div style='display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap'>";
+h+="<button class='b bg2' onclick='openAR()'>+ ADD AGENCY</button>";
+h+="<input class='si' id='resSrch' placeholder='Search agencies...' oninput='R()' style='flex:1;min-width:150px'>";
+h+="</div>";
 
-var rq=(document.getElementById("resSrch")?document.getElementById("resSrch").value:"").toLowerCase();
+var rq="";
+var el2=document.getElementById("resSrch");
+if(el2)rq=el2.value.toLowerCase();
+
 var filtered=allRes;
-if(rq)filtered=allRes.filter(function(r){return r.name.toLowerCase().indexOf(rq)>-1||r.cat.toLowerCase().indexOf(rq)>-1||(r.desc||"").toLowerCase().indexOf(rq)>-1});
+if(rq){filtered=allRes.filter(function(r){
+return r.name.toLowerCase().indexOf(rq)>-1||r.cat.toLowerCase().indexOf(rq)>-1||(r.desc||"").toLowerCase().indexOf(rq)>-1
+})}
 
-var cats=[...new Set(filtered.map(function(r){return r.cat}))].sort();
+var cats=[];
+filtered.forEach(function(r){if(cats.indexOf(r.cat)===-1)cats.push(r.cat)});
+cats.sort();
+
 cats.forEach(function(cat){
 var items=filtered.filter(function(r){return r.cat===cat});
 h+="<div class='res-cat'>"+cat+" ("+items.length+")</div>";
 items.forEach(function(r){
-/* Count how many participants have this resource assigned */
-var assignedCount=P.filter(function(p){return p.assignedRes&&p.assignedRes.indexOf(r.name)>-1}).length;
-h+="<div class='res-item' style='flex-wrap:wrap'><div style='flex:1'><strong>"+H(r.name)+"</strong>";
+var ac=0;
+P.forEach(function(p){if(p.assignedRes&&p.assignedRes.indexOf(r.name)>-1)ac++});
+h+="<div class='res-item' style='flex-wrap:wrap'>";
+h+="<div style='flex:1'><strong>"+H(r.name)+"</strong>";
 if(r.desc)h+=" <span style='color:#c8f0ff30;font-size:10px'>"+H(r.desc)+"</span>";
 if(r.phone)h+="<br><span style='color:#6ee7b7;font-size:11px'>"+H(r.phone)+"</span>";
-h+="</div><div style='display:flex;gap:4px;align-items:center'>";
-if(assignedCount)h+="<span style='font-size:9px;color:#00f7ff;padding:3px 6px;border:1px solid #00f7ff20;border-radius:4px'>"+assignedCount+" assigned</span>";
-h+="<button class='b bs2' onclick='openResAssign("+JSON.stringify(r.name)+")'>👥</button>";
-if(r.url)h+="<a href='"+H(r.url)+"' target='_blank' style='font-size:10px'>↗</a>";
-h+="</div></div>"})});
+h+="</div>";
+h+="<div style='display:flex;gap:4px;align-items:center'>";
+if(ac>0)h+="<span style='font-size:9px;color:#00f7ff;padding:3px 6px;border:1px solid #00f7ff20;border-radius:4px'>"+ac+" assigned</span>";
+h+="<button class='b bs2' onclick='openResAssign(decodeURIComponent(\""+encodeURIComponent(r.name)+"\"))'>Assign</button>";
+if(r.url)h+="<a href='"+H(r.url)+"' target='_blank' style='font-size:10px'> Link</a>";
+h+="</div></div>"
+})});
 
 if(!filtered.length)h+="<div class='emp'>NO MATCHING AGENCIES</div>";
 h+="</div>";
 
-/* ── RESOURCE PICKUPS ── */
 h+="<div class='cd'><div class='ct'>▸ RESOURCE PICKUPS</div>";
-h+="<button class='b bg2' onclick='openCreatePickup()' style='margin-bottom:8px'>+ NEW PICKUP PROGRAM</button>";
+h+="<button class='b bg2' onclick='openCreatePickup()' style='margin-bottom:8px'>+ NEW PICKUP</button>";
 if(!PICKUPS.length){h+="<div class='emp'>NO PICKUP PROGRAMS</div>"}
 PICKUPS.forEach(function(pu,pi){
 var nextDate=pu.date?getNextPickupDateFrom(pu):getNextPickupDate(pu.day);
 var confirmed=pu.slots.filter(function(s){return s.date===nextDate});
-var assignedNames=(pu.assignedTo||[]).map(function(pid){var p2=P.find(function(x){return x.id===pid});return p2?p2.n:"?"});
+var aNames=[];
+if(pu.assignedTo){pu.assignedTo.forEach(function(pid){var p2=P.find(function(x){return x.id===pid});if(p2)aNames.push(p2.n)})}
 var recurLabel=pu.recurrence==="weekly"?"Weekly":pu.recurrence==="biweekly"?"Biweekly":pu.recurrence==="monthly"?"Monthly":"One-time";
-h+="<div class='pu-card'><div style='display:flex;justify-content:space-between;align-items:center'><div><div class='pu-title'>"+H(pu.partner)+"</div><div class='pu-meta'>"+(pu.day?pu.day+"s":"")+" at "+pu.time+" · "+recurLabel+" · Next: "+nextDate+"</div></div><div style='display:flex;gap:4px'><button style='padding:5px 10px;border:1px solid #00f7ff25;border-radius:4px;background:transparent;color:#00f7ff;font-size:10px;cursor:pointer' onclick='editPickupAssign("+pi+")'>👥</button><button style='padding:5px 10px;border:1px solid #ff475730;border-radius:4px;background:transparent;color:#ff4757;font-size:10px;cursor:pointer' onclick='PICKUPS.splice("+pi+",1);svPU();R()'>DELETE</button></div></div>";
-if(assignedNames.length){h+="<div style='font-size:9px;color:#6ee7b760;margin:4px 0'>Assigned: "+assignedNames.join(", ")+"</div>"}else{h+="<div style='font-size:9px;color:#ff475760;margin:4px 0'>No participants assigned — click 👥</div>"}
-h+="<div style='font-family:Orbitron;font-size:9px;color:#00f7ff;margin:6px 0 4px'>CONFIRMED FOR "+nextDate+" ("+confirmed.length+")</div>";
-if(confirmed.length){
-confirmed.forEach(function(s){
+h+="<div class='pu-card'>";
+h+="<div style='display:flex;justify-content:space-between;align-items:center'>";
+h+="<div><div class='pu-title'>"+H(pu.partner)+"</div>";
+h+="<div class='pu-meta'>"+(pu.day?pu.day+"s":"")+" at "+pu.time+" | "+recurLabel+" | Next: "+nextDate+"</div></div>";
+h+="<div style='display:flex;gap:4px'>";
+h+="<button class='b bs2' onclick='editPickupAssign("+pi+")'>Assign</button>";
+h+="<button class='b bs2 br2' onclick='PICKUPS.splice("+pi+",1);svPU();R()'>Del</button>";
+h+="</div></div>";
+if(aNames.length){h+="<div style='font-size:9px;color:#6ee7b760;margin:4px 0'>Assigned: "+aNames.join(", ")+"</div>"}
+else{h+="<div style='font-size:9px;color:#ff475760;margin:4px 0'>No one assigned yet</div>"}
+h+="<div style='font-size:9px;color:#00f7ff;margin:6px 0 4px'>CONFIRMED ("+confirmed.length+")</div>";
+if(confirmed.length){confirmed.forEach(function(s){
 h+="<div class='pu-slot'><strong>"+H(s.name)+"</strong>";
-if(s.customFields){Object.keys(s.customFields).forEach(function(k){h+=" | "+k.replace(/_/g," ")+": <strong>"+H(s.customFields[k])+"</strong>"})}
-if(s.items&&s.items.length){h+="<br><span style='color:#6ee7b7'>Items:</span> ";s.items.forEach(function(it){h+=H(it.item)+" (x"+it.qty+") "})}
-h+="</div>"});
-}else{h+="<div style='font-size:10px;color:#00f7ff20;padding:6px'>No confirmations yet</div>"}
+if(s.customFields){Object.keys(s.customFields).forEach(function(k){h+=" | "+k.replace(/_/g," ")+": "+H(s.customFields[k])})}
+h+="</div>"})}
+else{h+="<div style='font-size:10px;color:#00f7ff20;padding:6px'>None yet</div>"}
 h+="</div>"});
 h+="</div>";
 

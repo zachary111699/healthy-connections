@@ -490,6 +490,9 @@ button,.b,.fl,.fi,.bk-btn{min-height:36px}
 .home-coach-from{font-family:'Orbitron',sans-serif;font-size:8px;color:#00f7ff40;letter-spacing:1px;margin-bottom:4px}
 .home-coach-msg{font-size:13px;color:#c8f0ff;line-height:1.6;font-style:italic}
 
+
+/* ═══ MODAL BACKDROP ═══ */
+.mbg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.75);display:flex;align-items:center;justify-content:center;z-index:1000;padding:16px}
 </style>
 </head>
 <body>
@@ -667,7 +670,7 @@ var p=P.find(function(x){return x.id===u.id||(x.pUser&&x.pUser.toLowerCase()===u
 if(!p){document.getElementById("pvc").innerHTML="<div class='emp'>NOT FOUND</div>";return}
 var cw=wkK();if(!STAMPS[p.id])STAMPS[p.id]={};if(!STAMPS[p.id][cw])STAMPS[p.id][cw]={count:0,times:[]};
 
-var h="<div class='pv-hdr'><div class='pv-name'>"+H(p.n)+"</div><div class='pv-coach'>Coach: "+H(p.co||"-")+"</div></div>";
+var h="<div class='pv-hdr'><div class='pv-name'>"+H(p.n)+"</div>"+(p.co?"<div class='pv-coach'>Coach: "+H(p.co)+"</div>":"")+"</div>";
 h+="<div class='pv-tabs'>";
 [["home","🏠 HOME"],["checkin","✅ CHECK IN"],["booking","📅 BOOK"],["calendar","📆 CALENDAR"],["workouts","🏋️ WORKOUTS"],["nutrition","🥗 NUTRITION"],["progress","📊 PROGRESS"]].concat(p.storeAccess?[["store","🛍 STORE"]]:[]).concat(p.referrals&&(p.referrals.mh||p.referrals.nutr||p.referrals.fin||p.referrals.career)?[["referrals","🔗 REFERRALS"]]:[]).concat(p.jobsAccess?[["jobs","💼 JOBS"]]:[]).concat([["journal","📓 JOURNAL"]]).forEach(function(t){
 h+="<button class='pv-tab"+(pvTab===t[0]?" on":"")+"' onclick='pvSwitchTab("+JSON.stringify(t[0])+")'>"+t[1]+"</button>"});
@@ -3650,7 +3653,8 @@ h2+="<input class='ip' id='pvExSearch2' placeholder='Search exercises...' oninpu
 h2+="<div id='pvExCreateList' style='max-height:200px;overflow-y:auto;background:#060a14;border-radius:8px;padding:6px;border:1px solid #ffffff06;margin-bottom:8px'></div>";
 h2+="<div style='font-family:Orbitron;font-size:9px;color:#00f7ff;margin:8px 0 4px'>SELECTED EXERCISES</div>";
 h2+="<div id='pvExSelected' style='min-height:30px'></div>";
-h2+="<button class='b bg2' style='width:100%;margin-top:10px;padding:12px;font-size:12px' onclick='pvSaveMyWorkout()'>CREATE & ASSIGN TO TODAY</button>";
+h2+="<label class='lb'>ASSIGN TO DATE</label><input class='ip' id='pvWkDate' type='date' value='"+new Date().toISOString().split("T")[0]+"' style='font-size:13px;padding:10px'>";
+h2+="<button class='b bg2' style='width:100%;margin-top:10px;padding:12px;font-size:12px' onclick='pvSaveMyWorkout()'>CREATE WORKOUT</button>";
 SM(h2);
 window._pvSelectedEx=[];
 pvFilterExCreate()}
@@ -3699,11 +3703,12 @@ var name=(document.getElementById("pvWkName")?document.getElementById("pvWkName"
 if(!name){alert("Give your workout a name");return}
 if(!window._pvSelectedEx||!window._pvSelectedEx.length){alert("Add at least one exercise");return}
 var type=(document.getElementById("pvWkType")?document.getElementById("pvWkType").value:"Strength");
-var wk={name:name,type:type,exercises:window._pvSelectedEx};
+var date=(document.getElementById("pvWkDate")?document.getElementById("pvWkDate").value:"");
+if(!date)date=new Date().toISOString().split("T")[0];
+var wk={name:name,type:type,exercises:window._pvSelectedEx,createdBy:CU.id};
 WORKOUTS.push(wk);
 var wIdx=WORKOUTS.length-1;
-var today=new Date().toISOString().split("T")[0];
-var aKey=CU.id+"-"+today;
+var aKey=CU.id+"-"+date;
 if(!ASSIGNED[aKey])ASSIGNED[aKey]=[];
 ASSIGNED[aKey].push(wIdx);
 SV();CM();pvRefresh()}

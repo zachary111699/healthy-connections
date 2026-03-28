@@ -452,6 +452,15 @@ input[type="checkbox"]{width:20px;height:20px}
 <div id="PV" style="display:none" class="pv-bg"><div class="pv-card" id="pvc"></div></div>
 <div class="mbg" id="mb" style="display:none" onclick="if(event.target===this)CM()"><div class="mbox" id="mc"></div></div>
 <script>
+
+/* Force kill old service workers and clear all caches */
+if('serviceWorker' in navigator){
+navigator.serviceWorker.getRegistrations().then(function(regs){
+regs.forEach(function(r){r.unregister()})});
+caches.keys().then(function(names){
+names.forEach(function(n){caches.delete(n)})});
+}
+
 var DU=[{username:"admin",password:"HealthyConnections2025",role:"admin",name:"Administrator"}];
 var users=JSON.parse(localStorage.getItem("hc6-users")||"null")||DU;
 var P=JSON.parse(localStorage.getItem("hc6-p")||"[]");

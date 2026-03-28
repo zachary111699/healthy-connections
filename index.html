@@ -672,93 +672,159 @@ h+="</div>"});
 
 var hitM=[];wws.forEach(function(ww){(ww.w.exercises||[]).forEach(function(ex){var f=ACE_LIB.find(function(a){return a.n===ex.name});if(f&&f.ms){f.ms.forEach(function(m){if(hitM.indexOf(m)===-1)hitM.push(m)})}})});
 if(hitM.length){
-h+="<div style='text-align:center;padding:16px;margin-top:8px;background:linear-gradient(145deg,#0d1a2d,#111d33);border-radius:14px;border:1px solid #00f7ff08'>";
-h+="<div style='font-family:Orbitron;font-size:12px;color:#ff475780;margin-bottom:12px;letter-spacing:1px'>MUSCLES THIS WEEK</div>";
+var sh=hitM.indexOf("Shoulders")>-1||hitM.indexOf("Full Body")>-1;
+var ch=hitM.indexOf("Chest")>-1||hitM.indexOf("Full Body")>-1;
+var ab=hitM.indexOf("Abs")>-1||hitM.indexOf("Full Body")>-1;
+var ar=hitM.indexOf("Arms")>-1||hitM.indexOf("Full Body")>-1;
+var bk=hitM.indexOf("Back")>-1||hitM.indexOf("Full Body")>-1;
+var lt=hitM.indexOf("Legs-Thighs")>-1||hitM.indexOf("Full Body")>-1;
+var lc=hitM.indexOf("Legs-Calves")>-1||hitM.indexOf("Full Body")>-1;
+var gl=hitM.indexOf("Butt/Hips")>-1||hitM.indexOf("Full Body")>-1;
+var on1="#ff4757";var on2="#ff6b81";var off1="#162030";var gw="#ff475740";
 
-/* SVG Anatomical Body Map — front view */
-var sh=hitM.indexOf("Shoulders")>-1;
-var ch=hitM.indexOf("Chest")>-1;
-var ab=hitM.indexOf("Abs")>-1;
-var ar=hitM.indexOf("Arms")>-1;
-var bk=hitM.indexOf("Back")>-1;
-var lt=hitM.indexOf("Legs-Thighs")>-1;
-var lc=hitM.indexOf("Legs-Calves")>-1;
-var gl=hitM.indexOf("Butt/Hips")>-1;
-var fb=hitM.indexOf("Full Body")>-1;
-var on="#ff4757";var off="#1a2a40";
+h+="<div style='padding:24px 12px;margin-top:12px;background:linear-gradient(180deg,#0a1020,#0d1528);border-radius:16px;border:1px solid #ff475710'>";
+h+="<div style='font-family:Orbitron;font-size:13px;color:#ff4757;text-align:center;letter-spacing:2px;margin-bottom:16px'>MUSCLE ACTIVATION MAP</div>";
+h+="<div style='display:flex;justify-content:center;gap:24px;flex-wrap:wrap'>";
 
-h+="<div style='display:flex;justify-content:center;align-items:flex-start;gap:20px;flex-wrap:wrap'>";
+/* ═══ FRONT VIEW — detailed anatomical SVG ═══ */
+h+="<div style='text-align:center'><div style='font-family:Orbitron;font-size:8px;color:#c8f0ff20;letter-spacing:2px;margin-bottom:6px'>ANTERIOR</div>";
+h+="<svg xmlns='http://www.w3.org/2000/svg' width='140' height='300' viewBox='0 0 140 300'>";
+h+="<defs><filter id='gf'><feGaussianBlur stdDeviation='3'/></filter>";
+h+="<radialGradient id='ag'><stop offset='0%' stop-color='#ff4757' stop-opacity='0.9'/><stop offset='100%' stop-color='#ff4757' stop-opacity='0.3'/></radialGradient></defs>";
 
-/* Front view */
-h+="<div><div style='font-size:8px;color:#c8f0ff20;margin-bottom:4px'>FRONT</div>";
-h+="<svg width='120' height='260' viewBox='0 0 120 260'>";
-/* Head */
-h+="<ellipse cx='60' cy='22' rx='16' ry='18' fill='"+off+"' stroke='#00f7ff15' stroke-width='1'/>";
-/* Neck */
-h+="<rect x='52' y='38' width='16' height='12' fill='"+off+"' rx='3'/>";
-/* Shoulders */
-h+="<ellipse cx='30' cy='55' rx='14' ry='8' fill='"+(sh||fb?on:off)+"' opacity='"+(sh||fb?"0.8":"0.3")+"'/>";
-h+="<ellipse cx='90' cy='55' rx='14' ry='8' fill='"+(sh||fb?on:off)+"' opacity='"+(sh||fb?"0.8":"0.3")+"'/>";
-/* Chest */
-h+="<rect x='35' y='50' width='50' height='30' fill='"+(ch||fb?on:off)+"' opacity='"+(ch||fb?"0.7":"0.3")+"' rx='6'/>";
-/* Abs */
-h+="<rect x='42' y='82' width='36' height='40' fill='"+(ab||fb?on:off)+"' opacity='"+(ab||fb?"0.7":"0.3")+"' rx='4'/>";
-/* Arms left */
-h+="<rect x='10' y='58' width='18' height='50' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.7":"0.3")+"' rx='8'/>";
-/* Arms right */
-h+="<rect x='92' y='58' width='18' height='50' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.7":"0.3")+"' rx='8'/>";
+/* Head & neck */
+h+="<ellipse cx='70' cy='24' rx='15' ry='18' fill='#182030' stroke='#ffffff08' stroke-width='0.5'/>";
+h+="<path d='M62,40 L60,50 L80,50 L78,40' fill='#182030'/>";
+
+/* Traps / Shoulders - deltoids */
+h+="<path d='M38,52 Q28,48 20,58 Q22,68 34,64 Z' fill='"+(sh?on1:off1)+"' opacity='"+(sh?"0.85":"0.35")+"'/>";
+h+="<path d='M102,52 Q112,48 120,58 Q118,68 106,64 Z' fill='"+(sh?on1:off1)+"' opacity='"+(sh?"0.85":"0.35")+"'/>";
+if(sh)h+="<path d='M38,52 Q28,48 20,58 Q22,68 34,64 Z' fill='"+gw+"' filter='url(#gf)'/><path d='M102,52 Q112,48 120,58 Q118,68 106,64 Z' fill='"+gw+"' filter='url(#gf)'/>";
+
+/* Pecs / Chest */
+h+="<path d='M40,56 Q42,52 70,54 Q70,72 50,74 Q38,72 40,56 Z' fill='"+(ch?on1:off1)+"' opacity='"+(ch?"0.8":"0.3")+"'/>";
+h+="<path d='M100,56 Q98,52 70,54 Q70,72 90,74 Q102,72 100,56 Z' fill='"+(ch?on1:off1)+"' opacity='"+(ch?"0.8":"0.3")+"'/>";
+if(ch)h+="<path d='M42,58 Q44,54 70,56 Q70,70 52,72 Q40,70 42,58 Z' fill='"+gw+"' filter='url(#gf)'/><path d='M98,58 Q96,54 70,56 Q70,70 88,72 Q100,70 98,58 Z' fill='"+gw+"' filter='url(#gf)'/>";
+
+/* Abs - 6 sections */
+var abO=ab?"0.75":"0.3";var abC=ab?on1:off1;
+h+="<rect x='54' y='76' width='14' height='12' rx='3' fill='"+abC+"' opacity='"+abO+"'/>";
+h+="<rect x='72' y='76' width='14' height='12' rx='3' fill='"+abC+"' opacity='"+abO+"'/>";
+h+="<rect x='54' y='90' width='14' height='12' rx='3' fill='"+abC+"' opacity='"+abO+"'/>";
+h+="<rect x='72' y='90' width='14' height='12' rx='3' fill='"+abC+"' opacity='"+abO+"'/>";
+h+="<rect x='55' y='104' width='13' height='12' rx='3' fill='"+abC+"' opacity='"+abO+"'/>";
+h+="<rect x='72' y='104' width='13' height='12' rx='3' fill='"+abC+"' opacity='"+abO+"'/>";
+/* Obliques */
+h+="<path d='M46,78 Q48,76 52,78 L52,116 Q48,118 46,116 Z' fill='"+abC+"' opacity='"+(ab?"0.5":"0.2")+"'/>";
+h+="<path d='M94,78 Q92,76 88,78 L88,116 Q92,118 94,116 Z' fill='"+abC+"' opacity='"+(ab?"0.5":"0.2")+"'/>";
+if(ab)h+="<rect x='52' y='76' width='36' height='42' rx='4' fill='"+gw+"' filter='url(#gf)'/>";
+
+/* Biceps */
+h+="<path d='M18,62 Q14,68 12,86 Q14,100 20,98 Q26,96 24,78 Q22,62 18,62 Z' fill='"+(ar?on1:off1)+"' opacity='"+(ar?"0.8":"0.3")+"'/>";
+h+="<path d='M122,62 Q126,68 128,86 Q126,100 120,98 Q114,96 116,78 Q118,62 122,62 Z' fill='"+(ar?on1:off1)+"' opacity='"+(ar?"0.8":"0.3")+"'/>";
+if(ar)h+="<path d='M18,64 Q14,70 12,88 Q14,98 20,96 Q24,94 24,80 Q22,64 18,64 Z' fill='"+gw+"' filter='url(#gf)'/><path d='M122,64 Q126,70 128,88 Q126,98 120,96 Q116,94 116,80 Q118,64 122,64 Z' fill='"+gw+"' filter='url(#gf)'/>";
+
 /* Forearms */
-h+="<rect x='8' y='108' width='14' height='40' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.5":"0.2")+"' rx='6'/>";
-h+="<rect x='98' y='108' width='14' height='40' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.5":"0.2")+"' rx='6'/>";
-/* Hips */
-h+="<rect x='38' y='122' width='44' height='16' fill='"+(gl||fb?on:off)+"' opacity='"+(gl||fb?"0.6":"0.3")+"' rx='8'/>";
-/* Thighs */
-h+="<rect x='36' y='138' width='20' height='55' fill='"+(lt||fb?on:off)+"' opacity='"+(lt||fb?"0.7":"0.3")+"' rx='8'/>";
-h+="<rect x='64' y='138' width='20' height='55' fill='"+(lt||fb?on:off)+"' opacity='"+(lt||fb?"0.7":"0.3")+"' rx='8'/>";
-/* Calves */
-h+="<rect x='38' y='195' width='16' height='45' fill='"+(lc||fb?on:off)+"' opacity='"+(lc||fb?"0.7":"0.3")+"' rx='6'/>";
-h+="<rect x='66' y='195' width='16' height='45' fill='"+(lc||fb?on:off)+"' opacity='"+(lc||fb?"0.7":"0.3")+"' rx='6'/>";
+h+="<path d='M12,100 Q8,110 6,135 Q8,148 14,146 Q18,140 16,118 Q16,102 12,100 Z' fill='"+(ar?on2:off1)+"' opacity='"+(ar?"0.6":"0.25")+"'/>";
+h+="<path d='M128,100 Q132,110 134,135 Q132,148 126,146 Q122,140 124,118 Q124,102 128,100 Z' fill='"+(ar?on2:off1)+"' opacity='"+(ar?"0.6":"0.25")+"'/>";
+
+/* Hip flexors */
+h+="<path d='M44,118 Q42,124 44,138 L56,138 Q56,124 52,118 Z' fill='"+(gl?on1:off1)+"' opacity='"+(gl?"0.6":"0.25")+"'/>";
+h+="<path d='M96,118 Q98,124 96,138 L84,138 Q84,124 88,118 Z' fill='"+(gl?on1:off1)+"' opacity='"+(gl?"0.6":"0.25")+"'/>";
+
+/* Quads */
+h+="<path d='M40,140 Q36,160 38,195 Q42,200 50,200 Q56,198 58,195 Q62,160 58,140 Z' fill='"+(lt?on1:off1)+"' opacity='"+(lt?"0.8":"0.3")+"'/>";
+h+="<path d='M100,140 Q104,160 102,195 Q98,200 90,200 Q84,198 82,195 Q78,160 82,140 Z' fill='"+(lt?on1:off1)+"' opacity='"+(lt?"0.8":"0.3")+"'/>";
+if(lt)h+="<path d='M42,145 Q38,165 40,190 Q44,195 50,195 Q54,193 56,190 Q58,165 56,145 Z' fill='"+gw+"' filter='url(#gf)'/><path d='M98,145 Q102,165 100,190 Q96,195 90,195 Q86,193 84,190 Q82,165 84,145 Z' fill='"+gw+"' filter='url(#gf)'/>";
+
+/* Knees */
+h+="<ellipse cx='49' cy='204' rx='8' ry='6' fill='#182030'/>";
+h+="<ellipse cx='91' cy='204' rx='8' ry='6' fill='#182030'/>";
+
+/* Calves - front (tibialis) */
+h+="<path d='M42,210 Q38,225 40,255 Q44,262 50,260 Q54,255 52,225 Q52,212 42,210 Z' fill='"+(lc?on1:off1)+"' opacity='"+(lc?"0.7":"0.3")+"'/>";
+h+="<path d='M98,210 Q102,225 100,255 Q96,262 90,260 Q86,255 88,225 Q88,212 98,210 Z' fill='"+(lc?on1:off1)+"' opacity='"+(lc?"0.7":"0.3")+"'/>";
+
+/* Feet */
+h+="<ellipse cx='47' cy='268' rx='10' ry='4' fill='#182030'/>";
+h+="<ellipse cx='93' cy='268' rx='10' ry='4' fill='#182030'/>";
+
+/* Body outline */
+h+="<path d='M70,42 Q58,44 38,52 Q24,48 16,60 Q10,72 10,90 Q12,104 8,120 Q4,140 6,150 L16,148 Q20,130 18,110 Q20,100 26,96 Q32,116 42,120 Q40,128 38,140 Q34,160 36,195 Q38,204 42,210 Q38,230 40,258 Q42,268 48,270 Q54,268 54,260 Q56,240 54,214 Q52,206 56,196 Q60,190 70,190 Q80,190 84,196 Q88,206 86,214 Q84,240 86,260 Q88,268 92,270 Q98,268 100,258 Q102,230 98,210 Q102,204 104,195 Q106,160 102,140 Q100,128 98,120 Q108,116 114,96 Q120,100 122,110 Q120,130 124,148 L134,150 Q136,140 132,120 Q128,104 130,90 Q130,72 124,60 Q116,48 102,52 Q82,44 70,42 Z' fill='none' stroke='#ffffff10' stroke-width='0.8'/>";
 h+="</svg></div>";
 
-/* Back view */
-h+="<div><div style='font-size:8px;color:#c8f0ff20;margin-bottom:4px'>BACK</div>";
-h+="<svg width='120' height='260' viewBox='0 0 120 260'>";
+/* ═══ BACK VIEW ═══ */
+h+="<div style='text-align:center'><div style='font-family:Orbitron;font-size:8px;color:#c8f0ff20;letter-spacing:2px;margin-bottom:6px'>POSTERIOR</div>";
+h+="<svg xmlns='http://www.w3.org/2000/svg' width='140' height='300' viewBox='0 0 140 300'>";
+h+="<defs><filter id='gf2'><feGaussianBlur stdDeviation='3'/></filter></defs>";
+
 /* Head */
-h+="<ellipse cx='60' cy='22' rx='16' ry='18' fill='"+off+"' stroke='#00f7ff15' stroke-width='1'/>";
-/* Neck */
-h+="<rect x='52' y='38' width='16' height='12' fill='"+off+"' rx='3'/>";
-/* Shoulders */
-h+="<ellipse cx='30' cy='55' rx='14' ry='8' fill='"+(sh||fb?on:off)+"' opacity='"+(sh||fb?"0.8":"0.3")+"'/>";
-h+="<ellipse cx='90' cy='55' rx='14' ry='8' fill='"+(sh||fb?on:off)+"' opacity='"+(sh||fb?"0.8":"0.3")+"'/>";
-/* Upper back */
-h+="<rect x='35' y='50' width='50' height='30' fill='"+(bk||fb?on:off)+"' opacity='"+(bk||fb?"0.7":"0.3")+"' rx='6'/>";
-/* Lower back */
-h+="<rect x='40' y='82' width='40' height='35' fill='"+(bk||fb?on:off)+"' opacity='"+(bk||fb?"0.6":"0.3")+"' rx='4'/>";
-/* Arms */
-h+="<rect x='10' y='58' width='18' height='50' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.6":"0.3")+"' rx='8'/>";
-h+="<rect x='92' y='58' width='18' height='50' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.6":"0.3")+"' rx='8'/>";
+h+="<ellipse cx='70' cy='24' rx='15' ry='18' fill='#182030' stroke='#ffffff08' stroke-width='0.5'/>";
+h+="<path d='M62,40 L60,50 L80,50 L78,40' fill='#182030'/>";
+
+/* Traps */
+h+="<path d='M50,46 L70,42 L90,46 L94,58 L70,64 L46,58 Z' fill='"+(bk||sh?on1:off1)+"' opacity='"+(bk||sh?"0.7":"0.3")+"'/>";
+if(bk||sh)h+="<path d='M52,48 L70,44 L88,48 L92,56 L70,62 L48,56 Z' fill='"+gw+"' filter='url(#gf2)'/>";
+
+/* Rear delts */
+h+="<path d='M38,52 Q28,48 20,58 Q22,66 32,64 Z' fill='"+(sh?on1:off1)+"' opacity='"+(sh?"0.8":"0.3")+"'/>";
+h+="<path d='M102,52 Q112,48 120,58 Q118,66 108,64 Z' fill='"+(sh?on1:off1)+"' opacity='"+(sh?"0.8":"0.3")+"'/>";
+
+/* Lats */
+h+="<path d='M36,60 Q34,68 38,90 Q42,98 52,96 Q56,90 54,70 Q50,60 44,58 Z' fill='"+(bk?on1:off1)+"' opacity='"+(bk?"0.8":"0.3")+"'/>";
+h+="<path d='M104,60 Q106,68 102,90 Q98,98 88,96 Q84,90 86,70 Q90,60 96,58 Z' fill='"+(bk?on1:off1)+"' opacity='"+(bk?"0.8":"0.3")+"'/>";
+if(bk)h+="<path d='M38,62 Q36,70 40,88 Q44,94 52,92 Q54,88 52,72 Q50,62 44,60 Z' fill='"+gw+"' filter='url(#gf2)'/><path d='M102,62 Q104,70 100,88 Q96,94 88,92 Q86,88 88,72 Q90,62 96,60 Z' fill='"+gw+"' filter='url(#gf2)'/>";
+
+/* Spinal erectors */
+h+="<rect x='62' y='66' width='6' height='46' rx='3' fill='"+(bk?on2:off1)+"' opacity='"+(bk?"0.6":"0.25")+"'/>";
+h+="<rect x='72' y='66' width='6' height='46' rx='3' fill='"+(bk?on2:off1)+"' opacity='"+(bk?"0.6":"0.25")+"'/>";
+
+/* Triceps */
+h+="<path d='M20,62 Q16,68 14,88 Q16,100 22,98 Q28,94 26,78 Q24,64 20,62 Z' fill='"+(ar?on1:off1)+"' opacity='"+(ar?"0.75":"0.3")+"'/>";
+h+="<path d='M120,62 Q124,68 126,88 Q124,100 118,98 Q112,94 114,78 Q116,64 120,62 Z' fill='"+(ar?on1:off1)+"' opacity='"+(ar?"0.75":"0.3")+"'/>";
+
 /* Forearms */
-h+="<rect x='8' y='108' width='14' height='40' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.5":"0.2")+"' rx='6'/>";
-h+="<rect x='98' y='108' width='14' height='40' fill='"+(ar||fb?on:off)+"' opacity='"+(ar||fb?"0.5":"0.2")+"' rx='6'/>";
+h+="<path d='M14,102 Q10,112 8,135 Q10,148 16,146 Q20,138 18,118 Q18,104 14,102 Z' fill='"+(ar?on2:off1)+"' opacity='"+(ar?"0.55":"0.25")+"'/>";
+h+="<path d='M126,102 Q130,112 132,135 Q130,148 124,146 Q120,138 122,118 Q122,104 126,102 Z' fill='"+(ar?on2:off1)+"' opacity='"+(ar?"0.55":"0.25")+"'/>";
+
 /* Glutes */
-h+="<ellipse cx='48' cy='130' rx='12' ry='14' fill='"+(gl||fb?on:off)+"' opacity='"+(gl||fb?"0.8":"0.3")+"'/>";
-h+="<ellipse cx='72' cy='130' rx='12' ry='14' fill='"+(gl||fb?on:off)+"' opacity='"+(gl||fb?"0.8":"0.3")+"'/>";
+h+="<path d='M44,118 Q40,126 42,142 Q46,148 56,146 Q62,140 60,128 Q58,120 52,118 Z' fill='"+(gl?on1:off1)+"' opacity='"+(gl?"0.85":"0.3")+"'/>";
+h+="<path d='M96,118 Q100,126 98,142 Q94,148 84,146 Q78,140 80,128 Q82,120 88,118 Z' fill='"+(gl?on1:off1)+"' opacity='"+(gl?"0.85":"0.3")+"'/>";
+if(gl)h+="<path d='M46,120 Q42,128 44,140 Q48,144 54,142 Q58,138 58,130 Q56,122 52,120 Z' fill='"+gw+"' filter='url(#gf2)'/><path d='M94,120 Q98,128 96,140 Q92,144 86,142 Q82,138 82,130 Q84,122 88,120 Z' fill='"+gw+"' filter='url(#gf2)'/>";
+
 /* Hamstrings */
-h+="<rect x='36' y='144' width='20' height='50' fill='"+(lt||fb?on:off)+"' opacity='"+(lt||fb?"0.7":"0.3")+"' rx='8'/>";
-h+="<rect x='64' y='144' width='20' height='50' fill='"+(lt||fb?on:off)+"' opacity='"+(lt||fb?"0.7":"0.3")+"' rx='8'/>";
+h+="<path d='M40,148 Q36,168 38,198 Q42,204 50,202 Q58,198 60,172 Q58,150 54,148 Z' fill='"+(lt?on1:off1)+"' opacity='"+(lt?"0.8":"0.3")+"'/>";
+h+="<path d='M100,148 Q104,168 102,198 Q98,204 90,202 Q82,198 80,172 Q82,150 86,148 Z' fill='"+(lt?on1:off1)+"' opacity='"+(lt?"0.8":"0.3")+"'/>";
+if(lt)h+="<path d='M42,152 Q38,170 40,194 Q44,200 50,198 Q56,194 56,174 Q56,154 52,152 Z' fill='"+gw+"' filter='url(#gf2)'/><path d='M98,152 Q102,170 100,194 Q96,200 90,198 Q84,194 84,174 Q84,154 88,152 Z' fill='"+gw+"' filter='url(#gf2)'/>";
+
 /* Calves */
-h+="<rect x='38' y='195' width='16' height='45' fill='"+(lc||fb?on:off)+"' opacity='"+(lc||fb?"0.7":"0.3")+"' rx='6'/>";
-h+="<rect x='66' y='195' width='16' height='45' fill='"+(lc||fb?on:off)+"' opacity='"+(lc||fb?"0.7":"0.3")+"' rx='6'/>";
+h+="<path d='M40,210 Q36,224 38,252 Q42,262 50,260 Q56,254 54,228 Q52,212 48,210 Z' fill='"+(lc?on1:off1)+"' opacity='"+(lc?"0.75":"0.3")+"'/>";
+h+="<path d='M100,210 Q104,224 102,252 Q98,262 90,260 Q84,254 86,228 Q88,212 92,210 Z' fill='"+(lc?on1:off1)+"' opacity='"+(lc?"0.75":"0.3")+"'/>";
+if(lc)h+="<path d='M42,214 Q38,228 40,248 Q44,256 50,254 Q54,250 52,230 Q52,216 48,214 Z' fill='"+gw+"' filter='url(#gf2)'/><path d='M98,214 Q102,228 100,248 Q96,256 90,254 Q86,250 88,230 Q88,216 92,214 Z' fill='"+gw+"' filter='url(#gf2)'/>";
+
+/* Knees */
+h+="<ellipse cx='49' cy='206' rx='7' ry='5' fill='#182030'/>";
+h+="<ellipse cx='91' cy='206' rx='7' ry='5' fill='#182030'/>";
+/* Feet */
+h+="<ellipse cx='47' cy='268' rx='10' ry='4' fill='#182030'/>";
+h+="<ellipse cx='93' cy='268' rx='10' ry='4' fill='#182030'/>";
+
+/* Body outline */
+h+="<path d='M70,42 Q58,44 38,52 Q24,48 16,60 Q10,72 10,90 Q12,104 8,120 Q4,140 6,150 L16,148 Q20,130 18,110 Q20,100 26,96 Q32,116 42,120 Q40,128 38,148 Q34,168 36,198 Q38,208 42,212 Q38,230 40,258 Q42,268 48,270 Q54,268 54,260 Q56,240 54,214 Q52,206 56,200 Q60,194 70,194 Q80,194 84,200 Q88,206 86,214 Q84,240 86,260 Q88,268 92,270 Q98,268 100,258 Q102,230 98,212 Q102,208 104,198 Q106,168 102,148 Q100,128 98,120 Q108,116 114,96 Q120,100 122,110 Q120,130 124,148 L134,150 Q136,140 132,120 Q128,104 130,90 Q130,72 124,60 Q116,48 102,52 Q82,44 70,42 Z' fill='none' stroke='#ffffff10' stroke-width='0.8'/>";
 h+="</svg></div>";
 
 h+="</div>";
 
-/* Labels */
-h+="<div style='margin-top:12px'>";
-["Abs","Arms","Back","Butt/Hips","Chest","Full Body","Legs-Calves","Legs-Thighs","Shoulders"].forEach(function(m){h+="<span class='muscle-tag2 "+(hitM.indexOf(m)>-1?"hit":"miss")+"'>"+m+"</span>"});
-h+="</div>";
+/* Active muscle count */
+h+="<div style='margin-top:14px;font-family:Orbitron;font-size:20px;color:#ff4757;font-weight:800'>"+hitM.length+"<span style='font-size:10px;color:#ff475760'>/9</span></div>";
+h+="<div style='font-size:9px;color:#c8f0ff20;margin-bottom:10px'>muscle groups activated</div>";
 
-h+="</div>"}
+/* Tags */
+h+="<div style='margin-top:6px'>";
+["Shoulders","Chest","Back","Abs","Arms","Butt/Hips","Legs-Thighs","Legs-Calves","Full Body"].forEach(function(m){
+var isHit=hitM.indexOf(m)>-1;
+h+="<span style='display:inline-block;padding:4px 10px;border-radius:8px;font-size:9px;font-weight:700;margin:2px;"+(isHit?"background:#ff475720;color:#ff4757;border:1px solid #ff475730":"background:#ffffff05;color:#ffffff15;border:1px solid #ffffff08")+"'>"+m+"</span>"});
+h+="</div></div>"}
 el.innerHTML=h}
 function pvFinishAll(pid,date,wIdx,cnt){for(var i=0;i<cnt;i++){var k=pid+"-"+date+"-"+wIdx+"-"+i;if(!COMPLETED[k])COMPLETED[k]=true}SV();pvRefresh()}
 

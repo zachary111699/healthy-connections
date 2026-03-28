@@ -411,6 +411,18 @@ button,.b,.fl,.fi,.bk-btn{min-height:36px}
 .hd-btn-label{font-size:6px}
 }
 
+
+/* ═══ REPORTS MOBILE FIX ═══ */
+@media(max-width:768px){
+.impact-card{min-width:0 !important}
+.impact-big{font-size:20px !important}
+.impact-lbl{font-size:6px !important}
+.rpt-cmp{grid-template-columns:1fr !important;gap:4px !important}
+.rpt-cmp-arrow{display:none !important}
+.ba-grid{grid-template-columns:1fr !important}
+.ba-arrow{display:none !important}
+}
+
 </style>
 </head>
 <body>
@@ -2038,7 +2050,7 @@ function parseCSV(text){var lines=[],cur="",inQ=false;for(var i=0;i<text.length;
 function likertAvg(data,colMap){if(!data||!data.rows)return{};var r={};Object.keys(colMap).forEach(function(cat){var cols=colMap[cat],sum=0,cnt=0;data.rows.forEach(function(row){cols.forEach(function(ci){var v=parseFloat(row[ci]);if(!isNaN(v)&&v>=1&&v<=5){sum+=v;cnt++}})});r[cat]=cnt?(sum/cnt).toFixed(1):null});return r}
 
 function rReports(el){
-var ac=P.filter(function(p){return p.s==="active"}),exP=P.filter(function(p){return p.s==="exited"}),total=P.length;
+var h="";var ac=P.filter(function(p){return p.s==="active"}),exP=P.filter(function(p){return p.s==="exited"}),total=P.length;
 var cw=wkK();var wcMet=0;ac.forEach(function(p){if(STAMPS[p.id]&&STAMPS[p.id][cw]&&STAMPS[p.id][cw].count>=2)wcMet++});
 var wGoals=P.filter(function(p){return p.fc&&p.fc.g}).length;
 var totalStampsAll=0;P.forEach(function(p){Object.keys(STAMPS[p.id]||{}).forEach(function(w){totalStampsAll+=(STAMPS[p.id][w]||{}).count||0})});
@@ -2048,12 +2060,12 @@ var onT=ac.filter(function(p){var c=ciI(p);return c.c==="g"||c.c==="y"}).length;
 var h="<div class='cd'><div class='ct'>▸ REPORTS & IMPACT</div>";
 
 /* ── BIG NUMBERS ── */
-h+="<div style='display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:10px'>";
+h+="<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;margin-bottom:10px'>";
 h+="<div class='impact-card'><div class='impact-big' style='color:#00f7ff;font-size:28px'>"+total+"</div><div class='impact-lbl'>TOTAL SERVED</div></div>";
 h+="<div class='impact-card'><div class='impact-big' style='color:#6ee7b7;font-size:28px'>"+ac.length+"</div><div class='impact-lbl'>ACTIVE</div></div>";
 h+="<div class='impact-card'><div class='impact-big' style='color:#c792ff;font-size:28px'>"+exP.length+"</div><div class='impact-lbl'>COMPLETED</div></div>";
 h+="<div class='impact-card'><div class='impact-big' style='color:#f59e0b;font-size:28px'>"+avgMo+"</div><div class='impact-lbl'>AVG MONTHS</div></div></div>";
-h+="<div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px'>";
+h+="<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;margin-bottom:10px'>";
 h+="<div class='impact-card'><div class='impact-big' style='color:#6ee7b7;font-size:22px'>"+(ac.length?Math.round(wcMet/ac.length*100):0)+"%</div><div class='impact-lbl'>2X/WK COMPLIANCE</div></div>";
 h+="<div class='impact-card'><div class='impact-big' style='color:#f59e0b;font-size:22px'>"+(total?Math.round(wGoals/total*100):0)+"%</div><div class='impact-lbl'>GOALS SET</div></div>";
 h+="<div class='impact-card'><div class='impact-big' style='color:#00f7ff;font-size:22px'>"+totalStampsAll+"</div><div class='impact-lbl'>TOTAL VISITS</div></div></div>";
@@ -2671,7 +2683,7 @@ function rReferrals(el){
 var h="<div class='cd' style='overflow-x:auto;-webkit-overflow-scrolling:touch'><div class='ct'>▸ REFERRALS</div>";
 
 /* Provider contacts */
-h+="<div style='display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:12px'>";
+h+="<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin-bottom:12px'>";
 [["Mental Health","#c792ff",REF_EMAILS.mh],["Nutrition","#6ee7b7",REF_EMAILS.nutr],["Financial","#f59e0b",REF_EMAILS.fin],["Career","#00f7ff",REF_EMAILS.career]].forEach(function(s){
 h+="<div class='impact-card' style='border-color:"+s[1]+"15'><div style='font-family:Orbitron;font-size:11px;font-weight:700;color:"+s[1]+"'>"+s[0]+"</div><div style='font-size:9px;color:#c8f0ff40;margin-top:4px'>"+(s[2]?H(s[2]):"No email set")+"</div></div>"});
 var cs6=JSON.parse(localStorage.getItem("hc6-customsvc")||"[]");
@@ -2691,7 +2703,7 @@ h+="</select></div><div style='display:flex;align-items:end'><button class='b bg
 h+="<div style='font-family:Orbitron;font-size:10px;color:#c792ff;margin:12px 0 6px'>SERVICE UTILIZATION</div>";
 var mhC=0,nuC=0,fiC=0,mhSess=0,nuSess=0,fiSess=0;
 P.forEach(function(p){if(p.sessions){if(p.sessions.mh>0){mhC++;mhSess+=p.sessions.mh}if(p.sessions.nutr>0){nuC++;nuSess+=p.sessions.nutr}if(p.sessions.fin>0){fiC++;fiSess+=p.sessions.fin}}});
-h+="<div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px'>";
+h+="<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;margin-bottom:10px'>";
 [["Mental Health",mhC,mhSess,"#c792ff"],["Nutrition",nuC,nuSess,"#6ee7b7"],["Financial",fiC,fiSess,"#f59e0b"]].forEach(function(s){
 h+="<div class='impact-card'><div style='font-family:Orbitron;font-size:22px;font-weight:800;color:"+s[3]+"'>"+s[1]+"</div><div class='impact-lbl'>PARTICIPANTS</div><div style='font-size:8px;color:"+s[3]+"60;margin-top:2px'>"+s[2]+" total sessions</div></div>"});
 h+="</div>";

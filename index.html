@@ -1436,11 +1436,13 @@ var PREBUILT_WK=[
 {name:"Foam Roll Quads",sets:"1",reps:"60s each",weight:"",rest:"",notes:""},
 {name:"Child Pose",sets:"1",reps:"60s",weight:"",rest:"",notes:"Deep breathing"}]}
 ];
-if(!WORKOUTS.length){WORKOUTS=PREBUILT_WK;localStorage.setItem("hc6-workouts",JSON.stringify(WORKOUTS))}
+PREBUILT_WK.forEach(function(pw){
+if(!WORKOUTS.some(function(w){return w.name===pw.name}))WORKOUTS.push(pw)});
+localStorage.setItem("hc6-workouts",JSON.stringify(WORKOUTS))
 
 var ASSIGNED=JSON.parse(localStorage.getItem("hc6-assigned")||"{}")||{};
 var COMPLETED=JSON.parse(localStorage.getItem("hc6-completed")||"{}")||{};
-function svW(){localStorage.setItem("hc6-exercises",JSON.stringify(EXERCISES));localStorage.setItem("hc6-workouts",JSON.stringify(WORKOUTS));localStorage.setItem("hc6-assigned",JSON.stringify(ASSIGNED));localStorage.setItem("hc6-completed",JSON.stringify(COMPLETED))}
+function svW(){localStorage.setItem("hc6-exercises",JSON.stringify(EXERCISES));localStorage.setItem("hc6-workouts",JSON.stringify(WORKOUTS));localStorage.setItem("hc6-assigned",JSON.stringify(ASSIGNED));localStorage.setItem("hc6-completed",JSON.stringify(COMPLETED));fbPush()}
 /* Data integrity check */
 if(!ASSIGNED||typeof ASSIGNED!=="object"||Array.isArray(ASSIGNED)){ASSIGNED={};localStorage.setItem("hc6-assigned","{}")}
 if(!COMPLETED||typeof COMPLETED!=="object"||Array.isArray(COMPLETED)){COMPLETED={};localStorage.setItem("hc6-completed","{}")}
@@ -1574,19 +1576,19 @@ if(typeof COMPLETED==="undefined"||!COMPLETED)return"";
 if(typeof WORKOUTS==="undefined"||!WORKOUTS)return"";
 var today3=new Date().toISOString().split("T")[0];var pKey=p.id+"-"+today3;var aw=ASSIGNED[pKey];
 if(!aw||!aw.length)return"";
-var comp=COMPLETED[pKey]||{};
+/* flat key format */
 var h="<div class='pv-sec'><div class='pv-st'>🏋️ MY WORKOUTS</div>";
 aw.forEach(function(aIdx){
 var w=WORKOUTS[aIdx];if(!w)return;
 h+="<div class='pv-wk'><div class='pv-wk-name'>"+H(w.name)+(w.type?" <span style='font-size:7px;color:#c792ff'>["+w.type+"]</span>":"")+"</div>";
 if(w.exercises){w.exercises.forEach(function(ex,ei){
-var ck=comp[aIdx+"-"+ei]?"done":"";
+var ck=COMPLETED[pKey+"-"+aIdx+"-"+ei]?"done":"";
 var exHow=(EX_HOW[ex.name]||"");h+="<div class='pv-wk-ex' style='flex-direction:column;align-items:stretch'><div style='display:flex;align-items:center;gap:6px'><div class='pv-wk-check "+ck+"' onclick=\"pvToggleEx('"+p.id+"','"+today3+"','"+aIdx+"-"+ei+"')\">"+(ck?"✓":"")+"</div><div class='pv-wk-info'><div>"+H(ex.name)+"</div><div class='pv-wk-sets'>"+(ex.sets?ex.sets+"x":"")+(ex.reps||"")+(ex.weight?" @ "+ex.weight:"")+(ex.rest?" | "+ex.rest:"")+(ex.notes?" — "+H(ex.notes):"")+"</div></div>"+(exHow?"<div style='font-size:7px;color:#00f7ff20;cursor:pointer;margin-top:2px' onclick='togNext(this)'>ℹ️ Instructions</div><div style='display:none;font-size:8px;color:#c8f0ff40;padding:3px;background:#00f7ff04;border-radius:3px;line-height:1.4'>"+H(exHow)+"</div>":"")+"</div>"})}
-var totalEx=w.exercises?w.exercises.length:0;var doneEx=0;if(w.exercises)w.exercises.forEach(function(ex,ei){if(comp[aIdx+"-"+ei])doneEx++});
+var totalEx=w.exercises?w.exercises.length:0;var doneEx=0;if(w.exercises)w.exercises.forEach(function(ex,ei){if(COMPLETED[pKey+"-"+aIdx+"-"+ei])doneEx++});
 if(totalEx){var pct=Math.round(doneEx/totalEx*100);h+="<div style='margin-top:4px;background:#00f7ff08;border-radius:2px;height:8px;overflow:hidden'><div style='height:100%;width:"+pct+"%;background:"+(pct>=100?"#6ee7b7":"#00f7ff")+";border-radius:2px;transition:width .3s'></div></div><div style='font-size:6px;color:#00f7ff40;text-align:right;margin-top:1px'>"+doneEx+"/"+totalEx+"</div>"}
 h+=muscleMapHTML(w.exercises||[]);h+="</div>"});h+="</div>";return h}
 
-function pvToggleEx(pid,dateKey,exKey){var pKey=pid+"-"+dateKey;if(!COMPLETED[pKey])COMPLETED[pKey]={};COMPLETED[pKey][exKey]=!COMPLETED[pKey][exKey];svW();var u=JSON.parse(sessionStorage.getItem("hc6-s"));if(u)showPV(u)}
+function pvToggleEx(pid,dateKey,exKey){var k=pid+"-"+dateKey+"-"+exKey;COMPLETED[k]=!COMPLETED[k];if(!COMPLETED[k])delete COMPLETED[k];SV();pvRefresh()}
 
 
 /* ═══ NUTRITION LOG + RECIPES ═══ */
@@ -1692,8 +1694,8 @@ if(hasPerf)earned.push("perfect_wk");
 var intake=p.intakeDate||p.id8;
 if(intake){var days=Math.floor((new Date()-new Date(intake))/864e5);if(days>=30)earned.push("first_month");if(days>=90)earned.push("three_months")}
 if(p.fc&&p.fc.g)earned.push("goals_set");
-var today4=new Date().toISOString().split("T")[0];var pKey=p.id+"-"+today4;var comp=(typeof COMPLETED!=="undefined"&&COMPLETED)?COMPLETED[pKey]||{}:{};var aw=(typeof ASSIGNED!=="undefined"&&ASSIGNED)?ASSIGNED[pKey]||[]:[];
-var anyDone=false;aw.forEach(function(aIdx){var w=WORKOUTS[aIdx];if(!w||!w.exercises)return;var all=true;w.exercises.forEach(function(ex,ei){if(!comp[aIdx+"-"+ei])all=false});if(all&&w.exercises.length)anyDone=true});
+var today4=new Date().toISOString().split("T")[0];var pKey=p.id+"-"+today4;/* flat key COMPLETED */var aw=(typeof ASSIGNED!=="undefined"&&ASSIGNED)?ASSIGNED[pKey]||[]:[];
+var anyDone=false;aw.forEach(function(aIdx){var w=WORKOUTS[aIdx];if(!w||!w.exercises)return;var all=true;w.exercises.forEach(function(ex,ei){if(!COMPLETED[pKey+"-"+aIdx+"-"+ei])all=false});if(all&&w.exercises.length)anyDone=true});
 if(anyDone)earned.push("workout_done");
 return earned}
 
@@ -2561,7 +2563,7 @@ if(!p.assignedRes)p.assignedRes=[];
 if(!p.metrics)p.metrics=[];
 if(!p.sessions)p.sessions={};
 if(!p.fc)p.fc={i:false,g:false,r:false,e:false};
-})}if(d.users)users=d.users;if(d.stamps)STAMPS=d.stamps;if(d.books)BOOKS=d.books;if(d.ann)ANN=d.ann;if(d.coaches)COACHES=d.coaches;if(d.moods)MOODS=d.moods;if(d.challenges)CHALLENGES=d.challenges;if(d.monthlych)MONTHLYCH=d.monthlych;if(d.journals)JOURNALS=d.journals;if(d.reflogs)REFLOGS=d.reflogs;if(d.sesslogs)SESSLOGS=d.sesslogs;if(d.jobposts)JOBPOSTS=d.jobposts;if(d.pickups){PICKUPS=d.pickups;PICKUPS.forEach(function(pu){if(!pu.slots)pu.slots=[];if(!pu.assignedTo)pu.assignedTo=[]})}if(d.pvtodos)PVTODOS=d.pvtodos;if(d.workouts)WORKOUTS=d.workouts;if(d.assigned)ASSIGNED=d.assigned;if(d.completed)COMPLETED=d.completed;if(d.refemails)REF_EMAILS=d.refemails;if(d.forms)F=d.forms;if(d.res)RES=d.res;SV();if(cb)cb()}).catch(function(){if(cb)cb()})}
+})}if(d.users)users=d.users;if(d.stamps)STAMPS=d.stamps;if(d.books)BOOKS=d.books;if(d.ann)ANN=d.ann;if(d.coaches)COACHES=d.coaches;if(d.moods)MOODS=d.moods;if(d.challenges)CHALLENGES=d.challenges;if(d.monthlych)MONTHLYCH=d.monthlych;if(d.journals)JOURNALS=d.journals;if(d.reflogs)REFLOGS=d.reflogs;if(d.sesslogs)SESSLOGS=d.sesslogs;if(d.jobposts)JOBPOSTS=d.jobposts;if(d.pickups){PICKUPS=d.pickups;PICKUPS.forEach(function(pu){if(!pu.slots)pu.slots=[];if(!pu.assignedTo)pu.assignedTo=[]})}if(d.pvtodos)PVTODOS=d.pvtodos;if(d.workouts&&Array.isArray(d.workouts))WORKOUTS=d.workouts;if(!Array.isArray(WORKOUTS))WORKOUTS=[];if(d.assigned)ASSIGNED=d.assigned;if(!ASSIGNED||typeof ASSIGNED!=="object")ASSIGNED={};if(d.completed)COMPLETED=d.completed;if(!COMPLETED||typeof COMPLETED!=="object")COMPLETED={};if(d.refemails)REF_EMAILS=d.refemails;if(d.forms)F=d.forms;if(d.res)RES=d.res;SV();if(cb)cb()}).catch(function(){if(cb)cb()})}
 var _origSV=SV;SV=function(){_origSV();fbPush()};
 fbPull(function(){var ld=document.getElementById("hcLoading");if(ld)ld.style.display="none";var s=sessionStorage.getItem("hc6-s");if(s){try{CU=JSON.parse(s);if(CU.role==="participant"){showPV(CU)}else{document.getElementById("LS").style.display="none";document.getElementById("DS").style.display="block";R()}}catch(e){document.getElementById("LS").style.display="flex"}}else{document.getElementById("LS").style.display="flex"}});
 if("serviceWorker" in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister()})})}

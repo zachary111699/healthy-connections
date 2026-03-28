@@ -29,10 +29,10 @@ a{color:#00f7ff}
 .lbtn{display:block;width:100%;padding:10px;border:2px solid #00f7ff;border-radius:6px;background:transparent;color:#00f7ff;font-size:11px;font-weight:700;font-family:'Orbitron',sans-serif;letter-spacing:2px;cursor:pointer}
 .lbtn:hover{background:#00f7ff10}
 .lerr{color:#ff4757;font-family:'Press Start 2P',monospace;font-size:6px;margin-top:8px;display:none}
-.hd{background:linear-gradient(135deg,#0d1525,#111d33);border-bottom:2px solid #00f7ff15;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
-.hd h1{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:800;color:#00f7ff;letter-spacing:2px}
-.hd-s{font-family:'Press Start 2P',monospace;font-size:5px;color:#6ee7b7;margin-top:2px}
-.hd-u{font-size:9px;color:#00f7ff50;margin-top:1px}
+.hd{background:linear-gradient(135deg,#0d1525,#111d33);border-bottom:2px solid #00f7ff15;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+.hd h1{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:800;color:#00f7ff;letter-spacing:3px}
+.hd-s{font-family:'Press Start 2P',monospace;font-size:8px;color:#6ee7b7;margin-top:4px}
+.hd-u{font-size:12px;color:#00f7ff50;margin-top:4px}
 .hd-b{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
 .b{padding:9px 16px;border-radius:6px;border:1px solid #00f7ff25;font-weight:600;font-size:12px;cursor:pointer;font-family:inherit;background:transparent;color:#00f7ff}
 .b:hover{background:#00f7ff08}
@@ -387,6 +387,30 @@ button,.b,.fl,.fi,.bk-btn{min-height:36px}
 .muscle-tag2{display:inline-block;padding:3px 8px;border-radius:6px;font-size:8px;font-weight:700;margin:2px}
 .muscle-tag2.hit{background:#ff475715;color:#ff4757}.muscle-tag2.miss{background:#00f7ff08;color:#00f7ff20}
 
+
+/* ═══ HEADER BUTTONS — large with labels ═══ */
+.hd-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:8px 12px;min-width:56px;
+  border-radius:8px;border:1px solid #00f7ff15;
+  background:#0a1628;color:#c8f0ff;
+  cursor:pointer;font-family:'Share Tech Mono',monospace;
+  transition:all 0.15s;gap:2px;
+}
+.hd-btn:hover{background:#00f7ff10;border-color:#00f7ff30}
+.hd-btn-icon{font-size:18px;line-height:1}
+.hd-btn-label{font-size:7px;color:#c8f0ff50;text-transform:uppercase;letter-spacing:0.5px;font-weight:700}
+.hd-btn-primary{background:linear-gradient(135deg,#00f7ff15,#00f7ff08);border-color:#00f7ff30;color:#00f7ff}
+.hd-btn-primary .hd-btn-label{color:#00f7ff80}
+.hd-b{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.hd{padding:12px 16px}
+
+@media(max-width:768px){
+.hd-btn{min-width:48px;padding:6px 8px}
+.hd-btn-icon{font-size:16px}
+.hd-btn-label{font-size:6px}
+}
+
 </style>
 </head>
 <body>
@@ -398,7 +422,7 @@ button,.b,.fl,.fi,.bk-btn{min-height:36px}
 <div class="lerr" id="liE">ACCESS DENIED</div></div></div>
 <div id="DS" style="display:none">
 <div class="hd"><div><h1>H.C. v7.0</h1><div class="hd-s">▸ COMPLETE SUITE</div><div class="hd-u" id="hu"></div></div>
-<div class="hd-b"><button class="b" id="bC">⚙</button><span id="aB"></span><button class="b" id="bL">⏻</button><button class="b bg2" id="bN">+</button></div></div>
+<div class="hd-b"><span id="aB"></span><button class="hd-btn" id="bC"><span class="hd-btn-icon">⚙</span><span class="hd-btn-label">Settings</span></button><button class="hd-btn" id="bL"><span class="hd-btn-icon">⏻</span><span class="hd-btn-label">Logout</span></button><button class="hd-btn hd-btn-primary" id="bN"><span class="hd-btn-icon">+</span><span class="hd-btn-label">Add New</span></button></div></div>
 <div class="nt" id="nv"></div>
 <div class="mn" id="pg"></div></div>
 <div id="PV" style="display:none" class="pv-bg"><div class="pv-card" id="pvc"></div></div>
@@ -463,7 +487,7 @@ function tryL(){var u=document.getElementById("liU").value.trim().toLowerCase(),
 function doLock(){CU=null;sessionStorage.removeItem("hc6-s");document.getElementById("DS").style.display="none";document.getElementById("PV").style.display="none";document.getElementById("LS").style.display="flex";document.getElementById("liU").value="";document.getElementById("liP").value="";document.getElementById("liE").style.display="none"}
 var ss=JSON.parse(sessionStorage.getItem("hc6-s")||"null");if(ss){if(ss.role==="participant"){var pp2=P.find(function(x){return x.pUser===ss.username&&x.pPass===ss.password});if(pp2){CU=ss;document.getElementById("LS").style.display="none";showPV(ss)}}else{var vv=users.find(function(x){return x.username===ss.username&&x.password===ss.password});if(vv){CU=vv;document.getElementById("LS").style.display="none";document.getElementById("DS").style.display="block"}}}
 
-function R(){if(!CU||CU.role==="participant")return;document.getElementById("hu").innerHTML="▸ "+H(CU.name)+" ["+CU.role.toUpperCase()+"]";document.getElementById("aB").innerHTML=CU.role==="admin"?"<button class='b' onclick='openUM()'>👥</button>":"";var nc=nCounts();var tabs=[["tracker","📊 TRACKER",nc.tracker],["portal","👤 PORTAL",0],["calendar","📅 CALENDAR",nc.calendar],["workouts","🏋️ WORKOUTS",0],["nutrition","🥗 NUTRITION",0],["referrals","🔗 REFERRALS",0],["resources","🏢 AGENCIES",0],["reports","📈 REPORTS",0],["announce","📢 ANNOUNCE",0]];document.getElementById("nv").innerHTML=tabs.map(function(t){return"<button class='ntb"+(tab===t[0]?" on":"")+"' onclick=\"tab='"+t[0]+"';R()\">"+t[1]+(t[2]?"<span class='ntb-bd'>"+t[2]+"</span>":"")+"</button>"}).join("");var pg=document.getElementById("pg");if(tab==="tracker")rTracker(pg);else if(tab==="calendar")rCal(pg);else if(tab==="workouts")rWorkouts(pg);else if(tab==="referrals")rReferrals(pg);else if(tab==="reports")rReports(pg);else if(tab==="announce")rAnn(pg);else if(tab==="portal")rPortal(pg);else if(tab==="nutrition")rNutrition(pg);else if(tab==="resources")rRes(pg)}
+function R(){if(!CU||CU.role==="participant")return;document.getElementById("hu").innerHTML="▸ "+H(CU.name)+" ["+CU.role.toUpperCase()+"]";document.getElementById("aB").innerHTML=CU.role==="admin"?"<button class='hd-btn' onclick='openUM()'><span class='hd-btn-icon'>👥</span><span class='hd-btn-label'>Users</span></button>":"";var nc=nCounts();var tabs=[["tracker","📊 TRACKER",nc.tracker],["portal","👤 PORTAL",0],["calendar","📅 CALENDAR",nc.calendar],["workouts","🏋️ WORKOUTS",0],["nutrition","🥗 NUTRITION",0],["referrals","🔗 REFERRALS",0],["resources","🏢 AGENCIES",0],["reports","📈 REPORTS",0],["announce","📢 ANNOUNCE",0]];document.getElementById("nv").innerHTML=tabs.map(function(t){return"<button class='ntb"+(tab===t[0]?" on":"")+"' onclick=\"tab='"+t[0]+"';R()\">"+t[1]+(t[2]?"<span class='ntb-bd'>"+t[2]+"</span>":"")+"</button>"}).join("");var pg=document.getElementById("pg");if(tab==="tracker")rTracker(pg);else if(tab==="calendar")rCal(pg);else if(tab==="workouts")rWorkouts(pg);else if(tab==="referrals")rReferrals(pg);else if(tab==="reports")rReports(pg);else if(tab==="announce")rAnn(pg);else if(tab==="portal")rPortal(pg);else if(tab==="nutrition")rNutrition(pg);else if(tab==="resources")rRes(pg)}
 
 function rTracker(el){var ac=P.filter(function(p){return p.s==="active"}),ex=P.filter(function(p){return p.s==="exited"});var coaches2=["all"];ac.forEach(function(p){if(p.co&&coaches2.indexOf(p.co)===-1)coaches2.push(p.co)});var fl=coachF!=="all"?ac.filter(function(p){return p.co===coachF}):ac;var ov=fl.filter(function(p){return ciI(p).c==="r"}),du=fl.filter(function(p){return ciI(p).c==="y"}),ut=fl.filter(function(p){return ciI(p).c==="g"});var cw=wkK();var h="<div class='sts'>";[[fl.length,"#00f7ff","ACTIVE"],[ov.length,"#ff4757","CRITICAL"],[du.length,"#f59e0b","WARNING"],[ut.length,"#6ee7b7","ONLINE"],[ex.length,"#94a3b8","ARCHIVED"]].forEach(function(s){h+="<div class='st'><div class='st-n' style='color:"+s[1]+"'>"+s[0]+"</div><div class='st-l'>"+s[2]+"</div></div>"});h+="</div>";h+="<div class='cd'><div class='ct'>▸ FORMS</div><div class='fls'>";[["📋INT","intake"],["🎯GOL","goals"],["📊CHK","checkin"],["🔗REF","referral"],["🏁EXT","exit"]].forEach(function(f){h+="<button class='fl' onclick=\"ofl('"+f[1]+"')\">"+f[0]+"</button>"});h+="</div>";if(coaches2.length>1){h+="<div class='fls' style='margin-top:4px'>";coaches2.forEach(function(c){h+="<button class='fi"+(coachF===c?" on":"")+"' onclick=\"coachF='"+H(c)+"';R()\">"+(c==="all"?"ALL":H(c))+"</button>"});h+="</div>"}if(!F.intake)h+="<p class='wrn'>⚠ NO FORM LINKS</p>";h+="</div>";h+="<div style='display:flex;flex-direction:column;gap:6px;margin-bottom:8px'><div style='display:flex;gap:4px;flex-wrap:wrap'><input class='si' id='sb' placeholder='Search name, ID, coach...' oninput='R()' style='flex:1;min-width:150px'><select class='ip' id='sortSel' onchange='sortBy=this.value;R()' style='width:auto;min-width:120px;padding:8px'><option value='name-az'"+(sortBy==="name-az"?" selected":"")+">Name A-Z</option><option value='name-za'"+(sortBy==="name-za"?" selected":"")+">Name Z-A</option><option value='coach'"+(sortBy==="coach"?" selected":"")+">Coach</option><option value='status'"+(sortBy==="status"?" selected":"")+">Status</option></select></div><div class='fis'>";[["all","ALL["+fl.length+"]",cf==="all"&&cv==="active"],["overdue","🔴["+ov.length+"]",cf==="overdue"],["due","🟡["+du.length+"]",cf==="due"],["good","🟢["+ut.length+"]",cf==="good"],["exited","📦["+ex.length+"]",cv==="exited"]].forEach(function(f){h+="<button class='fi"+(f[2]?" on":"")+"' onclick=\"sf('"+f[0]+"')\">"+f[1]+"</button>"});h+="</div></div>";var ls=cv==="exited"?ex:fl;if(cf==="overdue")ls=ov;else if(cf==="due")ls=du;else if(cf==="good")ls=ut;var q=(document.getElementById("sb")?document.getElementById("sb").value:"").toLowerCase();if(q)ls=ls.filter(function(p){return p.n.toLowerCase().indexOf(q)>-1||(p.pid||"").toLowerCase().indexOf(q)>-1||(p.co||"").toLowerCase().indexOf(q)>-1});if(sortBy==="name-az")ls.sort(function(a,b){return a.n.localeCompare(b.n)});else if(sortBy==="name-za")ls.sort(function(a,b){return b.n.localeCompare(a.n)});else if(sortBy==="coach")ls.sort(function(a,b){return(a.co||"zzz").localeCompare(b.co||"zzz")});else ls.sort(function(a,b){var o={r:0,y:1,g:2,x:3};return(o[ciI(a).c]||3)-(o[ciI(b).c]||3)});h+="<div class='cd' style='padding:0;overflow:hidden'><div style='padding:12px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border-bottom:1px solid #00f7ff08' onclick='togTracker()'><span style='font-family:Orbitron;font-size:12px;color:#00f7ff;font-weight:700'>PARTICIPANTS ("+ls.length+")</span><span id='trackerArrow' style='font-size:14px;color:#00f7ff40'>▼</span></div><div id='trackerList'>";if(!ls.length)h+="<div class='emp'>NO ENTRIES</div>";else{h+="<div style='overflow-x:auto'><table><thead><tr><th>STS</th><th>NAME</th><th>COACH</th><th>CHK</th><th>F/U</th><th>WK</th><th>SESS</th><th>M</th><th>FRM</th><th></th></tr></thead><tbody>";ls.forEach(function(p){var ci=ciI(p),fc=p.fc||{};var ws=(STAMPS[p.id]&&STAMPS[p.id][cw])?STAMPS[p.id][cw].count:0;h+="<tr><td><span class='bd "+bCl(ci.c)+"'><span class='dot3' style='background:"+dCl(ci.c)+"'></span>"+ci.l+"</span></td><td style='font-weight:600'>"+H(p.n)+"</td><td style='font-size:8px'>"+H(p.co||"-")+"</td><td>"+tH(p)+"</td><td>"+fT(p.followUp)+"</td><td><span class='bd "+(ws>=2?"bd-g":ws?"bd-y":"bd-x")+"'>"+ws+"/2</span></td><td>"+sessH(p)+"</td><td style='text-align:center;font-family:Orbitron;color:#00f7ff;font-size:9px'>"+(p.cc||0)+"</td><td>";[["i","I"],["g","G"],["r","R"],["e","E"]].forEach(function(x){h+="<span class='ft "+(fc[x[0]]?"fy":"fn3")+"'>"+(fc[x[0]]?"✓":"·")+x[1]+"</span>"});h+="</td><td><button class='b bs2' onclick=\"od('"+p.id+"')\">▶</button>"+(p.s==="active"?" <button class='b bs2 bg2' onclick=\"rc('"+p.id+"')\">✓</button>":"")+"</td></tr>"});h+="</tbody></table></div>"}h+="</div></div>";el.innerHTML=h}
 

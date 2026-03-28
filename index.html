@@ -3645,73 +3645,130 @@ R()}
 
 
 function pvOpenCreateWorkout(){
-var h2="<div class='mti'>+ CREATE MY WORKOUT "+XB()+"</div>";
-h2+="<label class='lb'>WORKOUT NAME</label><input class='ip' id='pvWkName' placeholder='My Upper Body' style='font-size:14px;padding:10px'>";
-h2+="<label class='lb'>TYPE</label><select class='ip' id='pvWkType' style='font-size:13px;padding:10px'><option>Strength</option><option>Cardio</option><option>Flexibility</option></select>";
-h2+="<div style='font-family:Orbitron;font-size:9px;color:#6ee7b7;margin:10px 0 6px;letter-spacing:1px'>ADD EXERCISES</div>";
-h2+="<input class='ip' id='pvExSearch2' placeholder='Search exercises...' oninput='pvFilterExCreate()' style='font-size:13px;padding:10px;margin-bottom:6px'>";
-h2+="<div id='pvExCreateList' style='max-height:200px;overflow-y:auto;background:#060a14;border-radius:8px;padding:6px;border:1px solid #ffffff06;margin-bottom:8px'></div>";
-h2+="<div style='font-family:Orbitron;font-size:9px;color:#00f7ff;margin:8px 0 4px'>SELECTED EXERCISES</div>";
-h2+="<div id='pvExSelected' style='min-height:30px'></div>";
+var h2="<div class='mti'>+ CREATE WORKOUT "+XB()+"</div>";
+h2+="<div class='r2'><div><label class='lb'>NAME *</label><input class='ip' id='pvWkName' placeholder='My Upper Body' style='font-size:14px;padding:10px'></div><div><label class='lb'>TYPE</label><select class='ip' id='pvWkType' style='font-size:13px;padding:10px'><option>Strength</option><option>Cardio</option><option>Flexibility</option><option>Circuit</option><option>AMRAP</option></select></div></div>";
 h2+="<label class='lb'>ASSIGN TO DATE</label><input class='ip' id='pvWkDate' type='date' value='"+new Date().toISOString().split("T")[0]+"' style='font-size:13px;padding:10px'>";
-h2+="<button class='b bg2' style='width:100%;margin-top:10px;padding:12px;font-size:12px' onclick='pvSaveMyWorkout()'>CREATE WORKOUT</button>";
+h2+="<div style='font-family:Orbitron;font-size:9px;color:#6ee7b7;margin:10px 0 6px;letter-spacing:1px'>EXERCISES ADDED</div>";
+h2+="<div id='pvWkExList'></div>";
+h2+="<div style='margin-top:8px;background:#060a1440;border:1px solid #ffffff06;border-radius:10px;padding:12px'>";
+h2+="<div style='font-family:Orbitron;font-size:9px;color:#6ee7b7;margin-bottom:6px;letter-spacing:1px'>ADD EXERCISE</div>";
+h2+="<input class='ip' id='pvWkExSearch' placeholder='Search "+ACE_LIB.length+" exercises...' oninput='pvWkFilterEx()' style='font-size:13px;padding:10px;margin-bottom:6px'>";
+h2+="<div style='display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px' id='pvWkBpFilters'>";
+["All","Abs","Arms","Back","Butt/Hips","Chest","Full Body","Legs-Calves","Legs-Thighs","Shoulders"].forEach(function(b,bi){
+h2+="<button class='fi"+(b==="All"?" on":"")+"' onclick='pvWkSetBpIdx("+bi+")'>"+b+"</button>"});
+h2+="</div><div style='display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px' id='pvWkEqFilters'>";
+["All","No Equipment","Dumbbells","Barbell","Machine","Resistance Bands/Cables","Kettlebells"].forEach(function(e,ei){
+h2+="<button class='fi"+(e==="All"?" on":"")+"' onclick='pvWkSetEqIdx("+ei+")'>"+e+"</button>"});
+h2+="</div><div id='pvWkExResults' style='max-height:250px;overflow-y:auto'></div></div>";
+h2+="<button class='b bg2' style='width:100%;margin-top:12px;padding:14px;font-size:13px' onclick='pvSaveMyWorkout()'>CREATE WORKOUT</button>";
 SM(h2);
-window._pvSelectedEx=[];
-pvFilterExCreate()}
+window._pvWkBp="All";window._pvWkEq="All";
+pvWkFilterEx()}
 
-function pvFilterExCreate(){
-var q=(document.getElementById("pvExSearch2")?document.getElementById("pvExSearch2").value:"").toLowerCase();
-var el=document.getElementById("pvExCreateList");if(!el)return;
-var h="";
-var count=0;
-ACE_LIB.forEach(function(ex,i){
-if(q&&ex.n.toLowerCase().indexOf(q)===-1&&ex.bp.toLowerCase().indexOf(q)===-1)return;
-if(count>=30)return;count++;
-var sel=window._pvSelectedEx&&window._pvSelectedEx.some(function(s){return s.name===ex.n});
-h+="<div style='display:flex;justify-content:space-between;align-items:center;padding:6px 4px;border-bottom:1px solid #ffffff04;font-size:12px'><div><span style='color:#c8f0ff'>"+H(ex.n)+"</span><br><span style='font-size:9px;color:#c8f0ff20'>"+ex.bp+"</span></div>";
-if(sel)h+="<span style='color:#6ee7b7;font-size:9px'>Added</span>";
-else h+="<button class='b bs2 bg2' onclick='pvAddExToWorkout("+i+")'>+ Add</button>";
-h+="</div>"});
-if(!count)h="<div class='emp'>No matching exercises</div>";
-el.innerHTML=h}
+function pvWkSetBp_OLD(el,v){
+window._pvWkBp=v;
+var btns=document.getElementById("pvWkBpFilters");
+if(btns){btns.querySelectorAll(".fi").forEach(function(b){b.className="fi"+(b.textContent===v?" on":"")})}
+pvWkFilterEx()}
 
-function pvAddExToWorkout(exIdx){
-var ex=ACE_LIB[exIdx];if(!ex)return;
-if(!window._pvSelectedEx)window._pvSelectedEx=[];
-if(window._pvSelectedEx.some(function(s){return s.name===ex.n}))return;
-window._pvSelectedEx.push({name:ex.n,sets:"3",reps:"10",weight:"",rest:"60s",notes:""});
-pvRenderSelectedEx();
-pvFilterExCreate()}
+function pvWkSetEq_OLD(el,v){
+window._pvWkEq=v;
+var btns=document.getElementById("pvWkEqFilters");
+if(btns){btns.querySelectorAll(".fi").forEach(function(b){b.className="fi"+(b.textContent===v?" on":"")})}
+pvWkFilterEx()}
 
-function pvRenderSelectedEx(){
-var el=document.getElementById("pvExSelected");if(!el)return;
-var h="";
-(window._pvSelectedEx||[]).forEach(function(ex,i){
-h+="<div style='display:flex;justify-content:space-between;align-items:center;padding:6px;background:#ffffff03;border-radius:6px;margin-bottom:4px'>";
-h+="<div style='flex:1;font-size:12px;color:#c8f0ff'>"+(i+1)+". "+H(ex.name)+"</div>";
-h+="<div style='display:flex;gap:4px;align-items:center'>";
-h+="<input style='width:35px;padding:4px;border:1px solid #ffffff08;border-radius:4px;background:#060a14;color:#c8f0ff;font-size:10px;text-align:center' value='"+ex.sets+"' placeholder='3' onchange='window._pvSelectedEx["+i+"].sets=this.value'>";
-h+="<span style='font-size:8px;color:#c8f0ff20'>x</span>";
-h+="<input style='width:35px;padding:4px;border:1px solid #ffffff08;border-radius:4px;background:#060a14;color:#c8f0ff;font-size:10px;text-align:center' value='"+ex.reps+"' placeholder='10' onchange='window._pvSelectedEx["+i+"].reps=this.value'>";
-h+="<button style='border:1px solid #ff475730;border-radius:4px;background:transparent;color:#ff4757;font-size:9px;padding:2px 6px;cursor:pointer' onclick='window._pvSelectedEx.splice("+i+",1);pvRenderSelectedEx()'>X</button>";
-h+="</div></div>"});
-if(!window._pvSelectedEx||!window._pvSelectedEx.length)h="<div style='font-size:11px;color:#ffffff15;text-align:center;padding:8px'>Search and add exercises above</div>";
-el.innerHTML=h}
+function pvWkFilterEx(){
+var q=(document.getElementById("pvWkExSearch")?document.getElementById("pvWkExSearch").value:"").toLowerCase();
+var res=document.getElementById("pvWkExResults");if(!res)return;
+var bp=window._pvWkBp||"All";var eq=window._pvWkEq||"All";
+var filtered=ACE_LIB.filter(function(e){
+if(bp!=="All"&&e.bp!==bp)return false;
+if(eq!=="All"&&e.eq!==eq)return false;
+if(q&&e.n.toLowerCase().indexOf(q)===-1)return false;
+return true});
+var dfC={"Beginner":"#6ee7b7","Intermediate":"#f59e0b","Advanced":"#ff4757"};
+var h2="";
+filtered.slice(0,40).forEach(function(e){
+var how2=EX_HOW[e.n]||e.how||"";
+h2+="<div style='background:#ffffff03;border:1px solid #ffffff04;border-radius:8px;padding:10px;margin-bottom:6px'>";
+h2+="<div style='display:flex;justify-content:space-between;align-items:center'>";
+h2+="<div><div style='font-size:13px;color:#c8f0ff'>"+H(e.n)+"</div><div style='font-size:10px;color:#c8f0ff20;margin-top:2px'>"+e.bp+" | "+e.eq+"</div></div>";
+h2+="<div style='display:flex;align-items:center;gap:6px'><span style='font-size:8px;padding:2px 6px;border-radius:4px;background:"+(dfC[e.df]||"#94a3b8")+"15;color:"+(dfC[e.df]||"#94a3b8")+"'>"+e.df+"</span>";
+h2+="<button class='b bs2 bg2' onclick='pvWkAddExIdx("+ACE_LIB.indexOf(e)+")'>+ Add</button></div></div>";
+if(how2)h2+="<div style='font-size:10px;color:#00f7ff20;cursor:pointer;padding:4px 0;margin-top:4px' onclick='togNext(this)'>How to perform</div><div style='display:none;font-size:10px;color:#c8f0ff30;padding:8px;background:#00f7ff04;border-radius:6px;line-height:1.5;margin-top:4px'>"+H(how2)+"</div>";
+h2+="</div>"});
+if(!filtered.length)h2="<div style='text-align:center;padding:16px;color:#ffffff15'>No matching exercises</div>";
+if(filtered.length>40)h2+="<div style='text-align:center;font-size:10px;color:#00f7ff15;padding:6px'>+"+(filtered.length-40)+" more — refine your search</div>";
+res.innerHTML=h2}
+
+function pvWkAddEx(name){
+var ex=ACE_LIB.find(function(e){return e.n===name})||{n:name,bp:"",ms:[]};
+var list=document.getElementById("pvWkExList");if(!list)return;
+var row=document.createElement("div");
+var rid="pvex_"+Date.now()+"_"+Math.random().toString(36).substr(2,4);
+row.id=rid;
+row.style.cssText="background:linear-gradient(165deg,#0f1c32,#0c1628);border:1px solid #ffffff06;border-radius:10px;padding:12px;margin-bottom:6px";
+var hdr=document.createElement("div");
+hdr.style.cssText="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px";
+var nm=document.createElement("strong");nm.style.cssText="font-size:13px;color:#00f7ff";nm.textContent=ex.n;
+var del=document.createElement("button");del.className="b bs2 br2";del.textContent="Remove";
+del.addEventListener("click",function(){document.getElementById(rid).remove()});
+hdr.appendChild(nm);hdr.appendChild(del);row.appendChild(hdr);
+var idInp=document.createElement("input");idInp.type="hidden";idInp.className="pvWkExNm";idInp.value=ex.n;row.appendChild(idInp);
+var grid=document.createElement("div");
+grid.style.cssText="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px";
+[["Sets","3"],["Reps","10"],["Weight",""],["Rest","60s"]].forEach(function(f){
+var wrap=document.createElement("div");
+var lbl=document.createElement("div");lbl.style.cssText="font-size:8px;color:#c8f0ff20;margin-bottom:2px;font-family:Orbitron;letter-spacing:.5px";lbl.textContent=f[0];
+var inp=document.createElement("input");inp.className="ip pvWkF_"+f[0].toLowerCase();inp.value=f[1];inp.style.cssText="font-size:12px;padding:8px;text-align:center";inp.placeholder=f[0];
+wrap.appendChild(lbl);wrap.appendChild(inp);grid.appendChild(wrap)});
+row.appendChild(grid);
+var notesWrap=document.createElement("div");notesWrap.style.cssText="margin-top:6px";
+var notesLbl=document.createElement("div");notesLbl.style.cssText="font-size:8px;color:#c8f0ff20;margin-bottom:2px;font-family:Orbitron;letter-spacing:.5px";notesLbl.textContent="Notes";
+var notesInp=document.createElement("input");notesInp.className="ip pvWkF_notes";notesInp.placeholder="Optional notes";notesInp.style.cssText="font-size:11px;padding:8px";
+notesWrap.appendChild(notesLbl);notesWrap.appendChild(notesInp);row.appendChild(notesWrap);
+list.appendChild(row);
+list.scrollTop=list.scrollHeight}
 
 function pvSaveMyWorkout(){
 var name=(document.getElementById("pvWkName")?document.getElementById("pvWkName").value.trim():"");
 if(!name){alert("Give your workout a name");return}
-if(!window._pvSelectedEx||!window._pvSelectedEx.length){alert("Add at least one exercise");return}
+var list=document.getElementById("pvWkExList");if(!list)return;
+var rows=list.children;
+if(!rows.length){alert("Add at least one exercise");return}
+var exercises=[];
+for(var i=0;i<rows.length;i++){
+var row=rows[i];
+var nm=row.querySelector(".pvWkExNm");if(!nm)continue;
+var sets=row.querySelector(".pvWkF_sets");
+var reps=row.querySelector(".pvWkF_reps");
+var weight=row.querySelector(".pvWkF_weight");
+var rest=row.querySelector(".pvWkF_rest");
+var notes=row.querySelector(".pvWkF_notes");
+exercises.push({name:nm.value,sets:sets?sets.value:"",reps:reps?reps.value:"",weight:weight?weight.value:"",rest:rest?rest.value:"",notes:notes?notes.value:""})}
 var type=(document.getElementById("pvWkType")?document.getElementById("pvWkType").value:"Strength");
 var date=(document.getElementById("pvWkDate")?document.getElementById("pvWkDate").value:"");
 if(!date)date=new Date().toISOString().split("T")[0];
-var wk={name:name,type:type,exercises:window._pvSelectedEx,createdBy:CU.id};
+var wk={name:name,type:type,exercises:exercises,createdBy:CU.id};
 WORKOUTS.push(wk);
 var wIdx=WORKOUTS.length-1;
 var aKey=CU.id+"-"+date;
 if(!ASSIGNED[aKey])ASSIGNED[aKey]=[];
 ASSIGNED[aKey].push(wIdx);
 SV();CM();pvRefresh()}
+
+
+var _pvBps=["All","Abs","Arms","Back","Butt/Hips","Chest","Full Body","Legs-Calves","Legs-Thighs","Shoulders"];
+var _pvEqs=["All","No Equipment","Dumbbells","Barbell","Machine","Resistance Bands/Cables","Kettlebells"];
+function pvWkSetBpIdx(i){var v=_pvBps[i]||"All";window._pvWkBp=v;
+var btns=document.getElementById("pvWkBpFilters");
+if(btns){btns.querySelectorAll(".fi").forEach(function(b){b.className="fi"+(b.textContent===v?" on":"")})}
+pvWkFilterEx()}
+function pvWkSetEqIdx(i){var v=_pvEqs[i]||"All";window._pvWkEq=v;
+var btns=document.getElementById("pvWkEqFilters");
+if(btns){btns.querySelectorAll(".fi").forEach(function(b){b.className="fi"+(b.textContent===v?" on":"")})}
+pvWkFilterEx()}
+function pvWkAddExIdx(i){var e=ACE_LIB[i];if(e)pvWkAddEx(e.n)}
 
 </script><div id='printArea' style='display:none'></div>
 </body></html>

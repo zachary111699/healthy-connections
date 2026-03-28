@@ -680,7 +680,7 @@ var cw=wkK();if(!STAMPS[p.id])STAMPS[p.id]={};if(!STAMPS[p.id][cw])STAMPS[p.id][
 
 var h="<div class='pv-hdr'><div class='pv-name'>"+H(p.n)+"</div><div class='pv-coach'>Coach: "+H(p.co||"-")+"</div></div>";
 h+="<div class='pv-tabs'>";
-[["home","🏠 HOME"],["checkin","✅ CHECK IN"],["booking","📅 BOOK"],["calendar","📆 CALENDAR"],["workouts","🏋️ WORKOUTS"],["nutrition","🥗 NUTRITION"],["progress","📊 PROGRESS"]].concat(p.referrals&&(p.referrals.mh||p.referrals.nutr||p.referrals.fin||p.referrals.career)?[["store","🛍 STORE"],["referrals","🔗 REFERRALS"]]:[]).concat(p.jobsAccess?[["jobs","💼 JOBS"]]:[]).concat([["journal","📓 JOURNAL"]]).forEach(function(t){
+[["home","🏠 HOME"],["checkin","✅ CHECK IN"],["booking","📅 BOOK"],["calendar","📆 CALENDAR"],["workouts","🏋️ WORKOUTS"],["nutrition","🥗 NUTRITION"],["progress","📊 PROGRESS"]].concat(p.storeAccess?[["store","🛍 STORE"]]:[]).concat(p.referrals&&(p.referrals.mh||p.referrals.nutr||p.referrals.fin||p.referrals.career)?[["referrals","🔗 REFERRALS"]]:[]).concat(p.jobsAccess?[["jobs","💼 JOBS"]]:[]).concat([["journal","📓 JOURNAL"]]).forEach(function(t){
 h+="<button class='pv-tab"+(pvTab===t[0]?" on":"")+"' onclick='pvSwitchTab("+JSON.stringify(t[0])+")'>"+t[1]+"</button>"});
 h+="</div><div id='pvTabContent'></div>";
 h+="<div class='pv-lock'><button onclick='doLock()'>⏻ SIGN OUT</button></div>";
@@ -760,6 +760,8 @@ for(var d=1;d<=daysInMonth;d++){
 var dd=new Date(cm.getFullYear(),cm.getMonth(),d);var ds2=dd.toISOString().split("T")[0];
 h+="<div class='pv-mcal-day"+(ds2===today?" today":"")+"' onclick='pvShowDay(\""+ds2+"\",\""+p.id+"\")'><div class='pv-mcal-num'>"+d+"</div>";
 try{var evts=(PEVENTS[p.id]||[]).filter(function(ev){return ev.date===ds2});evts.forEach(function(ev){h+="<div class='pv-mcal-ev pe'>"+(ev.time?ev.time+" ":"")+H(ev.title)+"</div>"})}catch(e){}
+if(STORE_PICKUP&&STORE_PICKUP.date&&STORE_PICKUP.date===ds2&&p.storeAccess){
+h+="<div class='pv-mcal-ev bk' style='border-left-color:#f59e0b;color:#f59e0b'>🛍 Store Pickup"+(STORE_PICKUP.time?" "+H(STORE_PICKUP.time):"")+"</div>"}
 try{PICKUPS.forEach(function(pu){if(pu.assignedTo&&pu.assignedTo.length&&pu.assignedTo.indexOf(p.id)===-1)return;var puDates=getPickupDatesForMonth(pu,ds2.substring(0,7));if(puDates.indexOf(ds2)>-1){var isConf=(pu.slots||[]).some(function(s){return s.pid===p.id&&s.date===ds2});h+="<div class='pv-mcal-ev "+(isConf?"bk":"wk")+"' style='border-left-color:"+(isConf?"#6ee7b7":"#f59e0b")+";color:"+(isConf?"#6ee7b7":"#f59e0b")+"'>"+(isConf?"✓ ":"")+"📦 "+H(pu.partner).substring(0,10)+"</div>"}})}catch(e){}
 try{var todos=(PVTODOS[p.id]||[]).filter(function(td){return td.date===ds2});todos.forEach(function(td){h+="<div class='pv-mcal-ev pe' style='border-left-color:#6ee7b7;color:#6ee7b7'>"+(td.done?"✓ ":"")+H(td.text).substring(0,10)+"</div>"})}catch(e){}
 try{Object.keys(BOOKS).forEach(function(k){(BOOKS[k]||[]).forEach(function(b){if(b.id===p.id){var pts=k.split("-");var bDate=pts[0]+"-"+pts[1]+"-"+pts[2];var bHr=parseInt(pts[3]);if(bDate===ds2){var ap=bHr<12?"a":"p";var h12=bHr>12?bHr-12:bHr;h+="<div class='pv-mcal-ev bk'>"+h12+ap+"</div>"}}})});}catch(e){}
@@ -2908,7 +2910,7 @@ function openResAssignIdx(idx){var allRes=gRes();if(idx>=0&&idx<allRes.length)op
 function openResAssign(resName){var h2="<div class='mti'>Assign: "+H(resName)+" "+XB()+"</div><div style='max-height:50vh;overflow-y:auto'>";P.filter(function(p){return p.s==="active"}).sort(function(a,b){return a.n.localeCompare(b.n)}).forEach(function(p){var has=p.assignedRes&&p.assignedRes.indexOf(resName)>-1;h2+="<label style='display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #00f7ff04;font-size:12px'><input type='checkbox' class='resPC' value='"+p.id+"'"+(has?" checked":"")+"> "+H(p.n)+"</label>"});h2+="</div><button class='b bg2' style='width:100%;margin-top:10px' onclick='saveResAssign()'>SAVE</button>";window._resAssignName=resName;SM(h2)}
 function saveResAssign(){var resName=window._resAssignName;if(!resName)return;var cks=document.querySelectorAll(".resPC");for(var i=0;i<cks.length;i++){var p=P.find(function(x){return x.id===cks[i].value});if(!p)continue;if(!p.assignedRes)p.assignedRes=[];var idx=p.assignedRes.indexOf(resName);if(cks[i].checked&&idx===-1)p.assignedRes.push(resName);else if(!cks[i].checked&&idx>-1)p.assignedRes.splice(idx,1)}SV();CM();R()}
 var FB_URL="https://healthy-connections-3edd3-default-rtdb.firebaseio.com";
-function fbPush(){var data={p:P,users:users,stamps:STAMPS,books:BOOKS,ann:ANN,coaches:COACHES,moods:MOODS,challenges:CHALLENGES,monthlych:MONTHLYCH,journals:JOURNALS,reflogs:REFLOGS,sesslogs:SESSLOGS,jobposts:JOBPOSTS,pickups:PICKUPS,pvtodos:PVTODOS,workouts:WORKOUTS,assigned:ASSIGNED,completed:COMPLETED,wlogs:WLOGS,store:STORE,claims:CLAIMS,refemails:REF_EMAILS,forms:F,res:RES};fetch(FB_URL+"/hc.json",{method:"PUT",body:JSON.stringify(data)}).catch(function(){})}
+function fbPush(){var data={p:P,users:users,stamps:STAMPS,books:BOOKS,ann:ANN,coaches:COACHES,moods:MOODS,challenges:CHALLENGES,monthlych:MONTHLYCH,journals:JOURNALS,reflogs:REFLOGS,sesslogs:SESSLOGS,jobposts:JOBPOSTS,pickups:PICKUPS,pvtodos:PVTODOS,workouts:WORKOUTS,assigned:ASSIGNED,completed:COMPLETED,wlogs:WLOGS,store:STORE,claims:CLAIMS,storePickup:STORE_PICKUP,refemails:REF_EMAILS,forms:F,res:RES};fetch(FB_URL+"/hc.json",{method:"PUT",body:JSON.stringify(data)}).catch(function(){})}
 function fbPull(cb){fetch(FB_URL+"/hc.json").then(function(r){return r.json()}).then(function(d){if(!d){if(cb)cb();return}if(d.p&&d.p.length){P=d.p;P.forEach(function(p){
 if(!p.goals)p.goals=[];
 if(!p.notes)p.notes=[];
@@ -2916,7 +2918,7 @@ if(!p.assignedRes)p.assignedRes=[];
 if(!p.metrics)p.metrics=[];
 if(!p.sessions)p.sessions={};
 if(!p.fc)p.fc={i:false,g:false,r:false,e:false};
-})}if(d.users)users=d.users;if(d.stamps)STAMPS=d.stamps;if(d.books)BOOKS=d.books;if(d.ann)ANN=d.ann;if(d.coaches)COACHES=d.coaches;if(d.moods)MOODS=d.moods;if(d.challenges)CHALLENGES=d.challenges;if(d.monthlych)MONTHLYCH=d.monthlych;if(d.journals)JOURNALS=d.journals;if(d.reflogs)REFLOGS=d.reflogs;if(d.sesslogs)SESSLOGS=d.sesslogs;if(d.jobposts)JOBPOSTS=d.jobposts;if(d.pickups){PICKUPS=d.pickups;PICKUPS.forEach(function(pu){if(!pu.slots)pu.slots=[];if(!pu.assignedTo)pu.assignedTo=[]})}if(d.pvtodos)PVTODOS=d.pvtodos;if(d.workouts&&Array.isArray(d.workouts))WORKOUTS=d.workouts;if(!Array.isArray(WORKOUTS))WORKOUTS=[];if(d.assigned)ASSIGNED=d.assigned;if(!ASSIGNED||typeof ASSIGNED!=="object")ASSIGNED={};if(d.completed)COMPLETED=d.completed;if(!COMPLETED||typeof COMPLETED!=="object")COMPLETED={};if(d.wlogs)WLOGS=d.wlogs;if(!WLOGS||typeof WLOGS!=="object")WLOGS={};if(d.store&&Array.isArray(d.store))STORE=d.store;if(d.claims&&Array.isArray(d.claims))CLAIMS=d.claims;if(d.refemails)REF_EMAILS=d.refemails;if(d.forms)F=d.forms;if(d.res)RES=d.res;SV();if(cb)cb()}).catch(function(){if(cb)cb()})}
+})}if(d.users)users=d.users;if(d.stamps)STAMPS=d.stamps;if(d.books)BOOKS=d.books;if(d.ann)ANN=d.ann;if(d.coaches)COACHES=d.coaches;if(d.moods)MOODS=d.moods;if(d.challenges)CHALLENGES=d.challenges;if(d.monthlych)MONTHLYCH=d.monthlych;if(d.journals)JOURNALS=d.journals;if(d.reflogs)REFLOGS=d.reflogs;if(d.sesslogs)SESSLOGS=d.sesslogs;if(d.jobposts)JOBPOSTS=d.jobposts;if(d.pickups){PICKUPS=d.pickups;PICKUPS.forEach(function(pu){if(!pu.slots)pu.slots=[];if(!pu.assignedTo)pu.assignedTo=[]})}if(d.pvtodos)PVTODOS=d.pvtodos;if(d.workouts&&Array.isArray(d.workouts))WORKOUTS=d.workouts;if(!Array.isArray(WORKOUTS))WORKOUTS=[];if(d.assigned)ASSIGNED=d.assigned;if(!ASSIGNED||typeof ASSIGNED!=="object")ASSIGNED={};if(d.completed)COMPLETED=d.completed;if(!COMPLETED||typeof COMPLETED!=="object")COMPLETED={};if(d.wlogs)WLOGS=d.wlogs;if(!WLOGS||typeof WLOGS!=="object")WLOGS={};if(d.store&&Array.isArray(d.store))STORE=d.store;if(d.claims&&Array.isArray(d.claims))CLAIMS=d.claims;if(d.storePickup!==undefined)STORE_PICKUP=d.storePickup;if(d.refemails)REF_EMAILS=d.refemails;if(d.forms)F=d.forms;if(d.res)RES=d.res;SV();if(cb)cb()}).catch(function(){if(cb)cb()})}
 var _origSV=SV;SV=function(){_origSV();fbPush()};
 fbPull(function(){var ld=document.getElementById("hcLoading");if(ld)ld.style.display="none";var s=sessionStorage.getItem("hc6-s");if(s){try{CU=JSON.parse(s);if(CU.role==="participant"){showPV(CU)}else{document.getElementById("LS").style.display="none";document.getElementById("DS").style.display="block";R()}}catch(e){document.getElementById("LS").style.display="flex"}}else{document.getElementById("LS").style.display="flex"}});
 if("serviceWorker" in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister()})})}
@@ -3239,7 +3241,8 @@ var h="";
 h+="<div class='rpt-section'><div class='rpt-title' style='color:#f59e0b'>🛍 RESOURCE STORE</div>";
 h+="<div style='display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap'>";
 h+="<button class='b bg2' onclick='openAddStoreItem()' style='padding:10px 16px'>+ ADD ITEM</button>";
-h+="<button class='b' onclick='openStoreAccess()' style='padding:10px 16px'>👥 MANAGE ACCESS</button></div>";
+h+="<button class='b' onclick='openStoreAccess()' style='padding:10px 16px'>👥 MANAGE ACCESS</button>";
+h+="<button class='b' onclick='openStorePickup()' style='padding:10px 16px'>📅 SET PICKUP DATE</button></div>";
 h+="<div style='font-size:12px;color:#c8f0ff30;margin-bottom:8px'>"+STORE.length+" items · Participants can claim 1 item per month</div>";
 
 /* Items grid */
@@ -3367,6 +3370,14 @@ var canClaim=claimedThisMonth.length===0;
 
 h+="<div style='text-align:center;padding:14px;margin-bottom:12px'>";
 h+="<div style='font-family:Orbitron;font-size:18px;font-weight:800;color:#f59e0b;margin-bottom:4px'>🛍 RESOURCE STORE</div>";
+if(STORE_PICKUP&&STORE_PICKUP.date){
+h+="<div style='background:#f59e0b10;border:1px solid #f59e0b20;border-radius:10px;padding:12px;margin:8px 0;text-align:left'>";
+h+="<div style='font-family:Orbitron;font-size:10px;color:#f59e0b;margin-bottom:4px'>📅 NEXT PICKUP</div>";
+h+="<div style='font-size:14px;color:#c8f0ff;font-weight:700'>"+H(STORE_PICKUP.date)+"</div>";
+if(STORE_PICKUP.time)h+="<div style='font-size:12px;color:#c8f0ff60;margin-top:2px'>"+H(STORE_PICKUP.time)+"</div>";
+if(STORE_PICKUP.location)h+="<div style='font-size:12px;color:#c8f0ff60'>"+H(STORE_PICKUP.location)+"</div>";
+if(STORE_PICKUP.notes)h+="<div style='font-size:11px;color:#f59e0b80;margin-top:4px'>"+H(STORE_PICKUP.notes)+"</div>";
+h+="</div>"}
 if(canClaim){h+="<div style='font-size:12px;color:#6ee7b7'>You can claim 1 item this month</div>"}
 else{h+="<div style='font-size:12px;color:#c8f0ff30'>You already claimed an item this month</div>";
 h+="<div style='font-size:10px;color:#c8f0ff20;margin-top:2px'>Claimed: "+H(claimedThisMonth[0].item)+"</div>"}
@@ -3401,6 +3412,37 @@ var qty=parseInt(item.qty)||0;if(qty<=0){alert("Out of stock");return}
 STORE[idx].qty=""+(qty-1);
 CLAIMS.push({pid:pid,item:item.name,date:new Date().toISOString().split("T")[0],cat:item.cat||""});
 SV();pvRefresh()}
+
+
+var STORE_PICKUP=JSON.parse(localStorage.getItem("hc6-store-pickup")||"null");
+
+function openStorePickup(){
+var h2="<div class='mti'>📅 STORE PICKUP DATE "+XB()+"</div>";
+h2+="<div style='font-size:12px;color:#c8f0ff40;margin-bottom:10px'>Set the next date participants can pick up their claimed items</div>";
+h2+="<label class='lb'>PICKUP DATE</label><input class='ip' id='spDate' type='date' value='"+(STORE_PICKUP&&STORE_PICKUP.date||"")+"' style='font-size:14px;padding:10px'>";
+h2+="<label class='lb'>TIME</label><input class='ip' id='spTime' value='"+(STORE_PICKUP&&STORE_PICKUP.time||"")+"' placeholder='10:00 AM - 2:00 PM' style='font-size:14px;padding:10px'>";
+h2+="<label class='lb'>LOCATION</label><input class='ip' id='spLoc' value='"+(STORE_PICKUP&&STORE_PICKUP.location||"")+"' placeholder='YMCA Front Desk' style='font-size:14px;padding:10px'>";
+h2+="<label class='lb'>NOTES</label><input class='ip' id='spNotes' value='"+(STORE_PICKUP&&STORE_PICKUP.notes||"")+"' placeholder='Bring your ID' style='font-size:13px;padding:10px'>";
+h2+="<button class='b bg2' style='width:100%;margin-top:10px;padding:12px;font-size:12px' onclick='saveStorePickup()'>SAVE PICKUP DATE</button>";
+if(STORE_PICKUP&&STORE_PICKUP.date)h2+="<button class='b br2' style='width:100%;margin-top:6px;padding:10px;font-size:11px' onclick='clearStorePickup()'>CLEAR PICKUP DATE</button>";
+SM(h2)}
+
+function saveStorePickup(){
+STORE_PICKUP={
+date:document.getElementById("spDate").value,
+time:document.getElementById("spTime").value.trim(),
+location:document.getElementById("spLoc").value.trim(),
+notes:document.getElementById("spNotes").value.trim()
+};
+localStorage.setItem("hc6-store-pickup",JSON.stringify(STORE_PICKUP));
+fbPush();
+alert("Pickup date saved: "+STORE_PICKUP.date);
+CM();R()}
+
+function clearStorePickup(){
+STORE_PICKUP=null;
+localStorage.setItem("hc6-store-pickup","null");
+fbPush();CM();R()}
 
 </script><div id='printArea' style='display:none'></div>
 </body></html>

@@ -170,10 +170,10 @@ textarea.ip{min-height:60px;resize:vertical}
 .nutr-log{background:#060a1430;border:1px solid #00f7ff06;border-radius:4px;padding:6px;margin-bottom:4px}
 .nutr-meal{font-family:'Press Start 2P',monospace;font-size:5px;color:#6ee7b7;margin-bottom:2px}
 .nutr-text{font-size:9px;color:#c8f0ff80}
-.recipe-card{background:#060a1440;border:1px solid #f59e0b10;border-radius:5px;padding:8px;margin-bottom:6px;cursor:pointer}
+.recipe-card{background:#060a1440;border:1px solid #f59e0b10;border-radius:10px;padding:14px;margin-bottom:8px;cursor:pointer}
 .recipe-card:hover{border-color:#f59e0b30;background:#f59e0b04}
-.recipe-name{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#f59e0b;margin-bottom:2px}
-.recipe-meta{font-size:7px;color:#f59e0b60;display:flex;gap:6px}
+.recipe-name{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#f59e0b;margin-bottom:4px}
+.recipe-meta{font-size:11px;color:#f59e0b60;display:flex;gap:8px;flex-wrap:wrap}
 .recipe-tag{padding:1px 4px;border-radius:2px;font-size:6px;font-family:'Press Start 2P',monospace}
 .recipe-detail{font-size:9px;color:#c8f0ff70;line-height:1.5;margin-top:4px}
 .ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:5px}
@@ -413,17 +413,6 @@ button,.b,.fl,.fi,.bk-btn{min-height:36px}
 
 
 /* ═══ REPORTS MOBILE FIX ═══ */
-@media(max-width:768px){
-.impact-card{min-width:0 !important}
-.impact-big{font-size:20px !important}
-.impact-lbl{font-size:6px !important}
-.rpt-cmp{grid-template-columns:1fr !important;gap:4px !important}
-.rpt-cmp-arrow{display:none !important}
-.ba-grid{grid-template-columns:1fr !important}
-.ba-arrow{display:none !important}
-}
-
-
 /* ═══ REPORTS — PROFESSIONAL / FUNDER-READY ═══ */
 .rpt-section{background:linear-gradient(145deg,#0d1a2d,#111d33);border:1px solid #00f7ff08;border-radius:14px;padding:18px;margin-bottom:14px}
 .rpt-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
@@ -459,14 +448,32 @@ button,.b,.fl,.fi,.bk-btn{min-height:36px}
 .rpt-act-primary{background:linear-gradient(135deg,#00f7ff15,#00f7ff08);border-color:#00f7ff30;color:#00f7ff}
 
 @media(max-width:768px){
+/* Reports */
 .dz-grid{grid-template-columns:1fr !important}
+.dz{padding:16px;min-height:60px}
 .rpt-grid{grid-template-columns:1fr 1fr !important}
 .rg{grid-template-columns:1fr 1fr !important}
-.rpt-cmp{grid-template-columns:1fr !important;text-align:center}
-.rpt-cmp-arrow{transform:rotate(90deg)}
-.rpt-actions{flex-direction:column}
-.rpt-act{justify-content:center;width:100%}
+.rc{padding:10px}
+.rc-n{font-size:16px !important}
+.rpt-section{padding:14px;margin-bottom:10px;border-radius:10px}
+.rpt-title{font-size:11px !important}
+.rpt-cmp{grid-template-columns:1fr !important;text-align:center;padding:10px}
+.rpt-cmp-val{font-size:18px !important}
+.rpt-cmp-arrow{display:block;transform:rotate(90deg);font-size:14px;padding:4px 0}
+.rpt-actions{flex-direction:column;gap:8px}
+.rpt-act{justify-content:center;width:100%;padding:12px 16px;font-size:10px}
 .rpt-stat-num{font-size:20px !important}
+.impact-card{padding:12px;min-width:0 !important}
+.impact-big{font-size:22px !important}
+.impact-lbl{font-size:7px !important}
+
+/* Nutrition */
+.recipe-card{padding:12px}
+.recipe-name{font-size:13px !important}
+.recipe-meta{font-size:10px !important}
+
+/* Body comp grid */
+.impact-card .impact-lbl{word-break:break-word}
 }
 
 </style>
@@ -2141,7 +2148,7 @@ if(allMetrics.length){var wSum=0,mSum=0,fSum=0,wD=0,mD=0,fD=0,cnt2=0;
 allMetrics.forEach(function(p){var pts=p.metrics.sort(function(a,b){return a.date.localeCompare(b.date)});var first=pts[0],last=pts[pts.length-1];
 wSum+=parseFloat(last.weight)||0;mSum+=parseFloat(last.muscle)||0;fSum+=parseFloat(last.fat)||0;
 wD+=(parseFloat(last.weight)||0)-(parseFloat(first.weight)||0);mD+=(parseFloat(last.muscle)||0)-(parseFloat(first.muscle)||0);fD+=(parseFloat(last.fat)||0)-(parseFloat(first.fat)||0);cnt2++});
-h+="<div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:6px'>";
+h+="<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin-bottom:6px'>";
 h+="<div class='impact-card'><div style='font-family:Orbitron;font-size:16px;font-weight:800;color:#00f7ff'>"+(wSum/cnt2).toFixed(1)+"</div><div class='impact-lbl'>AVG WEIGHT (lbs)</div><div style='font-size:9px;color:"+(wD/cnt2<0?"#6ee7b7":"#ff4757")+"'>"+(wD/cnt2>0?"+":"")+(wD/cnt2).toFixed(1)+" avg change</div></div>";
 h+="<div class='impact-card'><div style='font-family:Orbitron;font-size:16px;font-weight:800;color:#6ee7b7'>"+(mSum/cnt2).toFixed(1)+"</div><div class='impact-lbl'>AVG SMM (lbs)</div><div style='font-size:9px;color:"+(mD/cnt2>0?"#6ee7b7":"#ff4757")+"'>"+(mD/cnt2>0?"+":"")+(mD/cnt2).toFixed(1)+" avg change</div></div>";
 h+="<div class='impact-card'><div style='font-family:Orbitron;font-size:16px;font-weight:800;color:#ff4757'>"+(fSum/cnt2).toFixed(1)+"%</div><div class='impact-lbl'>AVG BODY FAT</div><div style='font-size:9px;color:"+(fD/cnt2<0?"#6ee7b7":"#ff4757")+"'>"+(fD/cnt2>0?"+":"")+(fD/cnt2).toFixed(1)+"% avg change</div></div></div>";
@@ -3135,7 +3142,7 @@ mealTypes.forEach(function(m,mi){h+="<button class='fi"+(nutrFilter===m?" on":""
 h+="</div>";
 
 h+="<div style='display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap'>";
-h+="<input class='si' id='adminRecSrch' placeholder='Search recipes...' oninput='reloadNutr()' style='flex:1;min-width:150px'>";
+h+="<input class='si' id='adminRecSrch' placeholder='Search recipes...' oninput='reloadNutr()' style='flex:1;min-width:150px;font-size:14px;padding:12px'>";
 h+="<button class='b bg2' onclick='openAddRecipe()'>+ ADD RECIPE</button></div>";
 
 var rq=(document.getElementById("adminRecSrch")?document.getElementById("adminRecSrch").value:"").toLowerCase();
@@ -3146,7 +3153,7 @@ if(nutrFilter!=="All"&&r.meal!==nutrFilter)return;
 if(rq&&r.name.toLowerCase().indexOf(rq)===-1&&(r.meal||"").toLowerCase().indexOf(rq)===-1&&(r.ing||"").toLowerCase().indexOf(rq)===-1)return;
 filtered.push({r:r,ri:ri})});
 
-h+="<div style='font-size:10px;color:#c8f0ff30;margin-bottom:6px'>"+filtered.length+" recipe"+(filtered.length!==1?"s":"")+"</div>";
+h+="<div style='font-size:12px;color:#c8f0ff30;margin-bottom:6px'>"+filtered.length+" recipe"+(filtered.length!==1?"s":"")+"</div>";
 
 filtered.forEach(function(item){
 var r=item.r;
@@ -3165,7 +3172,7 @@ h+="</div>";
 
 /* Participant Meal Logs */
 h+="<div class='cd'><div class='ct'>▸ PARTICIPANT MEAL LOGS</div>";
-h+="<div style='margin-bottom:8px'><input class='si' id='nutrLogSrch' placeholder='Search participant...' oninput='reloadNutr()' style='width:100%'></div>";
+h+="<div style='margin-bottom:8px'><input class='si' id='nutrLogSrch' placeholder='Search participant...' oninput='reloadNutr()' style='width:100%;font-size:14px;padding:12px'></div>";
 
 var nq=(document.getElementById("nutrLogSrch")?document.getElementById("nutrLogSrch").value:"").toLowerCase();
 var hasLogs=false;
@@ -3173,10 +3180,10 @@ P.filter(function(p){return p.s==="active"&&p.nutrLog&&p.nutrLog.length}).forEac
 if(nq&&p.n.toLowerCase().indexOf(nq)===-1)return;
 hasLogs=true;
 h+="<div style='margin-bottom:8px;padding:10px;background:#060a1420;border:1px solid #00f7ff06;border-radius:8px'>";
-h+="<div style='font-size:13px;font-weight:700;color:#00f7ff;margin-bottom:6px'>"+H(p.n)+"</div>";
+h+="<div style='font-size:15px;font-weight:700;color:#00f7ff;margin-bottom:6px'>"+H(p.n)+"</div>";
 (p.nutrLog||[]).slice(-7).reverse().forEach(function(n){
 var mClr2=n.meal==="Breakfast"?"#f59e0b":n.meal==="Lunch"?"#00f7ff":n.meal==="Dinner"?"#c792ff":"#6ee7b7";
-h+="<div style='display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #00f7ff04;font-size:11px'>";
+h+="<div style='display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #00f7ff04;font-size:13px'>";
 h+="<div><span style='color:"+mClr2+";font-size:9px;font-weight:700'>"+H(n.meal)+"</span> "+H(n.text)+"</div>";
 h+="<span style='color:#c8f0ff20;font-size:9px'>"+H(n.date)+"</span></div>"});
 h+="</div>"});

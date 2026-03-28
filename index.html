@@ -3366,7 +3366,6 @@ el.innerHTML=h;return}
 /* Check if they already claimed this month */
 var now=new Date();var thisMonth=now.getFullYear()+"-"+(now.getMonth()+1<10?"0":"")+(now.getMonth()+1);
 var claimedThisMonth=CLAIMS.filter(function(c){return c.pid===p.id&&c.date&&c.date.substring(0,7)===thisMonth});
-var canClaim=claimedThisMonth.length===0;
 
 h+="<div style='text-align:center;padding:14px;margin-bottom:12px'>";
 h+="<div style='font-family:Orbitron;font-size:18px;font-weight:800;color:#f59e0b;margin-bottom:4px'>🛍 RESOURCE STORE</div>";
@@ -3378,9 +3377,8 @@ if(STORE_PICKUP.time)h+="<div style='font-size:12px;color:#c8f0ff60;margin-top:2
 if(STORE_PICKUP.location)h+="<div style='font-size:12px;color:#c8f0ff60'>"+H(STORE_PICKUP.location)+"</div>";
 if(STORE_PICKUP.notes)h+="<div style='font-size:11px;color:#f59e0b80;margin-top:4px'>"+H(STORE_PICKUP.notes)+"</div>";
 h+="</div>"}
-if(canClaim){h+="<div style='font-size:12px;color:#6ee7b7'>You can claim 1 item this month</div>"}
-else{h+="<div style='font-size:12px;color:#c8f0ff30'>You already claimed an item this month</div>";
-h+="<div style='font-size:10px;color:#c8f0ff20;margin-top:2px'>Claimed: "+H(claimedThisMonth[0].item)+"</div>"}
+h+="<div style='font-size:12px;color:#6ee7b7'>1 of each item per month</div>";
+if(claimedThisMonth.length){h+="<div style='font-size:10px;color:#c8f0ff20;margin-top:4px'>This month you claimed: "+claimedThisMonth.map(function(c){return H(c.item)}).join(", ")+"</div>"}
 h+="</div>";
 
 if(STORE.length){
@@ -3394,8 +3392,9 @@ h+="<div class='store-body'><div class='store-name'>"+H(item.name)+"</div>";
 if(item.cat)h+="<div class='store-cat'>"+H(item.cat)+"</div>";
 if(item.desc)h+="<div style='font-size:10px;color:#c8f0ff20;margin-bottom:4px'>"+H(item.desc)+"</div>";
 h+="</div>";
+var alreadyClaimed=claimedThisMonth.some(function(c){return c.item===item.name});
 if(!inStock){h+="<button class='store-claim-btn oos'>OUT OF STOCK</button>"}
-else if(!canClaim){h+="<button class='store-claim-btn used'>CLAIMED THIS MONTH</button>"}
+else if(alreadyClaimed){h+="<button class='store-claim-btn used'>CLAIMED ✓</button>"}
 else{h+="<button class='store-claim-btn avail' onclick='pvClaimItem("+idx+")'>CLAIM ITEM</button>"}
 h+="</div>"});
 h+="</div>"}
@@ -3407,7 +3406,7 @@ function pvClaimItem(idx){if(CU&&CU.pid)claimItem(CU.pid,idx)}
 function claimItem(pid,idx){
 var item=STORE[idx];if(!item)return;
 var p=P.find(function(x){return x.id===pid});if(!p)return;
-if(!confirm("Claim "+item.name+"? You can only claim 1 item per month."))return;
+if(!confirm("Claim "+item.name+"? You can claim 1 of each item per month."))return;
 var qty=parseInt(item.qty)||0;if(qty<=0){alert("Out of stock");return}
 STORE[idx].qty=""+(qty-1);
 CLAIMS.push({pid:pid,item:item.name,date:new Date().toISOString().split("T")[0],cat:item.cat||""});

@@ -423,6 +423,52 @@ button,.b,.fl,.fi,.bk-btn{min-height:36px}
 .ba-arrow{display:none !important}
 }
 
+
+/* ═══ REPORTS — PROFESSIONAL / FUNDER-READY ═══ */
+.rpt-section{background:linear-gradient(145deg,#0d1a2d,#111d33);border:1px solid #00f7ff08;border-radius:14px;padding:18px;margin-bottom:14px}
+.rpt-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.rpt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:10px}
+.rpt-stat{background:#060a1430;border:1px solid #00f7ff08;border-radius:10px;padding:16px;text-align:center}
+.rpt-stat-num{font-family:'Orbitron',sans-serif;font-weight:800;margin-bottom:2px}
+.rpt-stat-lbl{font-size:8px;color:#c8f0ff30;text-transform:uppercase;letter-spacing:0.5px}
+.rpt-stat-sub{font-size:9px;margin-top:4px}
+
+/* CSV Drop Zones — stack on mobile */
+.dz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px}
+.dz{min-height:80px}
+
+/* Likert score grid */
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;margin-bottom:10px}
+.rc{background:#060a1430;border:1px solid #00f7ff08;border-radius:8px;padding:12px;text-align:center}
+.rc-n{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:800}
+.rc-l{font-size:7px;color:#c8f0ff30;text-transform:uppercase;letter-spacing:0.5px;margin-top:4px}
+
+/* Comparison cards */
+.rpt-cmp{display:grid;grid-template-columns:1fr 40px 1fr;gap:4px;align-items:center;margin-bottom:4px;background:#060a1430;border-radius:8px;padding:8px}
+.rpt-cmp-box{text-align:center}
+.rpt-cmp-val{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:800}
+.rpt-cmp-lbl{font-size:7px;color:#c8f0ff30;text-transform:uppercase}
+.rpt-cmp-arrow{text-align:center}
+.rpt-change{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700}
+.rpt-up{color:#6ee7b7}.rpt-down{color:#ff4757}.rpt-flat{color:#c8f0ff30}
+
+/* Action buttons row */
+.rpt-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.rpt-act{padding:10px 16px;border-radius:10px;border:1px solid #00f7ff15;background:#0a1628;color:#c8f0ff;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.5px;display:flex;align-items:center;gap:6px}
+.rpt-act:hover{background:#00f7ff08;border-color:#00f7ff25}
+.rpt-act-primary{background:linear-gradient(135deg,#00f7ff15,#00f7ff08);border-color:#00f7ff30;color:#00f7ff}
+
+@media(max-width:768px){
+.dz-grid{grid-template-columns:1fr !important}
+.rpt-grid{grid-template-columns:1fr 1fr !important}
+.rg{grid-template-columns:1fr 1fr !important}
+.rpt-cmp{grid-template-columns:1fr !important;text-align:center}
+.rpt-cmp-arrow{transform:rotate(90deg)}
+.rpt-actions{flex-direction:column}
+.rpt-act{justify-content:center;width:100%}
+.rpt-stat-num{font-size:20px !important}
+}
+
 </style>
 </head>
 <body>
@@ -2071,25 +2117,25 @@ h+="<div class='impact-card'><div class='impact-big' style='color:#f59e0b;font-s
 h+="<div class='impact-card'><div class='impact-big' style='color:#00f7ff;font-size:22px'>"+totalStampsAll+"</div><div class='impact-lbl'>TOTAL VISITS</div></div></div>";
 
 /* ── CSV IMPORT ── */
-h+="<div style='font-family:Orbitron;font-size:9px;color:#00f7ff;margin:10px 0 6px'>📂 IMPORT SURVEY DATA (CSV)</div>";
-h+="<div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px'>";
+h+="<div class='rpt-section'><div class='rpt-title' style='color:#00f7ff'>📂 IMPORT SURVEY DATA</div>";
+h+="<div class='dz-grid'>";
 [["intake","📋 INTAKE ASSESSMENT","Initial participant survey"],["checkin","📊 MONTHLY CHECK-IN","Monthly progress survey"],["exit","🏁 EXIT ASSESSMENT","Program completion survey"]].forEach(function(t){
 var has=DATA[t[0]]&&DATA[t[0]].rows;
 h+="<div class='dz' id='dz_"+t[0]+"'><div class='dz-icon'>"+t[1].split(" ")[0]+"</div><div>"+t[1].substring(2)+"</div><div class='dz-sub'>"+t[2]+"</div>"+(has?"<div style='color:#6ee7b7;font-size:8px;margin-top:4px'>✓ "+DATA[t[0]].rows.length+" records loaded</div>":"<div style='font-size:7px;color:#00f7ff20;margin-top:2px'>Click or drag CSV</div>")+"<input type='file' accept='.csv' style='display:none' id='fi_"+t[0]+"'></div>"});
-h+="</div>";
+h+="</div></div>";
 
 /* ── LIKERT ANALYSIS ── */
-if(DATA.intake&&DATA.intake.rows){var iA=likertAvg(DATA.intake,INTAKE_LIKERT);h+="<div style='font-family:Orbitron;font-size:8px;color:#00f7ff;margin:6px 0 4px'>INTAKE AVERAGES ("+DATA.intake.rows.length+")</div><div class='rg'>";Object.keys(iA).forEach(function(c){if(!iA[c])return;var v=parseFloat(iA[c]);h+="<div class='rc'><div class='rc-n' style='color:"+(v>=3.5?"#6ee7b7":v>=2.5?"#f59e0b":"#ff4757")+"'>"+iA[c]+"</div><div class='rc-l'>"+LIKERT_NAMES[c].toUpperCase()+"</div></div>"});h+="</div>"}
-if(DATA.checkin&&DATA.checkin.rows){var cA=likertAvg(DATA.checkin,CHECKIN_LIKERT);h+="<div style='font-family:Orbitron;font-size:8px;color:#6ee7b7;margin:4px 0'>CHECK-IN ("+DATA.checkin.rows.length+")</div><div class='rg'>";Object.keys(cA).forEach(function(c){if(!cA[c])return;var v=parseFloat(cA[c]);h+="<div class='rc'><div class='rc-n' style='color:"+(v>=3.5?"#6ee7b7":v>=2.5?"#f59e0b":"#ff4757")+"'>"+cA[c]+"</div><div class='rc-l'>"+LIKERT_NAMES[c].toUpperCase()+"</div></div>"});h+="</div>"}
+if(DATA.intake&&DATA.intake.rows){var iA=likertAvg(DATA.intake,INTAKE_LIKERT);h+="<div class='rpt-section'><div class='rpt-title' style='color:#00f7ff'>📋 INTAKE AVERAGES <span style='font-size:9px;color:#c8f0ff30'>("+DATA.intake.rows.length+" responses)</span></div><div class='rg'>";Object.keys(iA).forEach(function(c){if(!iA[c])return;var v=parseFloat(iA[c]);h+="<div class='rc'><div class='rc-n' style='color:"+(v>=3.5?"#6ee7b7":v>=2.5?"#f59e0b":"#ff4757")+"'>"+iA[c]+"</div><div class='rc-l'>"+LIKERT_NAMES[c].toUpperCase()+"</div></div>"});h+="</div>"}
+if(DATA.checkin&&DATA.checkin.rows){var cA=likertAvg(DATA.checkin,CHECKIN_LIKERT);h+="<div class='rpt-section'><div class='rpt-title' style='color:#6ee7b7'>📊 CHECK-IN PROGRESS <span style='font-size:9px;color:#c8f0ff30'>("+DATA.checkin.rows.length+" responses)</span></div><div class='rg'>";Object.keys(cA).forEach(function(c){if(!cA[c])return;var v=parseFloat(cA[c]);h+="<div class='rc'><div class='rc-n' style='color:"+(v>=3.5?"#6ee7b7":v>=2.5?"#f59e0b":"#ff4757")+"'>"+cA[c]+"</div><div class='rc-l'>"+LIKERT_NAMES[c].toUpperCase()+"</div></div>"});h+="</div>"}
 
 /* ── INTAKE → EXIT COMPARISON ── */
 if(DATA.intake&&DATA.intake.rows&&DATA.exit&&DATA.exit.rows){
 var iAvg=likertAvg(DATA.intake,INTAKE_LIKERT);var eAvg=likertAvg(DATA.exit,EXIT_LIKERT);
-h+="<div style='font-family:Orbitron;font-size:9px;color:#c792ff;margin:10px 0 6px'>📊 INTAKE → EXIT COMPARISON</div>";
+h+="<div class='rpt-section'><div class='rpt-title' style='color:#c792ff'>📊 INTAKE → EXIT COMPARISON</div>";
 Object.keys(LIKERT_NAMES).forEach(function(cat){if(!iAvg[cat]||!eAvg[cat])return;var iv=parseFloat(iAvg[cat]),ev=parseFloat(eAvg[cat]),diff=ev-iv;var arrow=diff>0?"↑":diff<0?"↓":"→";var cls=diff>0?"rpt-up":diff<0?"rpt-down":"rpt-flat";h+="<div class='rpt-cmp'><div class='rpt-cmp-box'><div class='rpt-cmp-val' style='color:#00f7ff'>"+iAvg[cat]+"</div><div class='rpt-cmp-lbl'>INTAKE</div></div><div class='rpt-cmp-arrow'><span class='rpt-change "+cls+"'>"+arrow+(diff?Math.abs(diff).toFixed(1):"")+"</span></div><div class='rpt-cmp-box'><div class='rpt-cmp-val' style='color:#c792ff'>"+eAvg[cat]+"</div><div class='rpt-cmp-lbl'>EXIT</div></div></div><div style='font-size:8px;color:#00f7ff40;margin-bottom:6px'>"+LIKERT_NAMES[cat]+"</div>"})}
 
 /* ── PROGRAM-WIDE BODY COMP ── */
-h+="<div style='font-family:Orbitron;font-size:9px;color:#00f7ff;margin:10px 0 4px'>📐 BODY COMPOSITION (PROGRAM-WIDE)</div>";
+h+="<div class='rpt-section'><div class='rpt-title' style='color:#00f7ff'>📐 BODY COMPOSITION — PROGRAM WIDE</div>";
 var allMetrics=[];P.forEach(function(p){if(p.metrics&&p.metrics.length>=2)allMetrics.push(p)});
 if(allMetrics.length){var wSum=0,mSum=0,fSum=0,wD=0,mD=0,fD=0,cnt2=0;
 allMetrics.forEach(function(p){var pts=p.metrics.sort(function(a,b){return a.date.localeCompare(b.date)});var first=pts[0],last=pts[pts.length-1];
@@ -2108,19 +2154,19 @@ else{h+="<div class='emp'>ADD BODY METRICS IN PORTAL TO SEE TRENDS</div>"}
 /* Session utilization moved to referrals tab */
 
 /* ── MOOD TRENDS ── */
-h+="<div style='font-family:Orbitron;font-size:9px;color:#f59e0b;margin:10px 0 4px'>😊 MOOD TRENDS (LAST 7 DAYS)</div>";
+h+="<div class='rpt-section'><div class='rpt-title' style='color:#f59e0b'>😊 MOOD TRENDS — LAST 7 DAYS</div>";
 var mc2={"great":0,"okay":0,"meh":0,"sad":0,"angry":0};var mt2=0;var wkAgo=new Date();wkAgo.setDate(wkAgo.getDate()-7);var wkStr=wkAgo.toISOString().split("T")[0];
 Object.keys(MOODS).forEach(function(pid){(MOODS[pid]||[]).forEach(function(m){if(m.date>=wkStr){mc2[m.mood]=(mc2[m.mood]||0)+1;mt2++}})});
 if(mt2){h+="<div style='display:flex;justify-content:space-around;text-align:center'>";[["great","😊"],["okay","😐"],["meh","😟"],["sad","😢"],["angry","😡"]].forEach(function(m){var c=mc2[m[0]]||0;h+="<div><div style='font-size:22px'>"+m[1]+"</div><div style='font-family:Orbitron;font-size:14px;color:#f59e0b'>"+Math.round(c/mt2*100)+"%</div></div>"});h+="</div>"}
 else{h+="<div style='font-size:9px;color:#00f7ff20;text-align:center'>No mood data</div>"}
 
 /* ── ACTION ROW ── */
-h+="<div style='display:flex;gap:4px;flex-wrap:wrap;margin-top:12px'>";
-h+="<button class='b bg2' onclick='runAI()' style='padding:7px 14px'>🤖 AI ANALYSIS</button>";
-h+="<button class='b bg2' onclick='genWeeklySummary()' style='padding:7px 14px'>📋 WEEKLY SUMMARY</button>";
-h+="<button class='b' onclick='openExportPicker()' style='padding:7px 14px'>🖨 PARTICIPANT REPORT</button>";
-h+="<button class='b' onclick='openBeforeAfter()' style='padding:7px 14px'>📊 BEFORE / AFTER</button>";
-h+="<button class='b' onclick='genMonthlyReport()' style='padding:7px 14px'>📄 MONTHLY REPORT</button></div>";
+h+="<div class='rpt-section'><div class='rpt-title' style='color:#00f7ff'>⚡ GENERATE REPORTS</div><div class='rpt-actions'>";
+h+="<button class='rpt-act rpt-act-primary' onclick='runAI()'>🤖 AI Analysis</button>";
+h+="<button class='rpt-act rpt-act-primary' onclick='genWeeklySummary()'>📋 Weekly Summary</button>";
+h+="<button class='rpt-act' onclick='openExportPicker()'>🖨 Participant Report</button>";
+h+="<button class='rpt-act' onclick='openBeforeAfter()'>📊 Before / After</button>";
+h+="<button class='rpt-act' onclick='genMonthlyReport()'>📄 Monthly Report</button></div></div>";
 h+="<div id='aiOut'></div><div id='weeklySumOut'></div>";
 
 

@@ -1867,45 +1867,45 @@ function pvToggleEx(pid,dateKey,exKey){var k=pid+"-"+dateKey+"-"+exKey;COMPLETED
 var NUTR_LOG=JSON.parse(localStorage.getItem("hc6-nutr")||"{}");
 function svN(){localStorage.setItem("hc6-nutr",JSON.stringify(NUTR_LOG))}
 var RECIPES=[
-{name:"One-Pan Chicken & Rice",meal:"Dinner",time:"30m",cost:"$5",ing:"chicken thighs, rice, broccoli, garlic, soy sauce",steps:"Season chicken. Sear 5min each side. Remove. Cook rice in same pan with broth. Add broccoli last 5min. Top with chicken."},
-{name:"Black Bean Tacos",meal:"Dinner",time:"15m",cost:"$3",ing:"black beans, tortillas, salsa, lime, cilantro, onion",steps:"Warm beans with cumin/garlic. Dice onion/cilantro. Warm tortillas. Assemble with salsa and lime."},
-{name:"Egg & Veggie Scramble",meal:"Breakfast",time:"10m",cost:"$2",ing:"3 eggs, spinach, bell pepper, onion, cheese",steps:"Dice veggies. Sauté 3min. Add beaten eggs. Scramble. Top with cheese."},
-{name:"Overnight Oats",meal:"Breakfast",time:"5m prep",cost:"$1.50",ing:"oats, milk, yogurt, banana, honey, peanut butter",steps:"Mix oats+milk+yogurt in jar. Top with banana and PB. Refrigerate overnight."},
-{name:"Turkey & Avocado Wrap",meal:"Lunch",time:"5m",cost:"$4",ing:"turkey deli meat, tortilla, avocado, spinach, mustard",steps:"Spread mashed avocado on tortilla. Layer turkey and spinach. Add mustard. Roll tight."},
-{name:"Tuna Lettuce Wraps",meal:"Lunch",time:"10m",cost:"$3",ing:"can tuna, mayo, mustard, celery, lettuce, lemon",steps:"Mix tuna with mayo, mustard, diced celery, lemon juice. Spoon into lettuce cups."},
-{name:"Sweet Potato Black Bean Bowl",meal:"Dinner",time:"25m",cost:"$4",ing:"sweet potato, black beans, rice, salsa, lime, cumin",steps:"Cube sweet potato. Roast 400°F 20min. Cook rice. Warm beans with cumin. Assemble with salsa."},
-{name:"PB Banana Smoothie",meal:"Snack",time:"5m",cost:"$2",ing:"banana, peanut butter, milk, oats, honey",steps:"Blend all until smooth. Add ice if desired."},
-{name:"Greek Yogurt Parfait",meal:"Snack",time:"5m",cost:"$2.50",ing:"greek yogurt, granola, berries, honey",steps:"Layer yogurt, granola, berries. Drizzle honey."},
-{name:"Chicken Stir Fry",meal:"Dinner",time:"20m",cost:"$5",ing:"chicken breast, mixed vegetables, soy sauce, garlic, ginger, rice",steps:"Slice chicken thin. Stir fry 5min. Add veggies and sauce. Serve over rice."},
-{name:"Bean & Cheese Quesadilla",meal:"Lunch",time:"10m",cost:"$2",ing:"tortilla, refried beans, cheese, salsa",steps:"Spread beans on half tortilla. Add cheese. Fold. Cook 3min each side."},
-{name:"PB Banana Toast",meal:"Breakfast",time:"3m",cost:"$1",ing:"bread, peanut butter, banana, cinnamon",steps:"Toast bread. Spread PB. Slice banana on top. Sprinkle cinnamon."},
-{name:"Budget Protein Bowl",meal:"Lunch",time:"15m",cost:"$3",ing:"canned chicken, brown rice, frozen veggies, hot sauce",steps:"Microwave rice and veggies. Warm chicken. Combine. Add hot sauce."},
-{name:"Veggie Fried Rice",meal:"Dinner",time:"15m",cost:"$3",ing:"leftover rice, eggs, frozen veggies, soy sauce, garlic",steps:"Scramble eggs. Add cold rice and veggies. Stir fry high heat 5min. Add soy sauce."},
-{name:"Sheet Pan Sausage & Veggies",meal:"Dinner",time:"25m",cost:"$5",ing:"turkey sausage, peppers, onion, zucchini, olive oil",steps:"Chop all. Toss with oil and seasoning. Sheet pan 400°F 20min."},
-{name:"Cottage Cheese & Fruit",meal:"Snack",time:"2m",cost:"$2",ing:"cottage cheese, pineapple or peaches, cinnamon",steps:"Scoop cottage cheese. Top with fruit and cinnamon."},
-{name:"Lentil Soup",meal:"Dinner",time:"30m",cost:"$3",ing:"lentils, canned tomatoes, onion, garlic, cumin, spinach",steps:"Sauté onion/garlic. Add lentils, tomatoes, water, cumin. Simmer 25min. Stir in spinach."},
-{name:"Egg Muffin Cups (x6)",meal:"Breakfast",time:"25m",cost:"$3",ing:"6 eggs, spinach, bell pepper, cheese",steps:"Whisk eggs. Divide veggies into muffin tin. Pour egg. Top cheese. Bake 375°F 18min."},
-{name:"Chicken Salad",meal:"Lunch",time:"10m",cost:"$4",ing:"canned chicken, greek yogurt, celery, grapes, almonds",steps:"Mix chicken with yogurt, diced celery, halved grapes, almonds. Serve on bread or lettuce."},
-{name:"Oatmeal Banana Pancakes",meal:"Breakfast",time:"15m",cost:"$1.50",ing:"oats, banana, eggs, cinnamon, baking powder",steps:"Blend oats to flour. Mash banana. Mix with eggs, cinnamon, baking powder. Cook like pancakes."},
-{name:"Slow Cooker Chicken Tacos",meal:"Dinner",time:"10m prep",cost:"$4",ing:"chicken breast, salsa, taco seasoning, tortillas, toppings",steps:"Put chicken in slow cooker. Cover with salsa and seasoning. Cook low 6hrs. Shred and serve in tortillas."},
-{name:"Fried Rice",meal:"Dinner",time:"15m",cost:"$3",ing:"leftover rice, 2 eggs, frozen veggies, soy sauce, sesame oil, garlic",steps:"Scramble eggs in hot pan. Add garlic, veggies. Add cold rice. Soy sauce and sesame oil. Stir fry 5min."},
-{name:"Sheet Pan Fajitas",meal:"Dinner",time:"25m",cost:"$5",ing:"chicken or beef, peppers, onion, fajita seasoning, tortillas, lime",steps:"Slice meat and veggies. Toss with oil and seasoning. Spread on sheet pan. Bake 400F 20min. Serve in tortillas."},
-{name:"Banana Oat Energy Bites",meal:"Snack",time:"10m",cost:"$2",ing:"oats, peanut butter, honey, banana, chocolate chips",steps:"Mash banana. Mix all ingredients. Roll into balls. Refrigerate 30min. Store in fridge up to 1 week."},
-{name:"Tuna Pasta",meal:"Dinner",time:"15m",cost:"$3",ing:"pasta, canned tuna, olive oil, garlic, lemon, parsley",steps:"Cook pasta. Drain. Toss with flaked tuna, olive oil, minced garlic, lemon juice, and parsley."},
-{name:"Chicken & Broccoli Stir Fry",meal:"Dinner",time:"20m",cost:"$4",ing:"chicken breast, broccoli, soy sauce, garlic, ginger, cornstarch, rice",steps:"Slice chicken. Stir fry 5min. Add broccoli. Make sauce with soy, garlic, ginger, cornstarch. Pour over. Serve on rice."},
-{name:"Avocado Toast",meal:"Breakfast",time:"5m",cost:"$2.50",ing:"bread, avocado, salt, pepper, red pepper flakes, lemon",steps:"Toast bread. Mash avocado with salt, pepper, lemon. Spread on toast. Top with red pepper flakes."},
-{name:"Rice & Beans",meal:"Dinner",time:"20m",cost:"$1.50",ing:"rice, canned black beans, onion, garlic, cumin, cilantro, lime",steps:"Cook rice. Saute onion and garlic. Add beans and cumin. Simmer 10min. Serve over rice with cilantro and lime."},
-{name:"Protein Smoothie Bowl",meal:"Breakfast",time:"5m",cost:"$3",ing:"frozen berries, banana, yogurt, granola, honey",steps:"Blend frozen berries, banana, yogurt until thick. Pour in bowl. Top with granola, honey, and extra fruit."},
-{name:"Slow Cooker Chili",meal:"Dinner",time:"15m prep",cost:"$5",ing:"ground turkey, kidney beans, diced tomatoes, onion, chili powder, cumin",steps:"Brown turkey with onion. Add to slow cooker with beans, tomatoes, spices. Cook low 6-8hrs."},
-{name:"Egg Fried Rice",meal:"Lunch",time:"10m",cost:"$2",ing:"leftover rice, 2 eggs, green onion, soy sauce, butter",steps:"Scramble eggs in butter. Add cold rice. Soy sauce. Stir fry high heat. Top with green onion."},
-{name:"Buffalo Chicken Wrap",meal:"Lunch",time:"10m",cost:"$4",ing:"canned chicken, hot sauce, ranch, lettuce, tortilla, celery",steps:"Mix chicken with hot sauce. Lay on tortilla with lettuce, diced celery, and ranch drizzle. Roll tight."},
-{name:"Pasta Primavera",meal:"Dinner",time:"20m",cost:"$4",ing:"pasta, zucchini, bell pepper, cherry tomatoes, garlic, olive oil, parmesan",steps:"Cook pasta. Saute veggies in olive oil with garlic. Toss with pasta. Top with parmesan."},
-{name:"Banana Smoothie",meal:"Snack",time:"3m",cost:"$1.50",ing:"banana, milk, ice, honey, cinnamon",steps:"Blend all ingredients until smooth. Add more milk for thinner consistency."},
-{name:"Chickpea Salad",meal:"Lunch",time:"10m",cost:"$3",ing:"canned chickpeas, cucumber, tomato, red onion, feta, lemon, olive oil",steps:"Drain chickpeas. Dice veggies. Toss everything with lemon juice and olive oil. Season to taste."},
-{name:"Breakfast Burrito",meal:"Breakfast",time:"10m",cost:"$3",ing:"eggs, tortilla, cheese, salsa, black beans",steps:"Scramble eggs. Warm tortilla. Fill with eggs, beans, cheese, salsa. Roll up."},
-{name:"Teriyaki Chicken Bowl",meal:"Dinner",time:"20m",cost:"$4",ing:"chicken thigh, teriyaki sauce, rice, broccoli, sesame seeds",steps:"Cook rice. Pan fry chicken in teriyaki sauce. Steam broccoli. Assemble bowl. Top with sesame seeds."},
-{name:"Trail Mix",meal:"Snack",time:"5m",cost:"$3",ing:"mixed nuts, raisins, chocolate chips, pretzels, dried cranberries",steps:"Mix all ingredients in a large bowl. Portion into bags. Great grab-and-go snack."},
-{name:"Loaded Sweet Potato",meal:"Dinner",time:"30m",cost:"$3",ing:"sweet potato, black beans, cheese, sour cream, green onion",steps:"Microwave sweet potato 8-10min until soft. Split open. Top with warmed beans, cheese, sour cream, green onion."}
+{name:"One-Pan Chicken & Rice",meal:"Dinner",time:"30m",cost:"$5",ing:"chicken thighs, rice, broccoli, garlic, soy sauce",steps:"Season chicken. Sear 5min each side. Remove. Cook rice in same pan with broth. Add broccoli last 5min. Top with chicken.",cal:"450"},
+{name:"Black Bean Tacos",meal:"Dinner",time:"15m",cost:"$3",ing:"black beans, tortillas, salsa, lime, cilantro, onion",steps:"Warm beans with cumin/garlic. Dice onion/cilantro. Warm tortillas. Assemble with salsa and lime.",cal:"320"},
+{name:"Egg & Veggie Scramble",meal:"Breakfast",time:"10m",cost:"$2",ing:"3 eggs, spinach, bell pepper, onion, cheese",steps:"Dice veggies. Sauté 3min. Add beaten eggs. Scramble. Top with cheese.",cal:"280"},
+{name:"Overnight Oats",meal:"Breakfast",time:"5m prep",cost:"$1.50",ing:"oats, milk, yogurt, banana, honey, peanut butter",steps:"Mix oats+milk+yogurt in jar. Top with banana and PB. Refrigerate overnight.",cal:"350"},
+{name:"Turkey & Avocado Wrap",meal:"Lunch",time:"5m",cost:"$4",ing:"turkey deli meat, tortilla, avocado, spinach, mustard",steps:"Spread mashed avocado on tortilla. Layer turkey and spinach. Add mustard. Roll tight.",cal:"380"},
+{name:"Tuna Lettuce Wraps",meal:"Lunch",time:"10m",cost:"$3",ing:"can tuna, mayo, mustard, celery, lettuce, lemon",steps:"Mix tuna with mayo, mustard, diced celery, lemon juice. Spoon into lettuce cups.",cal:"250"},
+{name:"Sweet Potato Black Bean Bowl",meal:"Dinner",time:"25m",cost:"$4",ing:"sweet potato, black beans, rice, salsa, lime, cumin",steps:"Cube sweet potato. Roast 400°F 20min. Cook rice. Warm beans with cumin. Assemble with salsa.",cal:"360"},
+{name:"PB Banana Smoothie",meal:"Snack",time:"5m",cost:"$2",ing:"banana, peanut butter, milk, oats, honey",steps:"Blend all until smooth. Add ice if desired.",cal:"300"},
+{name:"Greek Yogurt Parfait",meal:"Snack",time:"5m",cost:"$2.50",ing:"greek yogurt, granola, berries, honey",steps:"Layer yogurt, granola, berries. Drizzle honey.",cal:"280"},
+{name:"Chicken Stir Fry",meal:"Dinner",time:"20m",cost:"$5",ing:"chicken breast, mixed vegetables, soy sauce, garlic, ginger, rice",steps:"Slice chicken thin. Stir fry 5min. Add veggies and sauce. Serve over rice.",cal:"400"},
+{name:"Bean & Cheese Quesadilla",meal:"Lunch",time:"10m",cost:"$2",ing:"tortilla, refried beans, cheese, salsa",steps:"Spread beans on half tortilla. Add cheese. Fold. Cook 3min each side.",cal:"380"},
+{name:"PB Banana Toast",meal:"Breakfast",time:"3m",cost:"$1",ing:"bread, peanut butter, banana, cinnamon",steps:"Toast bread. Spread PB. Slice banana on top. Sprinkle cinnamon.",cal:"280"},
+{name:"Budget Protein Bowl",meal:"Lunch",time:"15m",cost:"$3",ing:"canned chicken, brown rice, frozen veggies, hot sauce",steps:"Microwave rice and veggies. Warm chicken. Combine. Add hot sauce.",cal:"380"},
+{name:"Veggie Fried Rice",meal:"Dinner",time:"15m",cost:"$3",ing:"leftover rice, eggs, frozen veggies, soy sauce, garlic",steps:"Scramble eggs. Add cold rice and veggies. Stir fry high heat 5min. Add soy sauce.",cal:"340"},
+{name:"Sheet Pan Sausage & Veggies",meal:"Dinner",time:"25m",cost:"$5",ing:"turkey sausage, peppers, onion, zucchini, olive oil",steps:"Chop all. Toss with oil and seasoning. Sheet pan 400°F 20min.",cal:"420"},
+{name:"Cottage Cheese & Fruit",meal:"Snack",time:"2m",cost:"$2",ing:"cottage cheese, pineapple or peaches, cinnamon",steps:"Scoop cottage cheese. Top with fruit and cinnamon.",cal:"220"},
+{name:"Lentil Soup",meal:"Dinner",time:"30m",cost:"$3",ing:"lentils, canned tomatoes, onion, garlic, cumin, spinach",steps:"Sauté onion/garlic. Add lentils, tomatoes, water, cumin. Simmer 25min. Stir in spinach.",cal:"280"},
+{name:"Egg Muffin Cups (x6)",meal:"Breakfast",time:"25m",cost:"$3",ing:"6 eggs, spinach, bell pepper, cheese",steps:"Whisk eggs. Divide veggies into muffin tin. Pour egg. Top cheese. Bake 375°F 18min.",cal:"200"},
+{name:"Chicken Salad",meal:"Lunch",time:"10m",cost:"$4",ing:"canned chicken, greek yogurt, celery, grapes, almonds",steps:"Mix chicken with yogurt, diced celery, halved grapes, almonds. Serve on bread or lettuce.",cal:"320"},
+{name:"Oatmeal Banana Pancakes",meal:"Breakfast",time:"15m",cost:"$1.50",ing:"oats, banana, eggs, cinnamon, baking powder",steps:"Blend oats to flour. Mash banana. Mix with eggs, cinnamon, baking powder. Cook like pancakes.",cal:"320"},
+{name:"Slow Cooker Chicken Tacos",meal:"Dinner",time:"10m prep",cost:"$4",ing:"chicken breast, salsa, taco seasoning, tortillas, toppings",steps:"Put chicken in slow cooker. Cover with salsa and seasoning. Cook low 6hrs. Shred and serve in tortillas.",cal:"380"},
+{name:"Fried Rice",meal:"Dinner",time:"15m",cost:"$3",ing:"leftover rice, 2 eggs, frozen veggies, soy sauce, sesame oil, garlic",steps:"Scramble eggs in hot pan. Add garlic, veggies. Add cold rice. Soy sauce and sesame oil. Stir fry 5min.",cal:"360"},
+{name:"Sheet Pan Fajitas",meal:"Dinner",time:"25m",cost:"$5",ing:"chicken or beef, peppers, onion, fajita seasoning, tortillas, lime",steps:"Slice meat and veggies. Toss with oil and seasoning. Spread on sheet pan. Bake 400F 20min. Serve in tortillas.",cal:"400"},
+{name:"Banana Oat Energy Bites",meal:"Snack",time:"10m",cost:"$2",ing:"oats, peanut butter, honey, banana, chocolate chips",steps:"Mash banana. Mix all ingredients. Roll into balls. Refrigerate 30min. Store in fridge up to 1 week.",cal:"180"},
+{name:"Tuna Pasta",meal:"Dinner",time:"15m",cost:"$3",ing:"pasta, canned tuna, olive oil, garlic, lemon, parsley",steps:"Cook pasta. Drain. Toss with flaked tuna, olive oil, minced garlic, lemon juice, and parsley.",cal:"420"},
+{name:"Chicken & Broccoli Stir Fry",meal:"Dinner",time:"20m",cost:"$4",ing:"chicken breast, broccoli, soy sauce, garlic, ginger, cornstarch, rice",steps:"Slice chicken. Stir fry 5min. Add broccoli. Make sauce with soy, garlic, ginger, cornstarch. Pour over. Serve on rice.",cal:"380"},
+{name:"Avocado Toast",meal:"Breakfast",time:"5m",cost:"$2.50",ing:"bread, avocado, salt, pepper, red pepper flakes, lemon",steps:"Toast bread. Mash avocado with salt, pepper, lemon. Spread on toast. Top with red pepper flakes.",cal:"310"},
+{name:"Rice & Beans",meal:"Dinner",time:"20m",cost:"$1.50",ing:"rice, canned black beans, onion, garlic, cumin, cilantro, lime",steps:"Cook rice. Saute onion and garlic. Add beans and cumin. Simmer 10min. Serve over rice with cilantro and lime.",cal:"350"},
+{name:"Protein Smoothie Bowl",meal:"Breakfast",time:"5m",cost:"$3",ing:"frozen berries, banana, yogurt, granola, honey",steps:"Blend frozen berries, banana, yogurt until thick. Pour in bowl. Top with granola, honey, and extra fruit.",cal:"300"},
+{name:"Slow Cooker Chili",meal:"Dinner",time:"15m prep",cost:"$5",ing:"ground turkey, kidney beans, diced tomatoes, onion, chili powder, cumin",steps:"Brown turkey with onion. Add to slow cooker with beans, tomatoes, spices. Cook low 6-8hrs.",cal:"320"},
+{name:"Egg Fried Rice",meal:"Lunch",time:"10m",cost:"$2",ing:"leftover rice, 2 eggs, green onion, soy sauce, butter",steps:"Scramble eggs in butter. Add cold rice. Soy sauce. Stir fry high heat. Top with green onion.",cal:"350"},
+{name:"Buffalo Chicken Wrap",meal:"Lunch",time:"10m",cost:"$4",ing:"canned chicken, hot sauce, ranch, lettuce, tortilla, celery",steps:"Mix chicken with hot sauce. Lay on tortilla with lettuce, diced celery, and ranch drizzle. Roll tight.",cal:"440"},
+{name:"Pasta Primavera",meal:"Dinner",time:"20m",cost:"$4",ing:"pasta, zucchini, bell pepper, cherry tomatoes, garlic, olive oil, parmesan",steps:"Cook pasta. Saute veggies in olive oil with garlic. Toss with pasta. Top with parmesan.",cal:"380"},
+{name:"Banana Smoothie",meal:"Snack",time:"3m",cost:"$1.50",ing:"banana, milk, ice, honey, cinnamon",steps:"Blend all ingredients until smooth. Add more milk for thinner consistency.",cal:"250"},
+{name:"Chickpea Salad",meal:"Lunch",time:"10m",cost:"$3",ing:"canned chickpeas, cucumber, tomato, red onion, feta, lemon, olive oil",steps:"Drain chickpeas. Dice veggies. Toss everything with lemon juice and olive oil. Season to taste.",cal:"280"},
+{name:"Breakfast Burrito",meal:"Breakfast",time:"10m",cost:"$3",ing:"eggs, tortilla, cheese, salsa, black beans",steps:"Scramble eggs. Warm tortilla. Fill with eggs, beans, cheese, salsa. Roll up.",cal:"420"},
+{name:"Teriyaki Chicken Bowl",meal:"Dinner",time:"20m",cost:"$4",ing:"chicken thigh, teriyaki sauce, rice, broccoli, sesame seeds",steps:"Cook rice. Pan fry chicken in teriyaki sauce. Steam broccoli. Assemble bowl. Top with sesame seeds.",cal:"450"},
+{name:"Trail Mix",meal:"Snack",time:"5m",cost:"$3",ing:"mixed nuts, raisins, chocolate chips, pretzels, dried cranberries",steps:"Mix all ingredients in a large bowl. Portion into bags. Great grab-and-go snack.",cal:"200"},
+{name:"Loaded Sweet Potato",meal:"Dinner",time:"30m",cost:"$3",ing:"sweet potato, black beans, cheese, sour cream, green onion",steps:"Microwave sweet potato 8-10min until soft. Split open. Top with warmed beans, cheese, sour cream, green onion.",cal:"400"}
 ];
 var recipeFilter="all";
 
@@ -3111,7 +3111,7 @@ h+="<div><div class='recipe-name'>"+H(r.name)+"</div>";
 h+="<div class='recipe-meta'>";
 h+="<span style='color:"+mClr+"'>"+H(r.meal||"")+"</span>";
 if(r.time)h+="<span>"+H(r.time)+"</span>";
-if(r.cost)h+="<span>"+H(r.cost)+"</span>";
+if(r.cost)h+="<span>"+H(r.cost)+"</span>";if(r.cal)h+="<span style='color:#ff4757'>"+r.cal+" cal</span>";
 h+="</div></div></div></div>"});
 
 if(!filtered.length)h+="<div class='emp'>NO MATCHING RECIPES</div>";

@@ -573,6 +573,7 @@ button,.b,.fl,.fi,.bk-btn{min-height:40px}
 
 /* ═══ MODAL BACKDROP ═══ */
 .mbg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:1000;padding:16px}
+.mood-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:1000}
 
 /* ═══ SCANLINE OVERLAY ═══ */
 #scanlines{position:fixed;inset:0;z-index:9999;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0px,transparent 2px,rgba(79,195,247,0.015) 2px,rgba(79,195,247,0.015) 4px)}
@@ -623,7 +624,7 @@ var DAYS=["SUN","MON","TUE","WED","THU","FRI","SAT"];
 var MAX_SLOT=2;
 var DEF_RES=[{cat:"Food",name:"Feeding South Florida",desc:"Food distribution",url:"https://feedingsouthflorida.org",phone:"954-518-1818"},{cat:"Food",name:"PBC Food Bank",desc:"Emergency food",url:"https://pbcfoodbank.org",phone:"561-670-2518"},{cat:"Clothing",name:"Goodwill Palm Beaches",desc:"Clothing & training",url:"https://gogoodwill.org",phone:"561-832-8893"},{cat:"Mental Health",name:"211 Palm Beach",desc:"24/7 hotline",url:"https://211palmbeach.org",phone:"211"},{cat:"Mental Health",name:"988 Crisis Lifeline",desc:"24/7 support",url:"https://988lifeline.org",phone:"988"},{cat:"Financial",name:"MyMoney.gov",desc:"Financial education",url:"https://www.mymoney.gov",phone:""},{cat:"Career",name:"CareerSource PBC",desc:"Jobs & training",url:"https://careersourcepbc.com",phone:"561-340-1060"},{cat:"Education",name:"Palm Beach State College",desc:"GED & degrees",url:"https://palmbeachstate.edu",phone:"561-967-7222"},{cat:"Housing",name:"PBC Housing Authority",desc:"Section 8",url:"https://pbcha.org",phone:"561-684-2160"}];
 
-function SV(){localStorage.setItem("hc6-users",JSON.stringify(users));localStorage.setItem("hc6-p",JSON.stringify(P));localStorage.setItem("hc6-f",JSON.stringify(F));localStorage.setItem("hc6-refemails",JSON.stringify(REF_EMAILS));localStorage.setItem("hc6-res",JSON.stringify(RES));localStorage.setItem("hc6-stamps",JSON.stringify(STAMPS));localStorage.setItem("hc6-wlogs",JSON.stringify(WLOGS));localStorage.setItem("hc6-store",JSON.stringify(STORE));localStorage.setItem("hc6-claims",JSON.stringify(CLAIMS));localStorage.setItem("hc6-books",JSON.stringify(BOOKS));localStorage.setItem("hc6-ann",JSON.stringify(ANN));localStorage.setItem("hc6-coaches",JSON.stringify(COACHES));localStorage.setItem("hc6-pvtodos",JSON.stringify(PVTODOS));localStorage.setItem("hc6-moods",JSON.stringify(MOODS));localStorage.setItem("hc6-challenges",JSON.stringify(CHALLENGES));localStorage.setItem("hc6-journals",JSON.stringify(JOURNALS));localStorage.setItem("hc6-reflogs",JSON.stringify(REFLOGS));localStorage.setItem("hc6-sesslogs",JSON.stringify(SESSLOGS));localStorage.setItem("hc6-monthlych",JSON.stringify(MONTHLYCH));localStorage.setItem("hc6-jobposts",JSON.stringify(JOBPOSTS));svPU()}
+function SV(){localStorage.setItem("hc6-users",JSON.stringify(users));localStorage.setItem("hc6-p",JSON.stringify(P));localStorage.setItem("hc6-f",JSON.stringify(F));localStorage.setItem("hc6-refemails",JSON.stringify(REF_EMAILS));localStorage.setItem("hc6-res",JSON.stringify(RES));localStorage.setItem("hc6-stamps",JSON.stringify(STAMPS));if(typeof WLOGS!=="undefined")localStorage.setItem("hc6-wlogs",JSON.stringify(WLOGS));if(typeof STORE!=="undefined")localStorage.setItem("hc6-store",JSON.stringify(STORE));if(typeof CLAIMS!=="undefined")localStorage.setItem("hc6-claims",JSON.stringify(CLAIMS));localStorage.setItem("hc6-books",JSON.stringify(BOOKS));localStorage.setItem("hc6-ann",JSON.stringify(ANN));localStorage.setItem("hc6-coaches",JSON.stringify(COACHES));localStorage.setItem("hc6-pvtodos",JSON.stringify(PVTODOS));localStorage.setItem("hc6-moods",JSON.stringify(MOODS));localStorage.setItem("hc6-challenges",JSON.stringify(CHALLENGES));localStorage.setItem("hc6-journals",JSON.stringify(JOURNALS));localStorage.setItem("hc6-reflogs",JSON.stringify(REFLOGS));localStorage.setItem("hc6-sesslogs",JSON.stringify(SESSLOGS));localStorage.setItem("hc6-monthlych",JSON.stringify(MONTHLYCH));localStorage.setItem("hc6-jobposts",JSON.stringify(JOBPOSTS));svPU()}
 function H(s){if(!s)return"";var d=document.createElement("div");d.textContent=String(s);return d.innerHTML}
 function dT(d){if(!d)return null;return Math.floor((new Date(d)-new Date())/864e5)}
 function cpy(t){navigator.clipboard.writeText(t).catch(function(){})}
@@ -1012,7 +1013,7 @@ else h+="<button class='pv-wk2-go ready' onclick=\"pvFinishAll('"+p.id+"','"+ww.
 h+="</div>"});
 
 h+="<div style='text-align:center;margin:12px 0'><button class='b' onclick='pvOpenCreateWorkout()' style='padding:12px 24px;font-size:11px'>+ CREATE MY OWN WORKOUT</button></div>";
-var hitM=[];wws.forEach(function(ww){(ww.w.exercises||[]).forEach(function(ex){var f=ACE_LIB.find(function(a){return a.n===ex.name});if(f&&f.ms){f.ms.forEach(function(m){if(hitM.indexOf(m)===-1)hitM.push(m)})}})});
+var hitM=[];var _msMap={"Quads":"Legs-Thighs","Hamstrings":"Legs-Thighs","Adductors":"Legs-Thighs","Hip Flexors":"Legs-Thighs","Calves":"Legs-Calves","Tibialis":"Legs-Calves","Glutes":"Butt/Hips","Biceps":"Arms","Triceps":"Arms","Forearms":"Arms","Grip":"Arms","Lats":"Back","Upper Back":"Back","Traps":"Back","Rotator Cuff":"Shoulders","Obliques":"Abs","Core":"Abs","Legs":"Legs-Thighs","Balance":"Legs-Thighs","Cardio":"Full Body","Stretch":"Full Body"};wws.forEach(function(ww){(ww.w.exercises||[]).forEach(function(ex){var f=ACE_LIB.find(function(a){return a.n===ex.name});if(f&&f.ms){f.ms.forEach(function(m){var mapped=_msMap[m]||m;if(hitM.indexOf(mapped)===-1)hitM.push(mapped);if(m!==mapped&&hitM.indexOf(m)===-1)hitM.push(m)})}})});
 if(hitM.length){
 var sh=hitM.indexOf("Shoulders")>-1||hitM.indexOf("Full Body")>-1;
 var ch=hitM.indexOf("Chest")>-1||hitM.indexOf("Full Body")>-1;
@@ -1183,11 +1184,12 @@ function pvFinishAll(pid,date,wIdx,cnt){for(var i=0;i<cnt;i++){var k=pid+"-"+dat
 
 function muscleMapHTML(exercises){
 var groups={"Legs":false,"Chest":false,"Back":false,"Shoulders":false,"Arms":false,"Core":false,"Cardio":false,"Stretch":false};
+var _mmMap={"Quads":"Legs","Hamstrings":"Legs","Calves":"Legs","Tibialis":"Legs","Glutes":"Legs","Adductors":"Legs","Hip Flexors":"Legs","Balance":"Legs","Legs-Thighs":"Legs","Legs-Calves":"Legs","Butt/Hips":"Legs","Biceps":"Arms","Triceps":"Arms","Forearms":"Arms","Grip":"Arms","Lats":"Back","Upper Back":"Back","Traps":"Back","Rotator Cuff":"Shoulders","Obliques":"Core","Abs":"Core","Full Body":"Cardio"};
 if(!exercises||!exercises.length)return"";
 var allEx=(typeof EXERCISES!=="undefined")?EXERCISES:[];
 exercises.forEach(function(ex){
 var found=ACE_LIB.find(function(e){return e.n===ex.name||e.n===ex.id});
-if(found&&found.ms){found.ms.forEach(function(m){if(groups.hasOwnProperty(m))groups[m]=true})}
+if(found&&found.ms){found.ms.forEach(function(m){if(groups.hasOwnProperty(m))groups[m]=true;var mapped=_mmMap[m];if(mapped&&groups.hasOwnProperty(mapped))groups[mapped]=true})}
 else{var n=(ex.name||"").toLowerCase();
 if(n.indexOf("squat")>-1||n.indexOf("lunge")>-1||n.indexOf("leg")>-1||n.indexOf("calf")>-1||n.indexOf("deadlift")>-1||n.indexOf("split")>-1)groups.Legs=true;
 if(n.indexOf("bench")>-1||n.indexOf("push")>-1||n.indexOf("chest")>-1||n.indexOf("fly")>-1||n.indexOf("dip")>-1)groups.Chest=true;
@@ -1999,6 +2001,32 @@ if(aK2.length){aK2.slice(0,15).forEach(function(k){var pts=k.split("-");var pid2
 h+="<div style='display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #00f7ff04;font-size:11px'><strong style='color:#c8f0ff'>"+H(p2.n)+"</strong><div>";aw2.forEach(function(ai){var w=WORKOUTS[ai];if(w)h+="<span style='font-size:9px;padding:2px 8px;border-radius:6px;background:#f59e0b15;color:#f59e0b;margin-left:3px'>"+H(w.name)+"</span>"});h+="</div></div>"})}
 if(!anyA)h+="<div style='font-size:11px;color:#c8f0ff20;text-align:center'>No upcoming assignments</div>";
 h+="</div>";el.innerHTML=h}
+
+function openAddExercise(){
+var h2="<div class='mti'>+ ADD CUSTOM EXERCISE "+XB()+"</div>";
+h2+="<label class='lb'>EXERCISE NAME *</label><input class='ip' id='ceN' placeholder='e.g. Bulgarian Split Squat'>";
+h2+="<label class='lb'>BODY PART *</label><select class='ip' id='ceBp'>";
+["Abs","Arms","Back","Butt/Hips","Chest","Full Body","Legs-Calves","Legs-Thighs","Shoulders"].forEach(function(b){h2+="<option>"+b+"</option>"});
+h2+="</select>";
+h2+="<label class='lb'>EQUIPMENT</label><select class='ip' id='ceEq'>";
+["No Equipment","Dumbbells","Barbell","Machine","Resistance Bands/Cables","Kettlebells","Body Weight","Stability Ball","Medicine Ball","TRX"].forEach(function(e){h2+="<option>"+e+"</option>"});
+h2+="</select>";
+h2+="<label class='lb'>DIFFICULTY</label><select class='ip' id='ceDf'><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>";
+h2+="<label class='lb'>MUSCLES (comma-separated)</label><input class='ip' id='ceMs' placeholder='e.g. Quads, Glutes, Hamstrings'>";
+h2+="<button class='b bg2' style='width:100%;margin-top:10px;padding:7px' onclick='saveAddExercise()'>▶ SAVE EXERCISE</button>";
+SM(h2)}
+function saveAddExercise(){
+var n=(document.getElementById("ceN").value||"").trim();
+var bp=document.getElementById("ceBp").value;
+var eq=document.getElementById("ceEq").value;
+var df=document.getElementById("ceDf").value;
+var msRaw=(document.getElementById("ceMs").value||"").trim();
+if(!n){alert("Exercise name required");return}
+if(ACE_LIB.some(function(e){return e.n.toLowerCase()===n.toLowerCase()})){alert("Exercise already exists");return}
+var ms=msRaw?msRaw.split(",").map(function(s){return s.trim()}).filter(Boolean):[];
+ACE_LIB.push({n:n,bp:bp,eq:eq,df:df,ms:ms});
+EXERCISES=ACE_LIB;
+svW();CM();alert("Exercise added: "+n)}
 
 function openNewWK(){
 var h2="<div class='mti'>+ CREATE WORKOUT "+XB()+"</div>";
@@ -2916,7 +2944,7 @@ body+="Please reach out to them directly to schedule their first session.\n\n";
 body+="Thank you,\n";
 body+="YMCA Healthy Connections Program\n";
 body+="West Palm Beach, FL";
-var toEmail=REF_EMAILS[svc]||"";if(isCustom){var cs5=JSON.parse(localStorage.getItem("hc6-customsvc")||"[]");var f2=cs5.find(function(c){return c.id===svc});if(f2)toEmail=f2.email||""}
+var isCustom=["mh","nutr","fin","career"].indexOf(svc)===-1;var toEmail=REF_EMAILS[svc]||"";if(isCustom){var cs5=JSON.parse(localStorage.getItem("hc6-customsvc")||"[]");var f2=cs5.find(function(c){return c.id===svc});if(f2)toEmail=f2.email||""}
 location.href="mailto:"+toEmail+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body)}
 
 
@@ -3242,7 +3270,7 @@ h2+="<div id='recipeList'>";
 RECIPES.forEach(function(r,ri){
 h2+="<div class='recipe-card' data-idx='"+ri+"' onclick='viewRecipeAdmin("+ri+")'>";
 h2+="<div class='recipe-name'>"+H(r.name)+"</div>";
-h2+="<div class='recipe-meta'><span>"+H(r.cat)+"</span><span>"+H(r.time)+"</span><span>$"+H(r.cost)+"</span></div></div>"});
+h2+="<div class='recipe-meta'><span>"+H(r.meal)+"</span><span>"+H(r.time)+"</span><span>$"+H(r.cost)+"</span></div></div>"});
 h2+="</div>";
 h2+="<button class='b bg2' style='width:100%;margin-top:8px;padding:10px' onclick='openAddRecipe()'>+ ADD CUSTOM RECIPE</button>";
 SM(h2)}
@@ -3253,7 +3281,7 @@ var cards=document.querySelectorAll(".recipe-card");
 cards.forEach(function(c){
 var idx=parseInt(c.getAttribute("data-idx"));
 var r=RECIPES[idx];
-var match=r.name.toLowerCase().indexOf(q)>-1||r.cat.toLowerCase().indexOf(q)>-1;
+var match=r.name.toLowerCase().indexOf(q)>-1||(r.meal||"").toLowerCase().indexOf(q)>-1;
 c.style.display=match?"":"none"})}
 
 function viewRecipeAdmin(ri){
@@ -3561,7 +3589,7 @@ else{h+="<div class='emp'>NO ITEMS AVAILABLE RIGHT NOW</div>"}
 
 el.innerHTML=h}
 
-function pvClaimItem(idx){if(CU&&CU.pid)claimItem(CU.pid,idx)}
+function pvClaimItem(idx){if(CU&&CU.id)claimItem(CU.id,idx)}
 function claimItem(pid,idx){
 var item=STORE[idx];if(!item)return;
 var p=P.find(function(x){return x.id===pid});if(!p)return;
